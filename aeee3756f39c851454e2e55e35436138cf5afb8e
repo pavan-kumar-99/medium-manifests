@@ -1,0 +1,1 @@
+{"jobID":"41f6b665-f58d-3e46-f4a8-38f037e8e47e","spec":{"type":"policy","cause":{"Message":"","User":"pavan1999.kumar@gmail.com"},"spec":{"kustomize-demo:deployment/kustomize-test":{"add":{"automated":"true"},"remove":{}}}},"result":null}
