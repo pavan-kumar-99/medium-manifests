@@ -7,8 +7,6 @@ metadata:
     app: kustomize-test
   name: kustomize-test
   namespace: kustomize-demo
-  annotations:
-    fluxcd.io/automated: 'true'
 spec:
   replicas: 1
   selector:
