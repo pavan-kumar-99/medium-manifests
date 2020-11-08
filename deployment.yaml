@@ -8,7 +8,8 @@ metadata:
   name: kustomize-test
   namespace: kustomize-demo
   annotations:
-    flux.weave.works/automated: "false"
+    fluxcd.io/automated: "false"
+    fluxcd.io/ignore: "true"
 spec:
   replicas: 1
   selector:
