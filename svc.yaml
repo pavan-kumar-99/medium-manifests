@@ -5,7 +5,7 @@ metadata:
   labels:
     app: kustomize-test
   name: kustomize-test
-  namespace: kustomize-test
+  namespace: kustomize-demo
 spec:
   ports:
   - name: http
