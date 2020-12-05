@@ -4,11 +4,6 @@
 
 replicaCount: 1
 
-namespace:
-  create: true
-  name: fluxcd-demo 
-  annotations: ""
-
 image:
   repository: nginx
   pullPolicy: IfNotPresent
