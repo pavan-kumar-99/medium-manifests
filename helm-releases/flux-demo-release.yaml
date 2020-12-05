@@ -12,5 +12,3 @@ spec:
     git: git@github.com:pavan-kumar-99/kustomize-demo.git
     path: helm-charts/fluxcd-demo
     ref: fluxcd-demo
-  values:
-   replicaCount: 5
