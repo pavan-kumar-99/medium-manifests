@@ -1,6 +1,12 @@
 #!/usr/bin/env groovy
 
-pipelineJob('k8s-e2e') {
+String basePath = 'example-path'
+
+folder(basePath) {
+    description 'Example Folder'
+}
+
+pipelineJob("$basePath/k8s-e2e") {
     displayName('Kubernetes Plugin E2E Test')
 
     logRotator {
@@ -19,10 +25,9 @@ pipelineJob('k8s-e2e') {
             scm {
                 git {
                     remote {
-                        url('https://github.com/jenkinsci/kubernetes-operator.git')
-                        credentials('jenkins-operator')
+                        url('https://github.com/pavan-kumar-99/vault-k8s.git')
                     }
-                    branches('*/master')
+                    branches('*/jenkins_operator')
                 }
             }
             scriptPath('cicd/pipelines/k8s.jenkins')
