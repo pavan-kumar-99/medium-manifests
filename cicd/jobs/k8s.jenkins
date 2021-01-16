@@ -25,12 +25,12 @@ pipelineJob("$basePath/k8s-e2e") {
             scm {
                 git {
                     remote {
-                        url('https://github.com/pavan-kumar-99/vault-k8s.git')
+                        url('https://github.com/pavan-kumar-99/medium-manifests.git')
                     }
                     branches('*/jenkins_operator')
                 }
             }
-            scriptPath('cicd/pipelines/k8s.jenkins')
+            scriptPath('cicd/pipelines/hostname_k8s .jenkins')
         }
     }
 }
