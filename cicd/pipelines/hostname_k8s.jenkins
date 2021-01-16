@@ -4,12 +4,12 @@ def label = "k8s-plugin"
 
 podTemplate(label: label,
         containers: [
-                containerTemplate(name: 'alpine', image: 'alpine:3.11', ttyEnabled: true, command: '/bin/sh'),
+                containerTemplate(name: 'hostname', image: 'alpine', ttyEnabled: true, command: '/bin/sh'),
         ],
         ) {
     node(label) {
         stage('Run shell') {
-            container('alpine') {
+            container('hostname') {
                 sh 'hostname'
             }
         }
