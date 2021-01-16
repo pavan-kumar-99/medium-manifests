@@ -1,2 +1,4 @@
 # Deploying Applications in Kubernetes Using Flux
 Flux is an Open and extensible continuous delivery solution for Kubernetes. Flux is a GitOps tool for Kubernetes that synchronizes the state of manifests in a Git repository to what is running in a cluster. So what is GitOps? Is it a new tool in the market? GitOps provides a way for developers to manage operational workflow for using Kubernetes using Git. It is all about using a version-controlled system for the deployment of applications in Kubernetes. So Developers can directly push the code into production from the version-controlled system like Git. Moreover, any changes made can be easily tracked and reverted in case of any chaos. There are multiple tools in the market to run GitOps. Today in this article we would be experimenting with a tool called Flux.
+
+Full Article can be found here https://medium.com/swlh/deploying-applications-in-kubernetes-using-flux-a9d171b11917
