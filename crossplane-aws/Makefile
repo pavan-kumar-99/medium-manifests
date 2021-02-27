@@ -29,4 +29,4 @@ install_crossplane :
 	@helm repo update
 	@helm install crossplane --namespace crossplane-system crossplane-stable/crossplane
 
-all : install_kind_mac create_kind_cluster
+all : install_kind_linux create_kind_cluster install_crossplane
