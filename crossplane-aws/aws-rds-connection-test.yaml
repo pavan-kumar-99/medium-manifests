@@ -19,12 +19,12 @@ spec:
       valueFrom:
         secretKeyRef:
           name: production-rds-conn-string
-          key: username
+          key: password
     - name: USER
       valueFrom:
         secretKeyRef:
           name: production-rds-conn-string
-          key: password
+          key: username
     - name: MYSQL_TCP_PORT
       valueFrom:
         secretKeyRef:
