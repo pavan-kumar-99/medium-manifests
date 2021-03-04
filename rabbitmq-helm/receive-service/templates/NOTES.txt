@@ -1,0 +1,1 @@
+The receiver-service is deployed. You can check the logs of the Pod.

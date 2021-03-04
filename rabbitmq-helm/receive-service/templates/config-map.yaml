@@ -5,4 +5,4 @@ data:
 kind: ConfigMap
 metadata:
   creationTimestamp: null
-  name: rmq-conf
+  name: {{ .Release.Name }}-rmq-conf

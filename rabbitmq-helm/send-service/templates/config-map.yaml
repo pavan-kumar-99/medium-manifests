@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  queue_name: {{ .Values.configmap.rmq_queue }}
+  rmq_url: {{ .Values.configmap.rmq_url }}
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: {{ .Release.Name }}-rmq-conf
