@@ -1,0 +1,15 @@
+name: "Self Hosted Runner"
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  selfhostedrunner:
+    name: "Self Hosted Runner"
+    runs-on: self-hosted    
+    steps:
+      - name: Hostname
+        id: hostname
+        run: hostname
