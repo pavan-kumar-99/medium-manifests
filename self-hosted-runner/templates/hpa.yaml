@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "rabbitmq-helm.fullname" . }}
+  name: {{ include "self-hosted-runner.fullname" . }}
   labels:
-    {{- include "rabbitmq-helm.labels" . | nindent 4 }}
+    {{- include "self-hosted-runner.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "rabbitmq-helm.fullname" . }}
+    name: {{ include "self-hosted-runner.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
