@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-autoscaler
+spec:
+  selector:
+    matchLabels:
+      run: k8s-autoscaler
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: k8s-autoscaler
+    spec:
+      containers:
+      - name: k8s-autoscaler
+        image: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 500m
+            memory: 50Gi
+          requests:
+            cpu: 200m
+            memory: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-autoscaler
+  labels:
+    run: k8s-autoscaler
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    run: k8s-autoscaler
+
