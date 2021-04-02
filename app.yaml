@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cert-manager-app
+  name: cert-manager-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cert-manager-app
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: cert-manager-app
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: cert-manager-app
+  name: cert-manager-app
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: cert-manager-app
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: certmanagerapp-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: www.kubernetes.ml
+    http:
+      paths:
+      - path: /app
+        backend:
+          serviceName: cert-manager-app
+          servicePort: 80
