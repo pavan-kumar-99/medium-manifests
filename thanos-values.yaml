@@ -1,0 +1,50 @@
+objstoreConfig: |-
+  type: GCS
+  config:
+    bucket: thanos-prod-medium
+    service_account: |-
+      {
+        "type": "service_account",
+        "project_id": "sodium-ceremony-309416",
+         ...............
+      }
+
+query:
+  enabled: true
+  dnsDiscovery:
+    sidecarsService: prom-thaons-kube-prometheu-thanos-discovery
+    sidecarsNamespace: prom
+    stores:
+      - "dnssrv+_grpc._tcp.prom-thaons-kube-prometheu-thanos-discovery.prom.svc.cluster.local"
+      - "thanos-store.prod-cluster-west.pavan.com:443"
+      - "thanos-store.prod-cluster-east.pavan.com:443"
+
+queryFrontend:
+  enabled: true
+
+bucketweb:
+  enabled: true
+  refresh: "10m"
+
+compactor:
+  enabled: true
+  persistence:
+    size: "10Gi"
+    existingClaim: ""
+
+storegateway:
+  enabled: true
+  persistence:
+    size: "10Gi"
+    existingClaim: ""
+
+ruler:
+  enabled: false
+
+receive:
+  enabled: false
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true

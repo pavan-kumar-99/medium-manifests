@@ -1,0 +1,15 @@
+--- 
+prometheus: 
+  prometheusSpec: 
+    externalLabels: 
+      cloud: gcp
+      cluster: prod
+    replicas: 3
+    thanos: 
+      image: "quay.io/thanos/thanos:v0.20.0"
+      objectStorageConfig: 
+        key: thanos.yaml
+        name: thanos-gcp-config
+      version: v0.20.0
+  thanosService: 
+    enabled: true
