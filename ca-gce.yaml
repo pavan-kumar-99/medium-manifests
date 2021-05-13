@@ -1,0 +1,28 @@
+#autoscalingGroups:
+# - name: https://content.googleapis.com/compute/v1/projects/sodium-ceremony-309416/zones/us-central1-a/instanceGroups/a-nodes-us-central1-a-pavan-k8s-local
+#   minSize: 1
+#   maxSize: 3
+autoDiscovery:
+  clusterName: medium.k8s.local
+cloudProvider: gce
+autoscalingGroupsnamePrefix:
+- name: a-nodes
+  maxSize: 5
+  minSize: 1
+extraArgs:
+  skip-nodes-with-local-storage: false
+  scale-down-delay-after-add: 2m
+  scale-down-unneeded-time: 2m
+serviceMonitor:
+  enabled: true
+  namespace: default
+  selector:
+    release: medium-ca  
+prometheusRule:
+  enabled: true
+  additionalLabels:
+    release: medium-ca
+  namespace: default
+  rules:
+  - cluster_autoscaler_scaled_up_nodes_total > 0
+  - cluster_autoscaler_scaled_down_nodes_total > 0
