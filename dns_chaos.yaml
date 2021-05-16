@@ -1,0 +1,15 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: DNSChaos
+metadata:
+  name: dns-chaos-medium
+spec:
+  action: error
+  patterns:
+    - google.com
+  mode: all
+  selector:
+    labelSelectors:
+      "app": "nginx"
+  duration: '60s'
+  scheduler:
+    cron: '@every 2m'
