@@ -1,0 +1,23 @@
+#These are the values for creating the deplyment
+
+deployment:
+  name: vault-deployment
+  replicas: 1
+  image: nginx
+
+#These are the generic values for the entire application 
+
+#The namespace to which that you have given access in the vault-server 
+namespace: default 
+
+#The service account to which that you have given access in the vault-server
+serviceaccount_name: prod-sa 
+
+
+#These are the valus used to authenticate with the vault server 
+
+
+vault:
+  role: prod-role  #The vault role that should be used to get the secrets 
+  secret_name: prod-secret
+  

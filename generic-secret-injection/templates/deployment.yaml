@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Values.deployment.name }}
+  name: {{ .Values.deployment.name }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.name }}
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment.name }}
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/agent-inject-secret-{{ .Values.vault.secret_name }}: "/secret/prod"
+        vault.hashicorp.com/role: "{{ .Values.vault.role }}"
+        vault.hashicorp.com/agent-inject-template-{{ .Values.vault.secret_name }}: |
+          {{`{{- with secret "/secret/prod" -}}
+          Username is {{ .Data.data.username }} and Password is {{ .Data.data.password }}
+          {{- end }}`}}
+    spec:
+      containers:
+      - image: {{ .Values.deployment.image }}
+        name: {{ .Values.deployment.name }}-container
+        resources: {}
+      serviceAccountName: {{ .Values.serviceaccount_name }}
+
