@@ -1,0 +1,6 @@
+FROM mysql:5
+LABEL "Database_name"="ecommercedb"
+LABEL "ROOT_PASSWORD"="EMPTY_PASSWORD"
+ENV MYSQL_ALLOW_EMPTY_PASSWORD="yes"
+ENV MYSQL_DATABASE="ecommercedb"
+COPY e-commerce/ecommercedb.sql /docker-entrypoint-initdb.d/

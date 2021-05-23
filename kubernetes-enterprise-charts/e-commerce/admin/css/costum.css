@@ -1,0 +1,55 @@
+.col-modal{
+	margin-left: 0;
+	width: 25%;
+	margin-right: 0;
+}
+.col-modal-half{
+	width: 50%;
+	margin-left: 0;
+}
+.col-head { 
+	margin-left: 0;
+	width: 25%;
+	margin-right: 0;
+ 
+} 
+/* .dropdown-acnt {
+    width: 250px;
+    min-width: 0;
+    margin-left: 0;
+}
+*/
+ 
+ 
+.divtxt {
+	text-decoration: none;
+	margin-top: 3px;
+	margin-left: 33%; 
+	position: inherit;
+	 width:150px;
+ 	 height: 80px;
+ 	 float: left;
+
+ }
+ .divtxt a:hover{
+ 	color: black;
+ 	text-decoration: none;
+ }
+ 
+.divpic {
+ 	 width: 70px;
+ 	 height: 80px;
+ 	 float: left;
+ 	 margin-left: 0;
+ 	 margin-top: 3px;
+ }
+
+@media(min-width:768px) {
+    .divpic {
+        z-index: 0;
+        position: none;
+        width: 0px;
+        margin-top: 0px;
+    }
+ 
+}
