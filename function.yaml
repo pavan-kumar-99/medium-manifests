@@ -1,0 +1,61 @@
+apiVersion: kubeless.io/v1beta1
+kind: Function
+metadata:
+  creationTimestamp: null
+  labels:
+    created-by: kubeless
+    function: env-get-go
+  name: env-get-go
+  namespace: default
+spec:
+  checksum: sha256:97b4cf86622dbda85c2d60b2fee01765645a64a078a62c258f36a5885f2ed895
+  deployment:
+    metadata:
+      creationTimestamp: null
+    spec:
+      selector: null
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - imagePullPolicy: Always
+            name: ""
+            resources: {}
+    status: {}
+  deps: ""
+  function: "package kubeless \n\nimport (\n\t\"fmt\"\n\t\"os\"\n\t\"log\"\n\t\"github.com/kubeless/kubeless/pkg/functions\"\n)\n\n\nfunc
+    Foo(event functions.Event, context functions.Context) (string, error) {\n\tenvVariable
+    := event.Data\n\tlog.Printf(\"Reading ENV for varaible - %v\", envVariable)\n\tenvVar
+    := os.Getenv(envVariable)\n\tif envVar == \"\" {\n\t         return\tfmt.Sprintf(\"Coudln't
+    get the %v from env varibale\", envVariable), nil\n\t}\n\tlog.Printf(envVar)\n\treturn
+    fmt.Sprintf(\"Value of ENV Var %v is %v\",envVariable,envVar ), nil\n}\n\n"
+  function-content-type: text
+  handler: env-check.Foo
+  horizontalPodAutoscaler:
+    metadata:
+      creationTimestamp: null
+    spec:
+      maxReplicas: 0
+      scaleTargetRef:
+        kind: ""
+        name: ""
+    status:
+      conditions: null
+      currentMetrics: null
+      currentReplicas: 0
+      desiredReplicas: 0
+  runtime: go1.13
+  service:
+    ports:
+    - name: http-function-port
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      created-by: kubeless
+      function: env-get-go
+    type: ClusterIP
+  timeout: "180"
+
