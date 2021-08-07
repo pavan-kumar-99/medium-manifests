@@ -1,2 +1,4 @@
 # Running Apache Spark on EKS with AWS Spot Instances
 Apache Spark is a data processing framework that can perform rapid processing tasks on huge datasets and can distribute the data processing tasks across multiple nodes. With the rapid containerization of applications, organizations have also started running spark on a containerized platforms like Kubernetes and have also been using them in production.The spark workloads are not kept running 24/7, we can have an autoscaling group configured with spot instances and having the min count to 0. Spot Instances are up to 90% less cheap than on-demand instances. In the scope of this article, we will understand how to set up an EKS cluster with a Spot Instances node group to run the spark workloads.
+
+Full Article published here: https://pavan1999-kumar.medium.com/running-apache-spark-on-eks-with-aws-spot-instances-f8ce91d319b9
