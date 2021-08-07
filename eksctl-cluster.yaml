@@ -20,6 +20,9 @@ managedNodeGroups:
     labels:
       nodegroup-type: on-demand
       node-type: on-demand
+    tags:
+      k8s.io/cluster-autoscaler/node-template/label/node-type: on-demand
+      k8s.io/cluster-autoscaler/node-template/label/nodegroup-type: on-demand
     iam:
       withAddonPolicies:
         autoScaler: true
@@ -37,6 +40,12 @@ managedNodeGroups:
       aws.amazon.com/spot: "true"
       nodegroup-type: spot
       node-type: spot
+    tags:
+      k8s.io/cluster-autoscaler/node-template/label/lifecycle: Ec2Spot
+      k8s.io/cluster-autoscaler/node-template/label/intent: apps
+      k8s.io/cluster-autoscaler/node-template/label/node-type: spot
+      k8s.io/cluster-autoscaler/node-template/label/nodegroup-type: spot
+      nodegroup-role: worker
     availabilityZones: ["ap-south-1a", "ap-south-1b"]
     iam:
       withAddonPolicies:
