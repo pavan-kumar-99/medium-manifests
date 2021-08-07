@@ -1,0 +1,43 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-medium-spot-cluster
+  region: ap-south-1
+  version: "1.19"
+
+managedNodeGroups:
+  - name: eks-medium-on-demand-node-group
+    instanceType: t2.micro
+    instancePrefix: managed-nodes
+    minSize: 1
+    desiredCapacity: 1
+    maxSize: 8
+    availabilityZones: ["ap-south-1a", "ap-south-1b"]
+    volumeSize: 10
+    volumeType: gp2
+    volumeEncrypted: true
+    labels:
+      nodegroup-type: on-demand
+      node-type: on-demand
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+  - name: eks-medium-spot-node-group
+    spot: true
+    minSize: 0
+    maxSize: 5
+    volumeSize: 10
+    volumeType: gp2
+    volumeEncrypted: true
+    instanceType: t2.large
+    instancePrefix: spot-nodes
+    labels:
+      lifecycle: Ec2Spot
+      aws.amazon.com/spot: "true"
+      nodegroup-type: spot
+      node-type: spot
+    availabilityZones: ["ap-south-1a", "ap-south-1b"]
+    iam:
+      withAddonPolicies:
+        autoScaler: true
