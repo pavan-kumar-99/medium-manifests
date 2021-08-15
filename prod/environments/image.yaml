@@ -1,0 +1,5 @@
+---
+
+image:
+  repository: httpd
+  pullPolicy: IfNotPresent
