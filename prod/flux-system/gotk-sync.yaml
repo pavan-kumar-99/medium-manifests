@@ -9,7 +9,8 @@ spec:
       .git/
       .sops.yaml
       .gitlab-ci.yml
-      /prod/environments/*
+      /prod/**/*.yaml
+      ./prod/**/*.yaml
   interval: 1m0s
   ref: 
     branch: fluxV2
