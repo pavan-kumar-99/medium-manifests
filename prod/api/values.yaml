@@ -15,4 +15,4 @@ spec:
   interval: 1m0s
   values:
     replicaCount: 2
-    nameOverride: "api
+    nameOverride: "api"
