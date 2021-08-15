@@ -5,7 +5,7 @@ metadata:
   name: flux-system
   namespace: flux-system
 spec: 
-  ignore: |
+  ignore: |-
       .git/
       .sops.yaml
       .gitlab-ci.yml
@@ -16,6 +16,7 @@ spec:
   secretRef: 
     name: flux-system
   url: "ssh://git@github.com/pavan-kumar-99/medium-manifests"
+  
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
