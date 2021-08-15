@@ -1,20 +1,20 @@
----
+--- 
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
-metadata:
+metadata: 
   name: api-prod
   namespace: flux-system
-spec:
-  chart:
-    spec:
+spec: 
+  chart: 
+    spec: 
       chart: ./helm-charts/web-app
-      sourceRef:
+      sourceRef: 
         kind: GitRepository
         name: flux-system
-      valuesFiles:
-      - ./prod/environments/image.yaml
+      valuesFiles: 
+        - ./prod/environments/image.yaml
   install: {}
   interval: 1m0s
-  values:
+  values: 
+    nameOverride: api
     replicaCount: 2
-    nameOverride: "api"
