@@ -12,7 +12,7 @@ spec:
         kind: GitRepository
         name: flux-system
       valuesFiles: 
-        - ./prod/environments/resources.yaml
+        - /prod/environments/resources.yaml
   install: {}
   interval: 1m0s
 #   values: 
