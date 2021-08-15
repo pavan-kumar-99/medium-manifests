@@ -15,6 +15,6 @@ spec:
         - ./prod/environments/image.yaml
   install: {}
   interval: 1m0s
-  values: 
-    nameOverride: api
-    replicaCount: 2
+#   values: 
+#     nameOverride: api
+#     replicaCount: 2
