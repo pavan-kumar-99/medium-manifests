@@ -13,4 +13,5 @@ spec:
         name: flux-system
   install: {}
   interval: 1m0s
-
+  values:
+    replicaCount: 2
