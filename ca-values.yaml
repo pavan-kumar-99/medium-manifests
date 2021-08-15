@@ -1,5 +1,0 @@
----
-autoDiscovery:
-  clusterName:  eks-medium-spot-cluster
-awsRegion: ap-south-1
-cloudProvider: aws
