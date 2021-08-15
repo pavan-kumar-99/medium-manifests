@@ -12,5 +12,5 @@ spec:
         kind: GitRepository
         name: flux-system
   install: {}
-  interval: 10m0s
+  interval: 1m0s
 
