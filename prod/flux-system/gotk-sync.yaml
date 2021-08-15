@@ -5,6 +5,11 @@ metadata:
   name: flux-system
   namespace: flux-system
 spec:
+  ignore: |
+    .git/
+    .sops.yaml
+    .gitlab-ci.yml
+    ./prod/environments
   interval: 1m0s
   ref:
     branch: fluxV2
