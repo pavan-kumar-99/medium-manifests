@@ -16,3 +16,5 @@ spec:
   values:
     replicaCount: 2
     nameOverride: "api"
+  valuesFiles:
+    - ./prod/environments/image.yaml
