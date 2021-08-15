@@ -1,16 +1,21 @@
----
+--- 
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: GitRepository
-metadata:
+metadata: 
   name: flux-system
   namespace: flux-system
-spec:
+spec: 
+  ignore: |
+      .git/
+      .sops.yaml
+      .gitlab-ci.yml
+      ./prod/environments/*
   interval: 1m0s
-  ref:
+  ref: 
     branch: fluxV2
-  secretRef:
+  secretRef: 
     name: flux-system
-  url: ssh://git@github.com/pavan-kumar-99/medium-manifests
+  url: "ssh://git@github.com/pavan-kumar-99/medium-manifests"
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
