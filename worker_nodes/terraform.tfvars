@@ -1,6 +1,6 @@
 cluster_name           = "production-cluster"
 location               = "us-east1"
-project_id             = "grounded-will-296203"
+project_id             = "my-k8-project-322221"
 subnetwork             = "default"
 node_pool_name         = "production-cluster-node-pool-2"
 master_version         = "1.15.12-gke.3"
