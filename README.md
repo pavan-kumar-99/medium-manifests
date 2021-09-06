@@ -1,0 +1,5 @@
+# Logging at Scale in Kubernetes using Grafana Loki
+
+Well, all of us have been using Grafana for quite a while. It allows you to query, visualize, alert on, and explore your metrics no matter where they are stored. In fact, I personally liked the colorful dashboards that almost support all the time-series database (TSDB) data. Grafana also has rich support for various input sources like Prometheus, InfluxDB, AWS Cloud Watch, Azure Monitor, etc. But what about log aggregation? How do you aggregate your logs from your applications? Using another solution like ELK, EFK, etc. What if I tell you that the log aggregation can also be now done by Grafana itself? Yes, you heard it right. Grafana Labs has recently launched its new solution for log aggregation known as Grafana Loki. Grafana Loki is a set of components that can be composed into a fully-featured logging stack. Loki is cheaper to operate and is also efficiently scalable.
+
+Full Article Published here: https://pavan1999-kumar.medium.com/logging-at-scale-in-kubernetes-using-grafana-loki-3bb2eb0c0872
