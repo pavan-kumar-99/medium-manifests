@@ -5,5 +5,6 @@ You define the behaviour of your users in regular Python code, instead of being 
 
 ![image](https://user-images.githubusercontent.com/34813177/133925300-e8c00f1b-32ed-48ea-99f5-a244bec98691.png)
 
-![image](https://user-images.githubusercontent.com/34813177/133931744-41813157-dbbb-41f0-8307-0ff3b460efc8.png)
+![image](https://user-images.githubusercontent.com/34813177/133931820-b4bb9ce1-280b-4338-900f-c44055951f16.png)
+
 
