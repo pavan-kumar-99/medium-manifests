@@ -1,2 +1,5 @@
 # Kubernetes Cluster Autoscaler in Action
 Are you running your Kubernetes clusters in Production? Great, how many nodes are you running your cluster with? Maybe from the stats that I have gathered on the Internet, it says a minimum of 20–40 nodes per cluster. Out of which upon research it was found that the same cluster with the same number of workloads could fit in 10–20 nodes. That is almost 50 percent of the total resources. Well, the count might actually change too depending on your workloads. Have you realized how the 50 percent reduction was made possible? This is done using a component known as Kubernetes Cluster Autoscaler. Kubernetes cluster autoscaler automatically resizes the number of worker nodes in a given cluster, based on the demands of your workloads. You don't need to manually add or remove nodes or over-provision your cluster. Instead, you specify a minimum and maximum size for your cluster and the scaling is automatic and is done by the cluster autoscaler on its own.
+
+Full article Published here: 
+https://pavan1999-kumar.medium.com/kubernetes-cluster-autoscaler-in-action-6172a023f542
