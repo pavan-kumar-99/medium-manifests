@@ -3,9 +3,9 @@
 
 config:
   dryRun: false  
-  runHour: 14
-  startHour: 15
-  endHour: 16
+  runHour: 15
+  startHour: 16
+  endHour: 17
   blacklistedNamespaces:
     - kube-system
   whitelistedNamespaces:
