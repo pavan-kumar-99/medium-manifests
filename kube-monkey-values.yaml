@@ -1,0 +1,21 @@
+---
+#Overriding the values of the default values.yaml file 
+
+config:
+  dryRun: false  
+  runHour: 14
+  startHour: 15
+  endHour: 16
+  blacklistedNamespaces:
+    - kube-system
+  whitelistedNamespaces:
+    - default
+  timeZone: Asia/Kolkata
+
+resources:
+  limits:
+    cpu: 900m
+    memory: 1024Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
