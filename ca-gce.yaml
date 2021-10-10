@@ -26,3 +26,4 @@ prometheusRule:
   rules:
   - cluster_autoscaler_scaled_up_nodes_total > 0
   - cluster_autoscaler_scaled_down_nodes_total > 0
+
