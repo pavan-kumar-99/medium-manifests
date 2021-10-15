@@ -1,0 +1,49 @@
+objstoreConfig: |-
+  type: GCS
+  config:
+    bucket: thanos-prod-medium-wi
+
+query:
+  enabled: true
+  dnsDiscovery:
+    sidecarsService: prom-thaons-kube-prometheu-thanos-discovery
+    sidecarsNamespace: default
+
+queryFrontend:
+  enabled: true
+
+bucketweb:
+  enabled: true
+  serviceAccount:
+    annotations:
+      iam.gke.io/gcp-service-account: storage-admin@analog-ace-322402.iam.gserviceaccount.com
+  refresh: "10m"
+
+compactor:
+  enabled: true
+  serviceAccount:
+    annotations:
+      iam.gke.io/gcp-service-account: storage-admin@analog-ace-322402.iam.gserviceaccount.com
+  persistence:
+    size: "10Gi"
+    existingClaim: ""
+
+storegateway:
+  enabled: true
+  serviceAccount:
+    annotations:
+      iam.gke.io/gcp-service-account: storage-admin@analog-ace-322402.iam.gserviceaccount.com
+  persistence:
+    size: "10Gi"
+    existingClaim: ""
+
+ruler:
+  enabled: false
+
+receive:
+  enabled: false
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
