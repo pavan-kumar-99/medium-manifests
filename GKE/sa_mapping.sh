@@ -1,6 +1,8 @@
 #!/bin/bash  
 
 
+#Reference: https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
+
 #Step1: Create a GCP Service account with the required name.
 
 #Step2: Attach the required roles to the Service account by using the below command. Here I am attaching the role storage.admin to the Member service account.
