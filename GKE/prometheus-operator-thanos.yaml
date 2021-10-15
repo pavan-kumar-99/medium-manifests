@@ -1,0 +1,18 @@
+--- 
+prometheus: 
+  serviceAccount:
+    annotations:
+      iam.gke.io/gcp-service-account: storage-admin@analog-ace-322402.iam.gserviceaccount.com
+  prometheusSpec: 
+    external Labels: 
+      cloud: gcp
+      cluster: prod
+    replicas: 2
+    thanos: 
+      image: "quay.io/thanos/thanos:v0.20.0"
+      objectStorageConfig: 
+        key: thanos.yaml
+        name: thanos-gcp-config
+      version: v0.20.0
+  thanosService: 
+    enabled: true
