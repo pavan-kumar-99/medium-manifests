@@ -1,4 +1,7 @@
---- 
+---
+defaultRules:
+  additionalRuleLabels:
+    prometheus: scrape
 prometheus: 
   serviceAccount:
     annotations:
@@ -7,6 +10,9 @@ prometheus:
     external Labels: 
       cloud: gcp
       cluster: prod
+    ruleSelector:
+      matchLabels:
+        prometheus: scrape
     replicas: 2
     thanos: 
       image: "quay.io/thanos/thanos:v0.20.0"
