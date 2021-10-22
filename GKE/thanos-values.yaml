@@ -11,6 +11,8 @@ query:
 
 queryFrontend:
   enabled: true
+  service:
+    type: "LoadBalancer"
 
 bucketweb:
   enabled: true
