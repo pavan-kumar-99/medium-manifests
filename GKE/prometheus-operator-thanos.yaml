@@ -2,7 +2,12 @@
 defaultRules:
   additionalRuleLabels:
     prometheus: scrape
+grafana:
+  service:
+    type: "LoadBalancer"
 prometheus: 
+  service:
+    type: "LoadBalancer"
   serviceAccount:
     annotations:
       iam.gke.io/gcp-service-account: storage-admin@analog-ace-322402.iam.gserviceaccount.com
