@@ -1,0 +1,104 @@
+config:
+  auth_enabled: false
+  api:
+    prometheus_http_prefix: '/prometheus'
+    response_compression_enabled: true
+  ingester:
+    max_transfer_retries: 0
+    lifecycler:
+      join_after: 0s
+      final_sleep: 0s
+      num_tokens: 512
+      ring:
+        replication_factor: 3
+        kvstore:
+          store: consul
+          prefix: 'collectors/'
+          consul:
+            host: 'consul-server:8500'
+            http_client_timeout: '20s'
+            consistent_reads: true
+  ruler_storage:
+    s3:
+      bucket_name: cortex-store-staging-qa
+      region: ap-south-1
+      access_key_id: XXXXXXXXXXXX
+      secret_access_key: XXXXXXXXXXXXXXXX
+      endpoint: s3.ap-south-1.amazonaws.com
+  alertmanager_storage:
+    s3:
+      bucket_name: cortex-store-staging-qa
+      region: ap-south-1
+      access_key_id: XXXXXXXXXXXX
+      secret_access_key: XXXXXXXXXXXX
+      endpoint: s3.ap-south-1.amazonaws.com
+  storage:
+    engine: blocks
+  blocks_storage:
+    backend: s3
+    s3:
+      bucket_name: cortex-store-staging-qa
+      region: ap-south-1
+      access_key_id: XXXXXXXXXXXX
+      secret_access_key: XXXXXXXXXXXX
+      endpoint: s3.ap-south-1.amazonaws.com
+    bucket_store:
+      sync_dir: "/data"
+    tsdb:
+      dir: "/data"
+
+alertmanager:
+  serviceMonitor:
+    enabled: true
+    additionalLabels:
+      scrape: prom
+
+distributor:
+  serviceMonitor:
+    enabled: true
+    additionalLabels:
+      scrape: prom
+
+ingester:
+  serviceMonitor:
+    enabled: true
+    additionalLabels:
+      scrape: prom
+
+ruler:
+  serviceMonitor:
+    enabled: true
+    additionalLabels:
+      scrape: prom
+
+querier:
+  serviceMonitor:
+    enabled: true
+    additionalLabels:
+      scrape: prom
+
+query_frontend:
+  serviceMonitor:
+    enabled: true
+    additionalLabels:
+      scrape: prom
+
+nginx:
+  service:
+    type: LoadBalancer
+  serviceMonitor:
+    enabled: true
+    additionalLabels:
+      scrape: prom
+
+store_gateway:
+  serviceMonitor:
+    enabled: true
+    additionalLabels:
+      scrape: prom
+
+compactor:
+  serviceMonitor:
+    enabled: true
+    additionalLabels:
+      scrape: prom
