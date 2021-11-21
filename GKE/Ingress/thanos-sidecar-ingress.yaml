@@ -1,0 +1,56 @@
+---
+defaultRules:
+  additionalRuleLabels:
+    prometheus: scrape
+grafana:
+  enabled: false
+prometheus: 
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+    paths:
+    - /
+  serviceAccount:
+    annotations:
+      iam.gke.io/gcp-service-account: thanos-admin@analog-ace-313998.iam.gserviceaccount.com
+  prometheusSpec: 
+    serviceMonitorSelector:
+      matchLabels:
+        prometheus: scrape
+    podMonitorSelector:
+      matchLabels:
+        prometheus: scrape
+    storageSpec:
+      volumeClaimTemplate:
+         spec:
+           accessModes: ["ReadWriteOnce"]
+           resources:
+             requests:
+               storage: 10Gi
+    externalLabels: 
+      cloud: gcp
+      cluster: prod
+    ruleSelector:
+      matchLabels:
+        prometheus: scrape
+    replicas: 2
+    thanos: 
+      image: "quay.io/thanos/thanos:v0.20.0"
+      objectStorageConfig: 
+        key: thanos.yaml
+        name: thanos-gcp-config
+      version: v0.20.0
+  thanosIngress: 
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+      nginx.ingress.kubernetes.io/backend-protocol: GRPC
+      nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
+      nginx.ingress.kubernetes.io/grpc-backend: 'true'
+      nginx.ingress.kubernetes.io/protocol: h2c
+    hosts:
+    - ts.gurukavala.tk
+    pathType: ImplementationSpecific
+    tls:
+    - secretName: prod-secret
