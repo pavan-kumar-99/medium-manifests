@@ -9,6 +9,7 @@ query:
   stores:
     - "aap-cluster:443"
     - "test1"
+    - "34.198.22.92:10901"
   extraFlags:
   - "--grpc-client-tls-secure"
   dnsDiscovery:
