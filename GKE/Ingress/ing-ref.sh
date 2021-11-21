@@ -5,3 +5,6 @@ https://github.com/prometheus-operator/prometheus-operator/blob/master/Documenta
 
 ## TODO Add sample files
 https://thanos.io/tip/operating/cross-cluster-tls-communication.md/
+
+## Deduplication
+https://thanos.io/tip/components/query.md/#deduplication
