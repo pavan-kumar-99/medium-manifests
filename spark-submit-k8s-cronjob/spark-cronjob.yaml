@@ -1,0 +1,30 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: spark-schedule
+spec:
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 6
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: "spark"
+          containers:
+          - name: spark-schedule
+            image: docker.io/greypavan/medium-manifests:spark-submit
+            imagePullPolicy: IfNotPresent
+            command: ["/opt/scripts/spark-submit.sh"]
+            volumeMounts:
+            - name: spark-submit-script
+              mountPath: /opt/scripts/
+            env:
+            - name: APISERVER
+              value: "https://kubernetes.default.svc"
+          restartPolicy: OnFailure
+          volumes:
+          - name: spark-submit-script
+            configMap:
+              name: spark-submit-script
+              defaultMode: 0777
