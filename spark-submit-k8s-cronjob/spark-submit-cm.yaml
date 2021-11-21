@@ -1,0 +1,21 @@
+apiVersion: v1
+data:
+  spark-submit.sh: |
+    #!/usr/bin/env sh
+    ./spark-3.2.0-bin-hadoop3.2/bin/spark-submit \
+      --master k8s://$APISERVER \
+      --deploy-mode cluster \
+      --name spark-pi \
+      --class org.apache.spark.examples.SparkPi \
+      --conf spark.executor.instances=2 \
+      --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+      --conf spark.kubernetes.namespace=default \
+      --conf spark.kubernetes.driver.request.cores=0.001 \
+      --conf spark.driver.memory=1g \
+      --conf spark.kubernetes.executor.request.cores=0.001 \
+      --conf spark.executor.memory=1g \
+      --conf spark.kubernetes.container.image=gcr.io/spark-operator/spark-py:v3.0.0 \
+      local:///opt/spark/examples/src/main/python/pi.py
+kind: ConfigMap
+metadata:
+  name: spark-submit-script
