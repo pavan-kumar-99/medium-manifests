@@ -1,0 +1,66 @@
+objstoreConfig: |-
+  type: GCS
+  config:
+    bucket: thanos-prod
+
+query:
+  enabled: true
+  replicaLabel: prometheus_replica #https://thanos.io/tip/components/query.md/#deduplication
+  stores:
+    - "aap-cluster:443"
+    - "test1"
+  extraFlags:
+  - "--grpc-client-tls-secure"
+  dnsDiscovery:
+    sidecarsService: prom-thaons-kube-prometheu-thanos-discovery
+    sidecarsNamespace: monitoring
+
+queryFrontend:
+  enabled: true
+  ingress:
+    enabled: true
+    hostname: prod-thanos.com
+    ingressClassName: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: "nginx-ingress"
+    secrets:
+    - prod-thanos-cert
+    tls: true
+    
+bucketweb:
+  enabled: true
+  serviceAccount:
+    annotations:
+      iam.gke.io/gcp-service-account: thanos-admin@analog-ace-912290.iam.gserviceaccount.com
+  refresh: "10m"
+
+compactor:
+  enabled: true
+  serviceAccount:
+    annotations:
+      iam.gke.io/gcp-service-account: thanos-admin@analog-ace-912290.iam.gserviceaccount.com
+  persistence:
+    size: "10Gi"
+    existingClaim: ""
+
+storegateway:
+  enabled: true
+  serviceAccount:
+    annotations:
+      iam.gke.io/gcp-service-account: thanos-admin@analog-ace-912290.iam.gserviceaccount.com
+  persistence:
+    size: "10Gi"
+    existingClaim: ""
+
+ruler:
+  enabled: false
+  replicaLabel: prometheus_replica
+
+receive:
+  enabled: false
+  replicaLabel: prometheus_replica
+
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
