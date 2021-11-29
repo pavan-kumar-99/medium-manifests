@@ -33,13 +33,18 @@ spec:
       containers:
       - image: {{ .Values.image.name }}
         name: runner
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         envFrom:
          - secretRef:
              name: github-creds
         command:
           - "/bin/sh"
           - "-c"
-          - "source /tmp/token.env && ./config.sh --url https://github.com/$username/$reponame --token $GITHUB_TOKEN && ./run.sh"
+          - "source /tmp/token.env && ./config.sh --unattended --url https://github.com/$username/$reponame --name $POD_NAME --replace=true --token $GITHUB_TOKEN && ./run.sh"
         lifecycle:
           preStop:
             exec:
