@@ -34,7 +34,7 @@ spec:
     runAsGroup: 2000
     runAsNonRoot: true
     runAsUser: 1000
-  serviceAccountName: prom-kube-prometheus-stack-prometheus
+  serviceAccountName: prometheus
   serviceMonitorNamespaceSelector: {}
   serviceMonitorSelector:
     matchLabels:
