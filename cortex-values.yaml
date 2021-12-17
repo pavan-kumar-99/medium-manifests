@@ -51,37 +51,37 @@ alertmanager:
   serviceMonitor:
     enabled: true
     additionalLabels:
-      scrape: prom
+      release: prom
 
 distributor:
   serviceMonitor:
     enabled: true
     additionalLabels:
-      scrape: prom
+      release: prom
 
 ingester:
   serviceMonitor:
     enabled: true
     additionalLabels:
-      scrape: prom
+      release: prom
 
 ruler:
   serviceMonitor:
     enabled: true
     additionalLabels:
-      scrape: prom
+      release: prom
 
 querier:
   serviceMonitor:
     enabled: true
     additionalLabels:
-      scrape: prom
+      release: prom
 
 query_frontend:
   serviceMonitor:
     enabled: true
     additionalLabels:
-      scrape: prom
+      release: prom
 
 nginx:
   service:
@@ -89,16 +89,16 @@ nginx:
   serviceMonitor:
     enabled: true
     additionalLabels:
-      scrape: prom
+      release: prom
 
 store_gateway:
   serviceMonitor:
     enabled: true
     additionalLabels:
-      scrape: prom
+      release: prom
 
 compactor:
   serviceMonitor:
     enabled: true
     additionalLabels:
-      scrape: prom
+      release: prom
