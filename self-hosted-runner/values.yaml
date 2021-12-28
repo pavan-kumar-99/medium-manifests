@@ -2,11 +2,17 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# This is to create the secret to get the token
+git:
+  repoName: "medium-manifests"
+  token: "XXXXXXX"
+  username: "pavan-kumar-99"
+
 replicaCount: 1
 
 image:
   name: greypavan/medium-manifests:runner
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
 
 imagePullSecrets: []
