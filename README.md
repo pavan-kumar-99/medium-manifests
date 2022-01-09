@@ -1,5 +1,60 @@
-# Introduction to Kustomize
-What is Kustomize?
-Kustomize is a standalone tool to customise the creation of Kubernetes objects through a file called kustomization.yaml. It introduces a template-free way to customize application configuration. It lets you customize an entire Kubernetes application without touching the actual YAML files. All the customization can be specified and can also be overridden in a special file called kustomization.yaml file. It is natively built into kubectl and follows a purely declarative approach to configuration customization. Without any further due, let's get into the hands-on section of Kustomize.
+# Medium Manifests
+What is Medium Manifests?
+Medium Manifests is a GitHub repo that contains all the code for the articles writtern here [Medium](https://pavan1999-kumar.medium.com/). Every article here, will have the GitHub Branch added in the article description itself. One Might clone the repo with the branch specified in the medium articles. 
 
-Full article can be found here https://pavan1999-kumar.medium.com/introduction-to-kustomize-97f990dc2f44
+## Cloning the Repo
+
+The branch names for the corresponding articles could be found [here](https://pavan1999-kumar.medium.com/) 
+
+```bash
+git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name>
+```
+
+## Published
+
+[Cortex Metrics](https://medium.com/nerd-for-tech/deep-dive-into-cortex-part-i-c228e01f8c58)
+
+[Kubernetes Cluster Autoscaler](https://medium.com/nerd-for-tech/kubernetes-cluster-autoscaler-in-action-6172a023f542)
+
+[Grafana Loki](https://medium.com/nerd-for-tech/logging-at-scale-in-kubernetes-using-grafana-loki-3bb2eb0c0872)
+
+[Spark on EKS](https://medium.com/nerd-for-tech/running-apache-spark-on-eks-with-aws-spot-instances-f8ce91d319b9)
+
+[Kubernetes Kubeless](https://medium.com/nerd-for-tech/going-serverless-in-kubernetes-using-kubeless-8ef83b3f2f89)
+
+[Kubernetes Cert Manager](https://medium.com/nerd-for-tech/free-and-automatic-ssl-certificates-in-kubernetes-using-cert-manager-6fb65ac63d5)
+
+[Kubernetes Chaos Mesh](https://medium.com/nerd-for-tech/chaos-engineering-in-kubernetes-using-chaos-mesh-431c1587ef0a)
+
+[Thanos](https://medium.com/nerd-for-tech/deep-dive-into-thanos-part-i-f72ecba39f76)
+
+[Kube-Bench and Kube-Hunter](https://www.techmanyu.com/kubernetes-security-with-kube-bench-and-kube-hunter-6765bf44ebc6)
+
+[Kubernetes Network Policies](https://medium.com/nerd-for-tech/network-policies-demystified-in-kubernetes-d57fc2548043)
+
+[Kubernetes Auto Scaling](https://medium.com/nerd-for-tech/autoscaling-in-kubernetes-hpa-vpa-ab61a2177950)
+
+[GitHub Self Hosted Runner](https://www.techmanyu.com/creating-self-hosted-github-runners-in-a-kubernetes-cluster-fd05560de34a)
+
+[Kubernetes Rabbit MQ Operator](https://medium.com/nerd-for-tech/deploying-rabbitmq-on-kubernetes-using-rabbitmq-cluster-operator-ef99f7a4e417)
+
+[Kubernetes Cross Plane](https://medium.com/nerd-for-tech/introduction-to-crossplane-2f873ae0f9f3)
+
+[Kubernetes Sealed Secrets](https://faun.pub/introduction-to-bitnami-sealed-secrets-bb5ae74d9a25)
+
+[Kubernetes External DNS](https://faun.pub/introduction-to-external-dns-in-kubernetes-654aa4cf38e6)
+
+[Kubernetes Jenkins Operator](https://medium.com/swlh/introduction-to-jenkins-operator-f4cb7ebc2e0b)
+
+[GitHub Actions](https://medium.com/nerd-for-tech/creating-a-gke-cluster-with-github-actions-dd34e2de50a6)
+
+[Kubernetes KIND](https://medium.com/nerd-for-tech/create-a-kubernetes-cluster-using-kind-b364a67437b7)
+
+[Kubernetes Flux CD V1](https://medium.com/swlh/deploying-applications-in-kubernetes-using-flux-a9d171b11917)
+
+
+[Kubernetes Kustomize](https://faun.pub/introduction-to-kustomize-97f990dc2f44)
+
+[Kubernetes ArgoCD](https://medium.com/nerd-for-tech/deploying-applications-in-kubernetes-using-argo-cd-ab004a8cdb5e)
+
+[Kubernetes HashiCorp Vault Injector](https://faun.pub/securing-your-secrets-using-vault-k8s-in-kubernetes-part-1-de3d7378e226)
