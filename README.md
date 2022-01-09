@@ -68,3 +68,13 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [ ] Elastic Search Hot-Warm-Cold Architecture using Elastic Operator
 - [ ] ML with Kubeflow
 - [ ] OPA Gatekeeper / JSPolicy
+- [ ] LongHorn.io
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## Sponsorship
+
+Do you want your product to be articulated and presented to the wider audience on my Medium Profile or Do you want to sponsor any of my upcoming articles? Please feel free to reachout to me here ( pavan1999.kumar@gmail.com ).
