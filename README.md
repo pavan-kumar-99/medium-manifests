@@ -1,6 +1,6 @@
 # Medium Manifests
 What is Medium Manifests?
-Medium Manifests is a GitHub repo that contains all the code for the articles writtern here [Medium](https://pavan1999-kumar.medium.com/). Every article here, will have the GitHub Branch added in the article description itself. One Might clone the repo with the branch specified in the medium articles. 
+Medium Manifests is a GitHub repo that contains all the code for the articles writtern here https://pavan1999-kumar.medium.com/. Every article here, will have the GitHub Branch added in the article description itself. One Might clone the repo with the branch specified in the medium articles. 
 
 ## Cloning the Repo
 
@@ -58,3 +58,13 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 [Kubernetes ArgoCD](https://medium.com/nerd-for-tech/deploying-applications-in-kubernetes-using-argo-cd-ab004a8cdb5e)
 
 [Kubernetes HashiCorp Vault Injector](https://faun.pub/securing-your-secrets-using-vault-k8s-in-kubernetes-part-1-de3d7378e226)
+
+
+## Upcoming
+
+- [ ] Kubernetes Cert Manager and Vault
+- [ ] AWS Karpenter
+- [ ] External Secrets and HashiCorp Vault
+- [ ] Elastic Search Hot-Warm-Cold Architecture using Elastic Operator
+- [ ] ML with Kubeflow
+- [ ] OPA Gatekeeper / JSPolicy
