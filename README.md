@@ -77,4 +77,4 @@ Please make sure to update tests as appropriate.
 
 ## Sponsorship
 
-Do you want your product to be articulated and presented to the wider audience on my Medium Profile or Do you want to sponsor any of my upcoming articles? Please feel free to reachout to me here ( pavan1999.kumar@gmail.com ).
+Want your product to be articulated and presented to a wider audience or want to sponsor any of my upcoming articles? Feel free to reach out on ( pavan1999.kumar@gmail.com ).
