@@ -12,6 +12,8 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 
 ## Published
 
+[Kubernetes HashiCorp Vault with Cert-Manager](https://pavan1999-kumar.medium.com/using-hashicorp-vault-as-a-certificate-issuer-in-cert-manager-9e19d7239d3d)
+
 [Cortex Metrics](https://medium.com/nerd-for-tech/deep-dive-into-cortex-part-i-c228e01f8c58)
 
 [Kubernetes Cluster Autoscaler](https://medium.com/nerd-for-tech/kubernetes-cluster-autoscaler-in-action-6172a023f542)
@@ -62,7 +64,7 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 
 ## Upcoming
 
-- [ ] Kubernetes Cert Manager and Vault
+- [x] Kubernetes Cert Manager and Vault
 - [ ] AWS Karpenter
 - [ ] External Secrets and HashiCorp Vault
 - [ ] Elastic Search Hot-Warm-Cold Architecture using Elastic Operator
