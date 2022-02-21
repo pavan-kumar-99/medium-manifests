@@ -1,0 +1,62 @@
+# Replace this with your own repo whitelist:
+orgWhitelist: github.com
+
+github:
+  user: foo
+  token: bar
+  secret: baz
+
+service:
+  type: ClusterIP
+  port: 80
+
+podTemplate:
+  annotations: {}
+    # kube2iam example:
+    # iam.amazonaws.com/role: role-arn
+  labels: {}
+
+statefulSet:
+  annotations: {}
+  labels: {}
+  securityContext:
+    fsGroup: 1000
+    runAsUser: 100
+
+ingress:
+  enabled: false
+
+
+resources:
+  requests:
+    memory: 1Gi
+    cpu: 100m
+  limits:
+    memory: 1Gi
+    cpu: 100m
+
+# Disk space for Atlantis to check out repositories
+dataStorage: 5Gi
+
+replicaCount: 1
+
+## test container details
+test:
+  enabled: true
+  image: lachlanevenson/k8s-kubectl
+  imageTag: v1.4.8-bash
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+serviceAccount:
+  create: true
+
+
+# Optionally specify google service account credentials as Kubernetes secrets. If you are using the terraform google provider you can specify the credentials as "${file("/var/secrets/some-secret-name/key.json")}".
+googleServiceAccountSecrets:
+  - name: some-secret-name
+    secretName: the_k8s_secret_name
