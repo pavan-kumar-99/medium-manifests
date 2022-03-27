@@ -1,19 +1,47 @@
 # Replace this with your own repo whitelist:
-orgWhitelist: github.com
+orgWhitelist: "github.com/pavan-kumar-99/*"
 
 github:
-  user: foo
-  token: bar
-  secret: baz
+  user: pavan-kumar-99
+  token: ghp_xxxxxxxxx
+  secret: 8xxxxxxxxx
+
+repoConfig: |
+ ---
+  repos:
+  - id: /.*/
+    branch: /.*/
+    workflow: myworkflow
+    apply_requirements: [approved, mergeable]
+    allowed_overrides: [apply_requirements, workflow, delete_source_branch_on_merge]
+    allowed_workflows: [myworkflow]
+    allow_custom_workflows: true
+  workflows:
+    myworkflow:
+      plan:
+        steps:
+        - run: echo "In Terraform Init and Plan"
+        - init
+        - plan:
+            extra_args: ["-lock=", "false"]
+      apply:
+        steps:
+        - run: echo "In Terraform Apply"
+        - apply
+
+aws:
+  credentials: |
+    [default]
+    aws_access_key_id=Axxx
+    aws_secret_access_key=3xxxxxx
+    region=ap-south-1
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 80
 
 podTemplate:
   annotations: {}
-    # kube2iam example:
-    # iam.amazonaws.com/role: role-arn
   labels: {}
 
 statefulSet:
@@ -29,10 +57,10 @@ ingress:
 
 resources:
   requests:
-    memory: 1Gi
+    memory: 0.5Gi
     cpu: 100m
   limits:
-    memory: 1Gi
+    memory: 0.5Gi
     cpu: 100m
 
 # Disk space for Atlantis to check out repositories
@@ -54,9 +82,3 @@ affinity: {}
 
 serviceAccount:
   create: true
-
-
-# Optionally specify google service account credentials as Kubernetes secrets. If you are using the terraform google provider you can specify the credentials as "${file("/var/secrets/some-secret-name/key.json")}".
-googleServiceAccountSecrets:
-  - name: some-secret-name
-    secretName: the_k8s_secret_name
