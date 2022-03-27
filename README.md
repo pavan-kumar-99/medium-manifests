@@ -68,12 +68,12 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 
 - [x] Kubernetes Cert Manager and Vault
 - [x] Atlantis ( Terraform Pull Request Automation )
+- [ ] JSPolicy
 - [ ] HashiCorp Vault CSI Provider
 - [ ] AWS Karpenter
 - [ ] External Secrets and HashiCorp Vault
 - [ ] Elastic Search Hot-Warm-Cold Architecture using Elastic Operator
 - [ ] ML with Kubeflow
-- [ ] OPA Gatekeeper / JSPolicy
 - [ ] LongHorn.io
 
 ## Contributing
