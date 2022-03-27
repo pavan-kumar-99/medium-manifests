@@ -13,16 +13,16 @@ projects:
     when_modified: ["*.tf", "*.tfvars"]
     enabled: true
   apply_requirements: [mergeable, approved]
-#   workflow: tfworkflow
-# workflows:
-#   myworkflow:
-#     plan:
-#       steps:
-#       - run: echo "In Terraform Init and Plan"
-#       - init
-#       - plan:
-#           extra_args: ["-lock", "false"]
-#     apply:
-#       steps:
-#       - run: echo "In Terraform Apply"
-#       - apply
+  workflow: tfworkflow
+workflows:
+  myworkflow:
+    plan:
+      steps:
+      - run: echo "In Terraform Init and Plan"
+      - init
+      - plan:
+          extra_args: ["-lock", "false"]
+    apply:
+      steps:
+      - run: echo "In Terraform Apply"
+      - apply
