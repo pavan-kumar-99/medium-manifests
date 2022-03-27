@@ -1,6 +1,6 @@
-# Atlantis
-With your applications being migrated to the cloud, the architecture has become really complex. With such complex architecture of your applications in the cloud, it is really difficult to predict the failures. Any such failures in the application can cause an expensive outage to your company. These constant unpredictable outages can defame the companies reputation and might lose customers too. Companies must explore an option to predict such outages rather than fixing them during the next outage. And here comes Chaos Engineering to our rescue. Chaos Engineering is a disciplined approach to Identifying the failures before they cause an outage. With this approach, we deliberately break the application to find out how they react to failures. This will help us build resilient systems. Well, this is a really good approach. Is there something like this in the Kubernetes Ecosystem? Yes, Chaos Mesh to help us here. Chaos Mesh is a cloud-native Chaos Engineering platform that orchestrates chaos on Kubernetes environments. It can be directly deployed to a Kubernetes Cluster and doesn't require any special dependencies. Chaos Mesh is a CNCF Sandbox project and has gained huge popularity in recent times.
+# Atlantis ( Terraform Pull Request Automation )
+Atlantis is an application for automating Terraform via pull requests. It is deployed as a standalone application into your infrastructure. No third party has access to your credentials. Atlantis listens for GitHub, GitLab, or Bitbucket webhooks about Terraform pull requests. It then runs terraform plan and comments with the output back on the pull request.
+When you want to apply, comment atlantis apply on the pull request and Atlantis will run terraform apply and comment back with the output.
 
 Full Article Published here 
-
-<TBA>
+https://pavan1999-kumar.medium.com/terraforming-the-gitops-way-9417cf4abf58
