@@ -13,7 +13,7 @@ projects:
     when_modified: ["*.tf", "*.tfvars"]
     enabled: true
   apply_requirements: [mergeable, approved]
-  workflow: tfworkflow
+#   workflow: tfworkflow
 # workflows:
 #   myworkflow:
 #     plan:
