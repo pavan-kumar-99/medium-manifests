@@ -1,0 +1,28 @@
+version: 3
+automerge: true
+delete_source_branch_on_merge: true
+parallel_plan: true
+parallel_apply: true
+projects:
+- name: ec2
+  dir: ./ec2
+  workspace: default
+  terraform_version: v1.1.1
+  delete_source_branch_on_merge: true
+  autoplan:
+    when_modified: ["*.tf", "*.tfvars"]
+    enabled: true
+  apply_requirements: [mergeable, approved]
+  workflow: tfworkflow
+workflows:
+  myworkflow:
+    plan:
+      steps:
+      - run: echo "In Terraform Init and Plan"
+      - init
+      - plan:
+          extra_args: ["-lock", "false"]
+    apply:
+      steps:
+      - run: echo "In Terraform Apply"
+      - apply
