@@ -12,6 +12,8 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 
 ## Published
 
+[Atlantis Pull Request Automation](https://pavan1999-kumar.medium.com/terraforming-the-gitops-way-9417cf4abf58)
+
 [Kubernetes HashiCorp Vault with Cert-Manager](https://pavan1999-kumar.medium.com/using-hashicorp-vault-as-a-certificate-issuer-in-cert-manager-9e19d7239d3d)
 
 [Cortex Metrics](https://medium.com/nerd-for-tech/deep-dive-into-cortex-part-i-c228e01f8c58)
@@ -65,7 +67,7 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 ## Upcoming
 
 - [x] Kubernetes Cert Manager and Vault
-- [ ] Atlantis ( Terraform Pull Request Automation )
+- [x] Atlantis ( Terraform Pull Request Automation )
 - [ ] HashiCorp Vault CSI Provider
 - [ ] AWS Karpenter
 - [ ] External Secrets and HashiCorp Vault
