@@ -12,4 +12,3 @@ projects:
   autoplan:
     when_modified: ["*.tf", "*.tfvars"]
     enabled: true
-  apply_requirements: [mergeable, approved]
