@@ -1,3 +1,9 @@
+## AWS Auth
+provider "aws" {
+  version = "~>3.0"
+  region  = "ap-south-1"
+}
+
 ## Remote S3 Data Block
 terraform {
   backend "s3" {
