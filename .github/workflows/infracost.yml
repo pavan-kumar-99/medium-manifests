@@ -1,0 +1,57 @@
+on:
+  pull_request:
+    branches:
+      - infracost    
+jobs:
+  infracost:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ec2/
+
+    name: Run Infracost
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Install terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_wrapper: false
+
+      - name: Terraform init
+        run: terraform init
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        working-directory: ${{ env.working-directory }}
+
+      - name: Terraform plan
+        run: terraform plan -out tfplan.binary
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}        
+        working-directory: ${{ env.working-directory }}
+
+      - name: Terraform show
+        run: terraform show -json tfplan.binary > plan.json
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        working-directory: ${{ env.working-directory }}
+
+      - name: Setup Infracost
+        uses: infracost/actions/setup@v1
+        with:
+          api-key: ${{ secrets.INFRACOST_API_KEY }}
+
+      - name: Generate Infracost JSON
+        run: infracost breakdown --path plan.json --format json --out-file /tmp/infracost.json
+        working-directory: ${{ env.working-directory }}
+
+      - name: Post Infracost comment
+        run: |
+          infracost comment github --path /tmp/infracost.json \
+                                   --repo $GITHUB_REPOSITORY \
+                                   --github-token ${{github.token}} \
+                                   --pull-request ${{github.event.pull_request.number}} \
+                                   --behavior update
