@@ -12,6 +12,8 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 
 ## Published
 
+[Analyze Terraform costs with Infracost ( The GitOps Way )](https://pavan1999-kumar.medium.com/terraforming-the-cost-with-infracost-c28dc6c981c9)
+
 [Atlantis Pull Request Automation](https://pavan1999-kumar.medium.com/terraforming-the-gitops-way-9417cf4abf58)
 
 [Kubernetes HashiCorp Vault with Cert-Manager](https://pavan1999-kumar.medium.com/using-hashicorp-vault-as-a-certificate-issuer-in-cert-manager-9e19d7239d3d)
@@ -68,7 +70,7 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 
 - [x] Kubernetes Cert Manager and Vault
 - [x] Atlantis ( Terraform Pull Request Automation )
-- [ ] Infracost
+- [x] Infracost
 - [ ] KeyCloak
 - [ ] JSPolicy
 - [ ] HashiCorp Vault CSI Provider
