@@ -71,7 +71,7 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [x] Kubernetes Cert Manager and Vault
 - [x] Atlantis ( Terraform Pull Request Automation )
 - [x] Infracost
-- [ ] Vault PKI With Vault Injector
+- [ ] HashiCorp Vault PKI With Vault Injector
 - [ ] KeyCloak
 - [ ] JSPolicy
 - [ ] HashiCorp Vault CSI Provider
