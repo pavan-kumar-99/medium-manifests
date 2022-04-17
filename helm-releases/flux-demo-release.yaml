@@ -9,6 +9,6 @@ spec:
   releaseName: fluxcd-demo
   targetNamespace: fluxcd-demo
   chart:
-    git: git@github.com:pavan-kumar-99/kustomize-demo.git
+    git: git@github.com:NotOpss/flux-medium-manifests.git
     path: helm-charts/fluxcd-demo
     ref: fluxcd-demo
