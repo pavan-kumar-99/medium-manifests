@@ -79,6 +79,7 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [ ] AWS Karpenter
 - [ ] Hierarchical Namespaces
 - [ ] Loft ( Virtual Clusters )
+- [ ] Prometheus Adapter
 - [ ] External Secrets and HashiCorp Vault
 - [ ] Elastic Search Hot-Warm-Cold Architecture using Elastic Operator
 - [ ] ML with Kubeflow
