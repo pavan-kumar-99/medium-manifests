@@ -80,6 +80,7 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [ ] Hierarchical Namespaces
 - [ ] Loft ( Virtual Clusters )
 - [ ] Prometheus Adapter
+- [ ] Custom Scheduler in K8s
 - [ ] External Secrets and HashiCorp Vault
 - [ ] Elastic Search Hot-Warm-Cold Architecture using Elastic Operator
 - [ ] ML with Kubeflow
