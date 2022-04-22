@@ -1,65 +1,26 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: cert-manager-app
-  name: cert-manager-app
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: cert-manager-app
-  strategy: {}
-  template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        app: cert-manager-app
-    spec:
-      containers:
-      - image: nginx
-        name: nginx
-        resources: {}
-
----
-
 apiVersion: v1
-kind: Service
+kind: Pod
 metadata:
-  creationTimestamp: null
-  labels:
-    app: cert-manager-app
-  name: cert-manager-app
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: cert-manager-app
-status:
-  loadBalancer: {}
-
----
-
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: certmanagerapp-ingress
   annotations:
-    kubernetes.io/ingress.class: nginx
-    cert-manager.io/issuer: "letsencrypt-production"
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    vault.hashicorp.com/agent-inject: "true"
+    vault.hashicorp.com/agent-init-first: "true"
+    vault.hashicorp.com/agent-inject-secret-server.key: "pki/issue/bettercallpavan"
+    vault.hashicorp.com/agent-inject-template-server.key: |
+      {{- with secret "pki/issue/bettercallpavan" "common_name=test.betetrcallpavan.com" -}}
+      {{ .Data.private_key }}
+      {{- end }}
+    vault.hashicorp.com/agent-inject-secret-server.crt: "pki/issue/bettercallpavan"
+    vault.hashicorp.com/agent-inject-template-server.crt: |
+      {{- with secret "pki/issue/bettercallpavan" "common_name=test.betetrcallpavan.com" -}}
+      {{ .Data.certificate }}
+      {{- end }}
+    vault.hashicorp.com/role: "issuer"
+  labels:
+    run: pki-test
+  name: pki-test
 spec:
-  tls:
-  - hosts:
-    - www.bettercallpavan.com
-    secretName: bettercallpavan-com-tls
-  rules:
-  - host: www.bettercallpavan.com
-    http:
-      paths:
-      - path: /app
-        backend:
-          serviceName: cert-manager-app
-          servicePort: 80
+  serviceAccountName: issuer
+  containers:
+  - image: nginx
+    name: pki-test
+  restartPolicy: Always
