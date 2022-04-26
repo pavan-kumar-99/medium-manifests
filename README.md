@@ -75,6 +75,7 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [ ] KubeCost
 - [ ] KeyCloak
 - [ ] JSPolicy
+- [ ] KubeVirt
 - [ ] HashiCorp Vault CSI Provider
 - [ ] AWS Karpenter
 - [ ] Hierarchical Namespaces
