@@ -1,5 +1,6 @@
 # To disable a syncer set "enabled: false".
 # See docs for details - https://www.vcluster.com/docs/architecture/synced-resources
+serviceCIDR: "10.96.0.0/12"
 sync:
   services:
     enabled: true
@@ -134,7 +135,7 @@ isolation:
       requests.ephemeral-storage: 50Gi
       limits.memory: 10Gi
       limits.ephemeral-storage: 50Gi
-      services.nodeports: 1
+      services.nodeports: 10
       services.loadbalancers: 1
       count/endpoints: 10
       count/pods: 10
