@@ -121,23 +121,23 @@ service:
 # standards, limit ranges and resource quotas
 isolation:
   enabled: true
-  namespace: multi-tenancy
+  namespace: customer-1
 
   podSecurityStandard: baseline
 
   resourceQuota:
     enabled: true
     quota:
-      requests.cpu: 10
-      requests.memory: 20Gi
-      requests.storage: "100Gi"
-      requests.ephemeral-storage: 60Gi
-      limits.memory: 40Gi
-      limits.ephemeral-storage: 160Gi
-      services.nodeports: 10
-      services.loadbalancers: 10
-      count/endpoints: 40
-      count/pods: 20
+      requests.cpu: 5
+      requests.memory: 10Gi
+      requests.storage: "50Gi"
+      requests.ephemeral-storage: 50Gi
+      limits.memory: 10Gi
+      limits.ephemeral-storage: 50Gi
+      services.nodeports: 1
+      services.loadbalancers: 1
+      count/endpoints: 10
+      count/pods: 10
       count/services: 20
       count/secrets: 100
       count/configmaps: 100
