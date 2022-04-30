@@ -138,7 +138,7 @@ isolation:
       services.nodeports: 10
       services.loadbalancers: 1
       count/endpoints: 10
-      count/pods: 10
+      count/pods: 3
       count/services: 20
       count/secrets: 100
       count/configmaps: 100
