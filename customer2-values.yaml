@@ -1,0 +1,162 @@
+# To disable a syncer set "enabled: false".
+# See docs for details - https://www.vcluster.com/docs/architecture/synced-resources
+serviceCIDR: "10.96.0.0/12"
+sync:
+  services:
+    enabled: true
+  configmaps:
+    enabled: true
+  secrets:
+    enabled: true
+  endpoints:
+    enabled: true
+  pods:
+    enabled: true
+  events:
+    enabled: true
+  persistentvolumeclaims:
+    enabled: true
+  ingresses:
+    enabled: true
+  fake-nodes:
+    enabled: true # will be ignored if nodes.enabled = true
+  fake-persistentvolumes:
+    enabled: true # will be ignored if persistentvolumes.enabled = true
+  nodes:
+    enabled: false
+    # If nodes sync is enabled, and syncAllNodes = true, the virtual cluster 
+    # will sync all nodes instead of only the ones where some pods are running. 
+    syncAllNodes: false
+    # nodeSelector is used to limit which nodes get synced to the vcluster,
+    # and which nodes are used to run vcluster pods. 
+    # A valid string representation of a label selector must be used. 
+    nodeSelector: ""
+    # if true, vcluster will run with a scheduler and node changes are possible
+    # from within the virtual cluster. This is useful if you would like to
+    # taint, drain and label nodes from within the virtual cluster
+    enableScheduler: false
+    # DEPRECATED: use enable scheduler instead
+    # syncNodeChanges allows vcluster user edits of the nodes to be synced down to the host nodes.
+    # Write permissions on node resource will be given to the vcluster.
+    syncNodeChanges: false
+  persistentvolumes:
+    enabled: false
+  storageclasses:
+    enabled: false
+  legacy-storageclasses:
+    enabled: false
+  priorityclasses:
+    enabled: false
+  networkpolicies:
+    enabled: false
+  volumesnapshots:
+    enabled: false
+  poddisruptionbudgets:
+    enabled: false
+  serviceaccounts:
+    enabled: false
+
+# Virtual Cluster (k3s) configuration
+vcluster:
+  # Image to use for the virtual cluster
+  image: rancher/k3s:v1.23.3-k3s1
+  command:
+    - /bin/k3s
+  baseArgs:
+    - server
+    - --write-kubeconfig=/data/k3s-config/kube-config.yaml
+    - --data-dir=/data
+    - --disable=traefik,servicelb,metrics-server,local-storage,coredns
+    - --disable-network-policy
+    - --disable-agent
+    - --disable-cloud-controller
+    - --flannel-backend=none
+  # Extra arguments for k3s. Make sure the service-cidr is the exact service cidr of the host cluster.
+  # If this does not match, you won't be able to create services within the vcluster. You can find out
+  # the service cidr of the host cluster by creating a service with a not allowed ClusterIP in the host cluster.
+  # This will yield an error message in the form of: 
+  # The Service "faulty-service" is invalid: spec.clusterIP: Invalid value: "1.1.1.1": provided IP is not in the valid range. The range of valid IPs is 10.96.0.0/12
+  extraArgs: []
+  volumeMounts:
+    - mountPath: /data
+      name: data
+  env: []
+  resources:
+    limits:
+      memory: 2Gi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+
+# Service account that should be used by the vcluster
+serviceAccount:
+  create: true
+  # Optional name of the service account to use
+  # name: default
+
+# Roles & ClusterRoles for the vcluster
+rbac:
+  clusterRole:
+    # Deprecated ! 
+    # Necessary cluster roles are created based on the enabled syncers (.sync.*.enabled)
+    # Support for this value will be removed in a future version of the vcluster
+    create: false
+  role:
+    # Deprecated !
+    # Support for this value will be removed in a future version of the vcluster
+    # and basic role will always be created
+    create: true
+    # Deprecated ! 
+    # Necessary extended roles are created based on the enabled syncers (.sync.*.enabled)
+    # Support for this value will be removed in a future version of the vcluster
+    extended: false
+
+# The amount of replicas to run the statefulset with
+replicas: 1
+
+# Service configurations
+service:
+  type: LoadBalancer
+
+# If enabled will deploy vcluster in an isolated mode with pod security
+# standards, limit ranges and resource quotas
+isolation:
+  enabled: true
+  namespace: customer-2
+
+  podSecurityStandard: baseline
+
+  resourceQuota:
+    enabled: true
+    quota:
+      requests.cpu: 500
+      requests.memory: 100Gi
+      requests.storage: "500Gi"
+      requests.ephemeral-storage: 500Gi
+      limits.memory: 100Gi
+      limits.ephemeral-storage: 500Gi
+      services.nodeports: 100
+      services.loadbalancers: 100
+      count/endpoints: 100
+      count/pods: 3000
+      count/services: 200
+      count/secrets: 1000
+      count/configmaps: 1000
+      count/persistentvolumeclaims: 200
+    scopeSelector:
+      matchExpressions:
+    scopes:
+  
+  limitRange:
+    enabled: true
+    default:
+      ephemeral-storage: 8Gi
+      memory: 512Mi
+      cpu: "1"
+    defaultRequest:
+      ephemeral-storage: 3Gi
+      memory: 128Mi
+      cpu: 100m
+
+  networkPolicy:
+    enabled: false
