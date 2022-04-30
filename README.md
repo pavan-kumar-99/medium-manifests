@@ -12,6 +12,10 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 
 ## Published
 
+[Loft ( Virtual Clusters )](https://pavan1999-kumar.medium.com/multi-tenancy-in-kubernetes-using-lofts-vcluster-dee6513a7206)
+
+[HashiCorp Vault PKI With Vault Injector](https://medium.com/nerd-for-tech/pki-certs-injection-to-k8s-pods-with-vault-agent-injector-d97482b48f3d)
+
 [Analyze Terraform costs with Infracost ( The GitOps Way )](https://pavan1999-kumar.medium.com/terraforming-the-cost-with-infracost-c28dc6c981c9)
 
 [Atlantis Pull Request Automation](https://pavan1999-kumar.medium.com/terraforming-the-gitops-way-9417cf4abf58)
@@ -72,6 +76,7 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [x] Atlantis ( Terraform Pull Request Automation )
 - [x] Infracost
 - [x] HashiCorp Vault PKI With Vault Injector
+- [x] Loft ( Virtual Clusters )
 - [ ] KubeCost
 - [ ] KeyCloak
 - [ ] JSPolicy
@@ -79,7 +84,6 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [ ] HashiCorp Vault CSI Provider
 - [ ] AWS Karpenter
 - [ ] Hierarchical Namespaces
-- [ ] Loft ( Virtual Clusters )
 - [ ] Prometheus Adapter
 - [ ] Custom Scheduler in K8s
 - [ ] External Secrets and HashiCorp Vault
