@@ -92,6 +92,8 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [ ] TelePort ( Go TelePort )
 - [ ] LongHorn.io
 - [ ] Backstage.io
+- [ ] Env0
+- [ ] kURL
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
