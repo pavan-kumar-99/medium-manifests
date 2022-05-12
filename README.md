@@ -96,6 +96,7 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [ ] kURL
 - [ ] Netflix Console Me
 - [ ] Cosign Sigstore
+- [ ] Cloud Custodian
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
