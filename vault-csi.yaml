@@ -1,0 +1,50 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
+kind: SecretProviderClass
+metadata:
+  name: vault-user-creds
+spec:
+  provider: vault
+  parameters:
+    roleName: 'csi-kv'
+    vaultAddress: 'http://vault:8200'
+    objects: |
+      - objectName: "user"
+        secretPath: "kv/app"
+        secretKey: "user"
+      - objectName: "password"
+        secretPath: "kv/db"
+        secretKey: "password"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  labels:
+    app: demo
+spec:
+  selector:
+    matchLabels:
+      app: demo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      serviceAccountName: csi-sa
+      containers:
+        - name: app
+          image: nginx
+          volumeMounts:
+            - name: 'vault-user-creds'
+              mountPath: '/mnt/secrets-store'
+              readOnly: true
+      volumes:
+        - name: vault-user-creds
+          csi:
+            driver: 'secrets-store.csi.k8s.io'
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: 'vault-user-creds'
+
