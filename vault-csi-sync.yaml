@@ -22,7 +22,8 @@ spec:
       - objectName: "password"
         secretPath: "kv/db"
         secretKey: "password"
- ---
+
+---
  
 apiVersion: v1
 kind: ServiceAccount
@@ -30,7 +31,7 @@ metadata:
   name: csi-sa
   namespace: default
   
- ---
+---
 
 kind: Pod
 apiVersion: v1
