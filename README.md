@@ -12,6 +12,8 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 
 ## Published
 
+[Hashicorp Vault Secrets in Kubernetes with CSI Driver](https://pavan1999-kumar.medium.com/hashicvault-secrets-in-kubernetes-with-csi-driver-ec917d4a2672)
+
 [Loft ( Virtual Clusters )](https://pavan1999-kumar.medium.com/multi-tenancy-in-kubernetes-using-lofts-vcluster-dee6513a7206)
 
 [HashiCorp Vault PKI With Vault Injector](https://medium.com/nerd-for-tech/pki-certs-injection-to-k8s-pods-with-vault-agent-injector-d97482b48f3d)
