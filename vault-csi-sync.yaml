@@ -1,0 +1,61 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: vault-credentials
+spec:
+  provider: vault
+  secretObjects:
+  - data:
+    - key: user
+      objectName: user
+    - key: password
+      objectName: password
+    secretName: dbpass
+    type: Opaque
+  parameters:
+    vaultAddress: "http://vault.default:8200"
+    roleName: "csi-kv"
+    objects: |
+      - objectName: "user"
+        secretPath: "kv/app"
+        secretKey: "user"
+      - objectName: "password"
+        secretPath: "kv/db"
+        secretKey: "password"
+ ---
+ 
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: csi-sa
+  namespace: default
+  
+ ---
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: webapp
+spec:
+  serviceAccountName: csi-sa
+  containers:
+  - image: nginx
+    name: webapp
+    env:
+    - name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: dbpass
+          key: password
+    volumeMounts:
+    - name: secrets-store-inline
+      mountPath: "/mnt/secrets-store"
+      readOnly: true
+  volumes:
+    - name: secrets-store-inline
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: "vault-credentials"
+          
