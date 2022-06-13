@@ -14,6 +14,14 @@ spec:
       - objectName: "password"
         secretPath: "kv/db"
         secretKey: "password"
+---
+
+ 
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: csi-sa
+  namespace: default
 
 ---
 apiVersion: apps/v1
