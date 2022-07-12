@@ -11,7 +11,7 @@ spec:
     branch: elasticsearch
   secretRef:
     name: flux-system
-  url: ssh://git@github.com/pavan-kumar-99/medium-manifests.git
+  url: https://github.com/pavan-kumar-99/medium-manifests.git
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
