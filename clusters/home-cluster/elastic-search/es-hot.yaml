@@ -59,13 +59,13 @@ spec:
           requests:
             storage: 1Gi
         storageClassName: hostpath
-    podTemplate:
-      spec:
-        containers:
-        - name: elasticsearch
-          resources:
-            requests:
-              memory: 1Gi
-              cpu: 1
-            limits:
-              memory: 1Gi
+#     podTemplate:
+#       spec:
+#         containers:
+#         - name: elasticsearch
+#           resources:
+#             requests:
+#               memory: 1Gi
+#               cpu: 1
+#             limits:
+#               memory: 1Gi
