@@ -1,0 +1,29 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: elastic
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: https://helm.elastic.co
+
+---
+
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: elastic-operator
+  namespace: flux-system
+spec:
+  interval: 5m
+  targetNamespace: "elastic-system"
+  install:
+    createNamespace: true
+  releaseName: elastic-operator
+  chart:
+    spec:
+      chart: elastic-operator
+      sourceRef:
+        kind: HelmRepository
+        name: elastic
+   
