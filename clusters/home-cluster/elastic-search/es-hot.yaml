@@ -36,36 +36,36 @@ spec:
             storage: 5Gi
         storageClassName: hostpath
   - name: master-zone-c
-  count: 1
-  config:
-    node.ml: false
-    node.store.allow_mmap: false
-    node.master: true
-    node.data: false
-    xpack:
-      security:
-        authc:
-          anonymous:
-            authz_exception: false
-            roles: superuser
-            username: anonymous
-  volumeClaimTemplates:
-  - metadata:
-      name: elasticsearch-data
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 1Gi
-      storageClassName: hostpath
-  podTemplate:
-    spec:
-      containers:
-      - name: elasticsearch
+    count: 1
+    config:
+      node.ml: false
+      node.store.allow_mmap: false
+      node.master: true
+      node.data: false
+      xpack:
+        security:
+          authc:
+            anonymous:
+              authz_exception: false
+              roles: superuser
+              username: anonymous
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
         resources:
           requests:
-            memory: 1Gi
-            cpu: 0.5
-          limits:
-            memory: 1Gi
+            storage: 1Gi
+        storageClassName: hostpath
+    podTemplate:
+      spec:
+        containers:
+        - name: elasticsearch
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 0.5
+            limits:
+              memory: 1Gi
