@@ -1,0 +1,36 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elastic-hot
+spec:
+  version: 7.12.1
+  http:
+    service:
+      metadata:
+        annotations:
+          elasticsearch.k8s.elastic.co/node-master: "false"
+      spec:
+        type: LoadBalancer
+  nodeSets:
+  - name: hot-node
+    count: 1
+    config:
+      node.roles: [ data_hot, data_content ]
+      node.store.allow_mmap: false
+      xpack:
+        security:
+          authc:
+            anonymous:
+              authz_exception: false
+              roles: superuser
+              username: anonymous
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi
+        storageClassName: hostpath
