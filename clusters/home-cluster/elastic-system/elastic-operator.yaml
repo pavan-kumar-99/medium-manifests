@@ -23,6 +23,7 @@ spec:
   chart:
     spec:
       chart: elastic-operator
+      version: latest
       sourceRef:
         kind: HelmRepository
         name: elastic
