@@ -8,7 +8,7 @@ spec:
   type: metricbeat
   version: 7.2.0
   elasticsearchRef:
-    name: elastic-hot
+    name: elastic-prod
   config:
     metricbeat:
       autodiscover:
