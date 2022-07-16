@@ -1,0 +1,87 @@
+# metricbeat resources
+apiVersion: beat.k8s.elastic.co/v1beta1
+kind: Beat
+metadata:
+  name: metricbeat
+  namespace: es
+spec:
+  type: metricbeat
+  version: 7.2.0
+  elasticsearchRef:
+    name: elastic-hot
+  config:
+    metricbeat:
+      autodiscover:
+        providers:
+          - type: kubernetes
+            scope: cluster
+            hints.enabled: true
+            templates:
+              - config:
+                  - module: elasticsearch
+                    metricsets:
+                      - cluster_stats
+                      - index
+                      - index_recovery
+                      - index_summary
+                      - ml_job
+                      - node_stats
+                      - shard
+                    period: 10s
+                    hosts: "https://192.168.29.165:9200"
+                    username: elastic
+                    password: u32OxR391Q7QwGEC70pKWZ43
+                    # WARNING: disables TLS as the default certificate is not valid for the pod FQDN
+                    # TODO: switch this to "certificate" when available: https://github.com/elastic/beats/issues/8164
+                    ssl.verification_mode: "none"
+                    xpack.enabled: false
+    logging.json: true
+  deployment:
+    podTemplate:
+      spec:
+        serviceAccountName: metricbeat
+        automountServiceAccountToken: true
+        # required to read /etc/beat.yml
+        securityContext:
+          runAsUser: 0
+        containers:
+        - name: metricbeat
+          env:
+          - name: MONITORED_ES_USERNAME
+            value: elastic
+          - name: MONITORED_ES_PASSWORD
+            value: u32OxR391Q7QwGEC70pKWZ43
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: metricbeat
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources:
+  - namespaces
+  - pods
+  - nodes
+  verbs:
+  - get
+  - watch
+  - list
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: metricbeat
+  namespace: es
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: metricbeat
+subjects:
+- kind: ServiceAccount
+  name: metricbeat
+  namespace: es
+roleRef:
+  kind: ClusterRole
+  name: metricbeat
+  apiGroup: rbac.authorization.k8s.io
