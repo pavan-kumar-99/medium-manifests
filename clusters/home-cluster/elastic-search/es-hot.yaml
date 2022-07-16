@@ -73,7 +73,7 @@ spec:
               username: anonymous
     volumeClaimTemplates:
     - metadata:
-        name: elasticsearch-cold
+        name: elasticsearch-data
       spec:
         accessModes:
         - ReadWriteOnce
