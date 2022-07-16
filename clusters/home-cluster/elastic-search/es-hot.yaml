@@ -2,6 +2,7 @@ apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
   name: elastic-prod
+  namespace: es
 spec:
   version: 7.12.1
   http:
