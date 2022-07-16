@@ -7,7 +7,7 @@ spec:
   version: 7.10.1
   count: 1
   elasticsearchRef:
-    name: elastic-hot
+    name: elastic-prod
     namespace: es
   http:
     service:
