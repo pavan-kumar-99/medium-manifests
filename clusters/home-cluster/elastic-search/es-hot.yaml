@@ -16,7 +16,7 @@ spec:
   - name: hot-node
     count: 1
     config:
-      http.max_content_length: 2147mb
+      http.max_content_length: 2147483647b
       node.roles: [ data_hot, data_content ]
       node.store.allow_mmap: false
       xpack:
@@ -39,7 +39,7 @@ spec:
   - name: warm-node
     count: 1
     config:
-      http.max_content_length: 2147mb
+      http.max_content_length: 2147483647b
       node.attr.type: warm
       node.roles: data_warm
       node.store.allow_mmap: false
@@ -63,7 +63,7 @@ spec:
   - name: cold-node
     count: 1
     config:
-      http.max_content_length: 2147mb
+      http.max_content_length: 2147483647b
       node.attr.type: cold
       node.store.allow_mmap: false
       node.roles: data_cold
@@ -87,7 +87,7 @@ spec:
   - name: master-node
     count: 1
     config:
-      http.max_content_length: 2147mb
+      http.max_content_length: 2147483647b
       node.ml: false
       node.store.allow_mmap: false
       node.master: true
