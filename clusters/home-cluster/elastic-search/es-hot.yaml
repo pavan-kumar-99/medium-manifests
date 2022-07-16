@@ -1,8 +1,7 @@
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
-  name: elastic-hot
-  namespace: es
+  name: elastic-prod
 spec:
   version: 7.12.1
   http:
@@ -33,9 +32,55 @@ spec:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 5Gi
+            storage: 10Gi
         storageClassName: hostpath
-  - name: master-zone-c
+  - name: warm-node
+    count: 1
+    config:
+      node.attr.type: warm
+      node.roles: data_warm
+      node.store.allow_mmap: false
+      xpack:
+        security:
+          authc:
+            anonymous:
+              authz_exception: false
+              roles: superuser
+              username: anonymous
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: hostpath
+  - name: cold-node
+    count: 1
+    config:
+      node.attr.type: cold
+      node.store.allow_mmap: false
+      node.roles: data_cold
+      xpack:
+        security:
+          authc:
+            anonymous:
+              authz_exception: false
+              roles: superuser
+              username: anonymous
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-cold
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: hostpath
+  - name: master-node
     count: 1
     config:
       node.ml: false
@@ -57,15 +102,5 @@ spec:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 1Gi
+            storage: 10Gi
         storageClassName: hostpath
-#     podTemplate:
-#       spec:
-#         containers:
-#         - name: elasticsearch
-#           resources:
-#             requests:
-#               memory: 1Gi
-#               cpu: 1
-#             limits:
-#               memory: 1Gi
