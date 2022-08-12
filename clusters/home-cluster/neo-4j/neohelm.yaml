@@ -12,14 +12,14 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: neo4j-cluster
+  name: neo4j-lb
   namespace: kube-tools
 spec:
   interval: 5m
   targetNamespace: "kube-tools"
   install:
     createNamespace: true
-  releaseName: neo4j
+  releaseName: neo4j-lb
   chart:
     spec:
       chart: neo4j-cluster-loadbalancer
@@ -39,10 +39,10 @@ spec:
   targetNamespace: "kube-tools"
   install:
     createNamespace: true
-  releaseName: neo4j
+  releaseName: neo4j-cluster
   chart:
     spec:
-      chart: neo4j-cluster-core
+      chart: neo4j-standalone
       version: 4.4.9
       sourceRef:
         kind: HelmRepository
