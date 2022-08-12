@@ -26,4 +26,4 @@ spec:
       version: 4.5.5
       sourceRef:
         kind: HelmRepository
-        name: rasa
+        name: rasa-enterprise
