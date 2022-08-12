@@ -27,3 +27,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: neo4j
+  values:
+    volumes:
+      data:
+        mode: "defaultStorageClass"
