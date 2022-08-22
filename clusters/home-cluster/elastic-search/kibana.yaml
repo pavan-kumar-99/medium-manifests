@@ -4,7 +4,7 @@ metadata:
   name: es-kibana
   namespace: es
 spec:
-  version: 7.10.1
+  version: 8.3.3
   count: 1
   elasticsearchRef:
     name: elastic-prod
