@@ -89,8 +89,7 @@ spec:
     config:
       http.max_content_length: 2147483647b
       node.store.allow_mmap: false
-      node.master: true
-      node.data: false
+      node.roles: ["master"]
       xpack:
         security:
           authc:
