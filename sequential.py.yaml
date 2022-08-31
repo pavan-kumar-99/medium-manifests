@@ -1,0 +1,85 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: sequential-pipeline-
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.10, pipelines.kubeflow.org/pipeline_compilation_time: '2022-08-31T15:26:26.165464',
+    pipelines.kubeflow.org/pipeline_spec: '{"description": "A pipeline for Medium
+      Followers.", "name": "sequential-pipeline"}'}
+  labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.10}
+spec:
+  entrypoint: sequential-pipeline
+  templates:
+  - name: process-data-op
+    container:
+      args: []
+      command:
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf "%s" "$0" > "$program_path"
+        python3 -u "$program_path" "$@"
+      - |
+        def process_data_op():
+            print("Processing Data")
+
+        import argparse
+        _parser = argparse.ArgumentParser(prog='Process data op', description='')
+        _parsed_args = vars(_parser.parse_args())
+
+        _outputs = process_data_op(**_parsed_args)
+      image: python:3.7
+    metadata:
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.10
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: "true"
+      annotations: {pipelines.kubeflow.org/component_spec: '{"implementation": {"container":
+          {"args": [], "command": ["sh", "-ec", "program_path=$(mktemp)\nprintf \"%s\"
+          \"$0\" > \"$program_path\"\npython3 -u \"$program_path\" \"$@\"\n", "def
+          process_data_op():\n    print(\"Processing Data\")\n\nimport argparse\n_parser
+          = argparse.ArgumentParser(prog=''Process data op'', description='''')\n_parsed_args
+          = vars(_parser.parse_args())\n\n_outputs = process_data_op(**_parsed_args)\n"],
+          "image": "python:3.7"}}, "name": "Process data op"}', pipelines.kubeflow.org/component_ref: '{}'}
+  - name: sequential-pipeline
+    dag:
+      tasks:
+      - {name: process-data-op, template: process-data-op}
+      - name: train-op
+        template: train-op
+        dependencies: [process-data-op]
+  - name: train-op
+    container:
+      args: []
+      command:
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf "%s" "$0" > "$program_path"
+        python3 -u "$program_path" "$@"
+      - |
+        def train_op():
+            print("Training ML Model")
+
+        import argparse
+        _parser = argparse.ArgumentParser(prog='Train op', description='')
+        _parsed_args = vars(_parser.parse_args())
+
+        _outputs = train_op(**_parsed_args)
+      image: python:3.7
+    metadata:
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.10
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: "true"
+      annotations: {pipelines.kubeflow.org/component_spec: '{"implementation": {"container":
+          {"args": [], "command": ["sh", "-ec", "program_path=$(mktemp)\nprintf \"%s\"
+          \"$0\" > \"$program_path\"\npython3 -u \"$program_path\" \"$@\"\n", "def
+          train_op():\n    print(\"Training ML Model\")\n\nimport argparse\n_parser
+          = argparse.ArgumentParser(prog=''Train op'', description='''')\n_parsed_args
+          = vars(_parser.parse_args())\n\n_outputs = train_op(**_parsed_args)\n"],
+          "image": "python:3.7"}}, "name": "Train op"}', pipelines.kubeflow.org/component_ref: '{}'}
+  arguments:
+    parameters: []
+  serviceAccountName: pipeline-runner
