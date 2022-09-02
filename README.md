@@ -12,6 +12,8 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 
 ## Published
 
+[Kubeflow: MLOPS](https://medium.com/nerd-for-tech/mlops-machine-learning-pipelines-using-kubeflow-fc06508a3f0d)
+
 [Hashicorp Vault Secrets in Kubernetes with CSI Driver](https://pavan1999-kumar.medium.com/hashicvault-secrets-in-kubernetes-with-csi-driver-ec917d4a2672)
 
 [Loft ( Virtual Clusters )](https://pavan1999-kumar.medium.com/multi-tenancy-in-kubernetes-using-lofts-vcluster-dee6513a7206)
@@ -80,6 +82,7 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [x] HashiCorp Vault PKI With Vault Injector
 - [x] Loft ( Virtual Clusters )
 - [x] HashiCorp Vault CSI Provider
+- [x] Kubeflow
 - [ ] KubeArmour
 - [ ] Volcano
 - [ ] KubeCost
