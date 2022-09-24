@@ -1,0 +1,35 @@
+apiVersion: policy.jspolicy.com/v1beta1
+kind: JsPolicy
+metadata:
+  name: "ns.rq.devsecops.com"
+spec:
+  operations: ["CREATE"]
+  resources: ["namespaces"]
+  apiGroups: [""]
+  type: Controller
+  objectSelector:
+    matchLabels:
+      create-rq: "true"
+  javascript: |
+    const resourceQuota = get("ResourceQuota", "v1", request.name + "/my-resource-quota");
+    if (!resourceQuota) {
+      const createResult = create({
+        kind: "ResourceQuota",
+        apiVersion: "v1",
+        metadata: {
+          "name": "my-resource-quota",
+          "namespace": request.name
+        },
+        spec: {
+          hard: {
+            "limits.cpu": "2"
+          }
+        }
+      });
+      if (!createResult.ok && createResult.reason !== "AlreadyExists") {
+        requeue(createResult.message);
+      } else {
+        print(`created ResourceQuota ${request.name}/my-resource-quota`);
+      }
+    }
+    
