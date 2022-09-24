@@ -1,0 +1,23 @@
+apiVersion: policy.jspolicy.com/v1beta1
+kind: JsPolicy
+metadata:
+  name: "inject-agent-sidecar.devsecops.com"
+spec:
+  type: Mutating
+  operations: ["CREATE"]
+  resources: ["pods"]
+  javascript: |
+    if (request.object.metadata?.annotations?.["inject-agent"] === "true") {
+      if (!request.object.spec.containers) {
+        request.object.spec.containers = [];
+      }
+    
+      // add sidecar
+      request.object.spec.containers.push({
+        name: "agent-container",
+        image: "busybox",
+        command: ["sleep", "100"]
+      });
+    
+      mutate(request.object);
+    }
