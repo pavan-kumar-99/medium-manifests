@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    inject-agent: "true"
+  labels:
+    run: mutate-test
+  name: mutate-test
+spec:
+  containers:
+  - image: nginx
+    name: mutate-test
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
