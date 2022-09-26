@@ -12,6 +12,8 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 
 ## Published
 
+[jsPolicy](https://pavan1999-kumar.medium.com/policies-as-code-in-kubernetes-using-jspolicy-8d358d064bfd)
+
 [Kubeflow: MLOPS](https://medium.com/nerd-for-tech/mlops-machine-learning-pipelines-using-kubeflow-fc06508a3f0d)
 
 [Hashicorp Vault Secrets in Kubernetes with CSI Driver](https://pavan1999-kumar.medium.com/hashicvault-secrets-in-kubernetes-with-csi-driver-ec917d4a2672)
@@ -83,11 +85,11 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [x] Loft ( Virtual Clusters )
 - [x] HashiCorp Vault CSI Provider
 - [x] Kubeflow
+- [x] JSPolicy
 - [ ] KubeArmour
 - [ ] Volcano
 - [ ] KubeCost
 - [ ] KeyCloak
-- [ ] JSPolicy
 - [ ] KubeVirt
 - [ ] AWS Karpenter
 - [ ] Hierarchical Namespaces
@@ -113,6 +115,7 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [ ] CAST AI
 - [ ] Devtron
 - [ ] Forsetti
+- [ ] Jit.io
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
