@@ -12,6 +12,8 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 
 ## Published
 
+[Multi Stage Docker Build](https://pavan1999-kumar.medium.com/how-i-reduced-the-size-of-my-docker-image-by-95-520a05439300)
+
 [jsPolicy](https://pavan1999-kumar.medium.com/policies-as-code-in-kubernetes-using-jspolicy-8d358d064bfd)
 
 [Kubeflow: MLOPS](https://medium.com/nerd-for-tech/mlops-machine-learning-pipelines-using-kubeflow-fc06508a3f0d)
@@ -86,6 +88,7 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [x] HashiCorp Vault CSI Provider
 - [x] Kubeflow
 - [x] JSPolicy
+- [x] MultiStage Docker Build
 - [ ] KubeArmour
 - [ ] Volcano
 - [ ] KubeCost
