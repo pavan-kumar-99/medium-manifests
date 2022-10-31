@@ -12,6 +12,8 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 
 ## Published
 
+[Goldilocks](https://pavan1999-kumar.medium.com/how-to-guess-the-right-size-for-your-kubernetes-pods-9c88686fec)
+
 [Multi Stage Docker Build](https://pavan1999-kumar.medium.com/how-i-reduced-the-size-of-my-docker-image-by-95-520a05439300)
 
 [jsPolicy](https://pavan1999-kumar.medium.com/policies-as-code-in-kubernetes-using-jspolicy-8d358d064bfd)
@@ -89,6 +91,7 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [x] Kubeflow
 - [x] JSPolicy
 - [x] MultiStage Docker Build
+- [x] Goldilocks
 - [ ] KubeArmour
 - [ ] Volcano
 - [ ] KubeCost
@@ -120,7 +123,6 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [ ] Forsetti
 - [ ] Jit.io
 - [ ] Numaflow
-- [ ] Goldilocks
 - [ ] Weavework TF Controller
 - [ ] Kaniaster
 - [ ] TestKube
