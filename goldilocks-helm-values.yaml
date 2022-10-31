@@ -1,0 +1,20 @@
+vpa:
+  enabled: true
+  recommender:
+    enabled: true
+  updater:
+    enabled: false
+
+metrics-server:
+  enabled: true
+  apiService:
+    create: false
+
+controller:
+  enabled: true
+
+dashboard:
+  enabled: true
+  replicaCount: 2
+  service:
+    type: LoadBalancer
