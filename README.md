@@ -94,6 +94,7 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [x] Goldilocks
 - [ ] Helm Dashboard
 - [ ] Stack Storm
+- [ ] Google Architecture Diagram
 - [ ] KubeArmour
 - [ ] Volcano
 - [ ] KubeCost
