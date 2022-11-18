@@ -92,6 +92,7 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 - [x] JSPolicy
 - [x] MultiStage Docker Build
 - [x] Goldilocks
+- [ ] Grafana Mimir
 - [ ] Helm Dashboard
 - [ ] Stack Storm
 - [ ] Google Architecture Diagram
