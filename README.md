@@ -12,6 +12,10 @@ git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name
 
 ## Published
 
+[Kyverno](https://medium.com/gitconnected/kubernetes-policies-as-code-using-kyverno-10720df9c842)
+
+[Helm Dashboard](https://medium.com/gitconnected/introduction-to-helm-dashboard-dddf43e38cc2)
+
 [Goldilocks](https://pavan1999-kumar.medium.com/how-to-guess-the-right-size-for-your-kubernetes-pods-9c88686fec)
 
 [Multi Stage Docker Build](https://pavan1999-kumar.medium.com/how-i-reduced-the-size-of-my-docker-image-by-95-520a05439300)
