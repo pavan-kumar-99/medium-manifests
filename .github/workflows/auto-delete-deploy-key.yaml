@@ -1,5 +1,8 @@
 name: Delete Deploy Keys
 
+on:
+  workflow_dispatch:
+
 jobs:
   delete_deploy_keys:
     runs-on: ubuntu-latest
