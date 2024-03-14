@@ -2,6 +2,9 @@ name: Delete Deploy Keys
 
 on:
   workflow_dispatch:
+  repository_dispatch:
+    types:
+      - webhook
 
 jobs:
   delete_deploy_keys:
