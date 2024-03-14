@@ -7,6 +7,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Install Pip3
+        run: |
+          pip install requests==2.31.0
+
       - name: Run script
         run: |
           python scripts/delete_deploy_keys.py
