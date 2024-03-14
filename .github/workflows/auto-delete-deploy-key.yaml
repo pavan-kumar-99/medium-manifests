@@ -1,0 +1,14 @@
+name: Delete Deploy Keys
+
+jobs:
+  delete_deploy_keys:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run script
+        run: |
+          python scripts/delete_deploy_keys.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
