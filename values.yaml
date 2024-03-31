@@ -1,0 +1,11 @@
+loglevel: debug
+opencost:
+  exporter:
+    cloudProviderApiKey: "Axxxxxxxxxxxxxxxxxxxxxo"
+  cloudIntegrationSecret: cloud-costs
+  cloudCost:
+    enabled: true
+    refreshRateHours: 0.1
+service:
+  enabled: true
+  type: LoadBalancer
