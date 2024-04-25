@@ -1,2 +1,4 @@
 # OpenCost
 With the increasing shift towards cloud-centric operations, it's crucial for DevOps and FinOps teams to effectively monitor and manage cloud resources to optimize costs. However, amidst multiple teams utilizing various resources, tracking expenses per team and understanding resource allocation becomes challenging. While cloud providers offer billing consoles, navigating and interpreting the data can be complex. Enter OpenCost. OpenCost is a vendor-neutral, open-source project designed to precisely measure and allocate cloud infrastructure and container costs in real time. Developed by Kubernetes experts and supported by practitioners, OpenCost offers transparency into Kubernetes spending, demystifying the intricacies of cloud expenditure.
+
+Full Article is Published here: https://levelup.gitconnected.com/introduction-to-opencost-feaf522d345a
