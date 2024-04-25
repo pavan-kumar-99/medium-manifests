@@ -2,7 +2,7 @@ name: Delete Deploy Keys
 
 on:
   schedule:
-    - cron: '* * */12 * *'
+    - cron: '0 0 1 * *'
 
 jobs:
   delete_deploy_keys:
