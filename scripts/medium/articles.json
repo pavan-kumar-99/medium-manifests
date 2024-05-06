@@ -1,0 +1,232 @@
+[
+    {
+        "article_id": "dc3527552452",
+        "title": "Introduction to Apache Iceberg | PySpark",
+        "url": "https://pavan1999-kumar.medium.com/introduction-to-apache-iceberg-dc3527552452"
+    },
+    {
+        "article_id": "feaf522d345a",
+        "title": "Introduction to OpenCost",
+        "url": "https://levelup.gitconnected.com/introduction-to-opencost-feaf522d345a"
+    },
+    {
+        "article_id": "10720df9c842",
+        "title": "Kubernetes Policies as code using Kyverno",
+        "url": "https://levelup.gitconnected.com/kubernetes-policies-as-code-using-kyverno-10720df9c842"
+    },
+    {
+        "article_id": "dddf43e38cc2",
+        "title": "Introduction to Helm Dashboard",
+        "url": "https://levelup.gitconnected.com/introduction-to-helm-dashboard-dddf43e38cc2"
+    },
+    {
+        "article_id": "9c88686fec",
+        "title": "How to guess the right size for your Kubernetes Pods?",
+        "url": "https://levelup.gitconnected.com/how-to-guess-the-right-size-for-your-kubernetes-pods-9c88686fec"
+    },
+    {
+        "article_id": "520a05439300",
+        "title": "How I reduced the size of my Docker Image by 95%",
+        "url": "https://levelup.gitconnected.com/how-i-reduced-the-size-of-my-docker-image-by-95-520a05439300"
+    },
+    {
+        "article_id": "8d358d064bfd",
+        "title": "Policies as Code in Kubernetes using jsPolicy",
+        "url": "https://medium.com/nerd-for-tech/policies-as-code-in-kubernetes-using-jspolicy-8d358d064bfd"
+    },
+    {
+        "article_id": "fc06508a3f0d",
+        "title": "MlOps: Machine learning Pipelines using kubeflow",
+        "url": "https://medium.com/nerd-for-tech/mlops-machine-learning-pipelines-using-kubeflow-fc06508a3f0d"
+    },
+    {
+        "article_id": "ec917d4a2672",
+        "title": "HashicVault Secrets in Kubernetes with CSI Driver",
+        "url": "https://pavan1999-kumar.medium.com/hashicvault-secrets-in-kubernetes-with-csi-driver-ec917d4a2672"
+    },
+    {
+        "article_id": "dee6513a7206",
+        "title": "Multi-Tenancy in Kubernetes using Loft\u2019s Vcluster",
+        "url": "https://medium.com/nerd-for-tech/multi-tenancy-in-kubernetes-using-lofts-vcluster-dee6513a7206"
+    },
+    {
+        "article_id": "d97482b48f3d",
+        "title": "PKI Certs Injection to K8s Pods with Vault Agent Injector",
+        "url": "https://medium.com/nerd-for-tech/pki-certs-injection-to-k8s-pods-with-vault-agent-injector-d97482b48f3d"
+    },
+    {
+        "article_id": "c28dc6c981c9",
+        "title": "Analyze Terraform costs with Infracost ( The GitOps Way )",
+        "url": "https://medium.com/nerd-for-tech/terraforming-the-cost-with-infracost-c28dc6c981c9"
+    },
+    {
+        "article_id": "9417cf4abf58",
+        "title": "Terraforming the GitOps Way\u00a0!!!",
+        "url": "https://medium.com/nerd-for-tech/terraforming-the-gitops-way-9417cf4abf58"
+    },
+    {
+        "article_id": "9e19d7239d3d",
+        "title": "Using Hashicorp Vault as a Certificate issuer in Cert Manager",
+        "url": "https://medium.com/nerd-for-tech/using-hashicorp-vault-as-a-certificate-issuer-in-cert-manager-9e19d7239d3d"
+    },
+    {
+        "article_id": "666f74cb781a",
+        "title": "Deep Dive into Cortex Metrics Part II",
+        "url": "https://medium.com/nerd-for-tech/deep-dive-into-cortex-metrics-part-ii-666f74cb781a"
+    },
+    {
+        "article_id": "c228e01f8c58",
+        "title": "Deep Dive into Cortex Metrics \u2014 Part I",
+        "url": "https://medium.com/nerd-for-tech/deep-dive-into-cortex-part-i-c228e01f8c58"
+    },
+    {
+        "article_id": "6172a023f542",
+        "title": "Kubernetes Cluster Autoscaler in Action",
+        "url": "https://medium.com/nerd-for-tech/kubernetes-cluster-autoscaler-in-action-6172a023f542"
+    },
+    {
+        "article_id": "3bb2eb0c0872",
+        "title": "Logging at Scale in Kubernetes using Grafana Loki",
+        "url": "https://medium.com/nerd-for-tech/logging-at-scale-in-kubernetes-using-grafana-loki-3bb2eb0c0872"
+    },
+    {
+        "article_id": "f8ce91d319b9",
+        "title": "Running Apache Spark on EKS with AWS Spot Instances",
+        "url": "https://medium.com/nerd-for-tech/running-apache-spark-on-eks-with-aws-spot-instances-f8ce91d319b9"
+    },
+    {
+        "article_id": "8ef83b3f2f89",
+        "title": "Going Serverless in Kubernetes using Kubeless",
+        "url": "https://medium.com/nerd-for-tech/going-serverless-in-kubernetes-using-kubeless-8ef83b3f2f89"
+    },
+    {
+        "article_id": "6fb65ac63d5",
+        "title": "Free and Automatic SSL Certificates in Kubernetes using Cert Manager",
+        "url": "https://medium.com/nerd-for-tech/free-and-automatic-ssl-certificates-in-kubernetes-using-cert-manager-6fb65ac63d5"
+    },
+    {
+        "article_id": "431c1587ef0a",
+        "title": "Chaos Engineering in Kubernetes using Chaos Mesh",
+        "url": "https://medium.com/nerd-for-tech/chaos-engineering-in-kubernetes-using-chaos-mesh-431c1587ef0a"
+    },
+    {
+        "article_id": "f72ecba39f76",
+        "title": "Deep Dive into Thanos-Part I",
+        "url": "https://medium.com/nerd-for-tech/deep-dive-into-thanos-part-i-f72ecba39f76"
+    },
+    {
+        "article_id": "8f48b8bba132",
+        "title": "Deep Dive into Thanos-Part II",
+        "url": "https://medium.com/nerd-for-tech/deep-dive-into-thanos-part-ii-8f48b8bba132"
+    },
+    {
+        "article_id": "6765bf44ebc6",
+        "title": "Kubernetes Security with Kube-bench and Kube-hunter",
+        "url": "https://www.techmanyu.com/kubernetes-security-with-kube-bench-and-kube-hunter-6765bf44ebc6"
+    },
+    {
+        "article_id": "d57fc2548043",
+        "title": "Network Policies demystified in Kubernetes",
+        "url": "https://medium.com/nerd-for-tech/network-policies-demystified-in-kubernetes-d57fc2548043"
+    },
+    {
+        "article_id": "ab61a2177950",
+        "title": "AutoScaling in Kubernetes ( HPA / VPA )",
+        "url": "https://medium.com/nerd-for-tech/autoscaling-in-kubernetes-hpa-vpa-ab61a2177950"
+    },
+    {
+        "article_id": "fd05560de34a",
+        "title": "Creating Self Hosted GitHub runners in a Kubernetes Cluster",
+        "url": "https://www.techmanyu.com/creating-self-hosted-github-runners-in-a-kubernetes-cluster-fd05560de34a"
+    },
+    {
+        "article_id": "ef99f7a4e417",
+        "title": "Deploying RabbitMQ on Kubernetes using RabbitMQ Cluster Operator",
+        "url": "https://medium.com/nerd-for-tech/deploying-rabbitmq-on-kubernetes-using-rabbitmq-cluster-operator-ef99f7a4e417"
+    },
+    {
+        "article_id": "2f873ae0f9f3",
+        "title": "Introduction to Crossplane",
+        "url": "https://medium.com/nerd-for-tech/introduction-to-crossplane-2f873ae0f9f3"
+    },
+    {
+        "article_id": "bb5ae74d9a25",
+        "title": "Introduction to Bitnami Sealed Secrets",
+        "url": "https://faun.pub/introduction-to-bitnami-sealed-secrets-bb5ae74d9a25"
+    },
+    {
+        "article_id": "654aa4cf38e6",
+        "title": "Introduction to External DNS in Kubernetes",
+        "url": "https://faun.pub/introduction-to-external-dns-in-kubernetes-654aa4cf38e6"
+    },
+    {
+        "article_id": "f4cb7ebc2e0b",
+        "title": "Introduction to Jenkins Operator",
+        "url": "https://medium.com/swlh/introduction-to-jenkins-operator-f4cb7ebc2e0b"
+    },
+    {
+        "article_id": "dd34e2de50a6",
+        "title": "Creating a GKE Cluster with GitHub Actions",
+        "url": "https://medium.com/nerd-for-tech/creating-a-gke-cluster-with-github-actions-dd34e2de50a6"
+    },
+    {
+        "article_id": "b364a67437b7",
+        "title": "Create a Kubernetes Cluster using Kind",
+        "url": "https://medium.com/nerd-for-tech/create-a-kubernetes-cluster-using-kind-b364a67437b7"
+    },
+    {
+        "article_id": "a9d171b11917",
+        "title": "Deploying Applications in Kubernetes Using Flux",
+        "url": "https://medium.com/swlh/deploying-applications-in-kubernetes-using-flux-a9d171b11917"
+    },
+    {
+        "article_id": "97f990dc2f44",
+        "title": "Introduction to Kustomize",
+        "url": "https://faun.pub/introduction-to-kustomize-97f990dc2f44"
+    },
+    {
+        "article_id": "ab004a8cdb5e",
+        "title": "Deploying applications in Kubernetes using Argo CD",
+        "url": "https://medium.com/nerd-for-tech/deploying-applications-in-kubernetes-using-argo-cd-ab004a8cdb5e"
+    },
+    {
+        "article_id": "bb9ab466a1a0",
+        "title": "Ingress Gateway in Istio",
+        "url": "https://medium.com/nerd-for-tech/ingress-gateway-in-istio-bb9ab466a1a0"
+    },
+    {
+        "article_id": "970f0666b867",
+        "title": "MTLS in Istio",
+        "url": "https://medium.com/nerd-for-tech/mtls-in-istio-970f0666b867"
+    },
+    {
+        "article_id": "36f8c4d32fe8",
+        "title": "Mirroring of Live Traffic in Kubernetes using Istio Traffic Mirroring",
+        "url": "https://medium.com/nerd-for-tech/mirroring-of-live-traffic-in-kubernetes-using-istio-traffic-mirroring-36f8c4d32fe8"
+    },
+    {
+        "article_id": "5d9bdb495032",
+        "title": "Weighted routing in Kubernetes using Istio",
+        "url": "https://www.techmanyu.com/weighted-routing-in-kubernetes-using-istio-5d9bdb495032"
+    },
+    {
+        "article_id": "1557db1cd62d",
+        "title": "How to Install Istio using istioctl",
+        "url": "https://www.techmanyu.com/how-to-install-istio-using-istioctl-1557db1cd62d"
+    },
+    {
+        "article_id": "2bc68d2ffdac",
+        "title": "Introduction to Istio Service Mesh",
+        "url": "https://www.techmanyu.com/introduction-to-istio-service-mesh-2bc68d2ffdac"
+    },
+    {
+        "article_id": "7640d34ad102",
+        "title": "Securing your secrets using vault in Kubernetes\u200a\u2014\u200aPart 2",
+        "url": "https://faun.pub/securing-your-secrets-using-vault-in-kubernetes-part-2-7640d34ad102"
+    },
+    {
+        "article_id": "de3d7378e226",
+        "title": "Securing your secrets using vault-k8s in Kubernetes\u200a\u2014\u200aPart 1",
+        "url": "https://faun.pub/securing-your-secrets-using-vault-k8s-in-kubernetes-part-1-de3d7378e226"
+    }
+]
