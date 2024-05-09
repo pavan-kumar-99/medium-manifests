@@ -31,21 +31,57 @@ def download_from_s3(bucket_name, key, local_path):
             raise
 
 
-def process_data(local_path):
+def process_data(bucket_name, bucket_prefix, local_path):
     """
     Process data from JSON files and return the joined DataFrame.
 
     Args:
     - bucket_name: Name of the S3 bucket.
-    - key: Key (path) of the file in the S3 bucket.
+    - bucket_prefix: Key (path) of the file in the S3 bucket.
     - local_path: Local path where the file will be downloaded.
 
     Returns:
     - Joined DataFrame.
     - Spark Session.
     """
+    catalog_name = "glue_catalog"
+    iceberg_bucket_name = bucket_name
+    iceberg_bucket_prefix = bucket_prefix
+    database_name = "iceberg_dataframe"
+    table_name = "product"
+    warehouse_path = f"s3://{iceberg_bucket_name}/{iceberg_bucket_prefix}"
+    dynamodb_table = "myGlueLockTable"
+
+    conf = (
+        SparkConf()
+        .config(
+            f"spark.sql.catalog.{catalog_name}", "org.apache.iceberg.spark.SparkCatalog"
+        )
+        .config(f"spark.sql.catalog.{catalog_name}.warehouse", f"{warehouse_path}")
+        .config(
+            f"spark.sql.catalog.{catalog_name}.catalog-impl",
+            "org.apache.iceberg.aws.glue.GlueCatalog",
+        )
+        .config(
+            f"spark.sql.catalog.{catalog_name}.io-impl",
+            "org.apache.iceberg.aws.s3.S3FileIO",
+        )
+        .config(
+            f"spark.sql.catalog.{catalog_name}.lock-impl",
+            "org.apache.iceberg.aws.glue.DynamoLockManager",
+        )
+        .config(f"spark.sql.catalog.{catalog_name}.lock.table", f"{dynamodb_table}")
+        .config(
+            "spark.sql.extensions",
+            "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions",
+        )
+    )
     # Initialize Spark session
-    spark = SparkSession.builder.appName("Medium Stats Pavan").getOrCreate()
+    spark = (
+        SparkSession.builder.appName("Medium Stats Pavan")
+        .config(conf=conf)
+        .getOrCreate()
+    )
 
     statsSchema = StructType(
         [
@@ -73,12 +109,13 @@ def process_data(local_path):
     df = (
         spark.read.option("multiLine", "true")
         .option("mode", "PERMISSIVE")
-        .schema(articlesSchema)
+        .schema(statsSchema)
         .json(local_path)
     )
     df_posts = (
         spark.read.option("multiLine", "true")
         .option("mode", "PERMISSIVE")
+        .schema(articlesSchema)
         .json(file_path)
     )
 
@@ -112,11 +149,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Process files from S3 and perform data transformations."
     )
-    parser.add_argument("bucket_name", type=str, help="Name of the S3 bucket")
     parser.add_argument("key", type=str, help="Key (path) of the file in the S3 bucket")
-    parser.add_argument(
-        "local_path", type=str, help="Local path where the file will be downloaded"
-    )
     parser.add_argument(
         "ingest_mode",
         type=str,
@@ -125,14 +158,17 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    # Download files from S3
-    download_from_s3(args.bucket_name, args.key, args.local_path)
-
-    # Process data
-    df, spark = process_data(args.local_path)
-
     db_name = "medium-stats"
     table_name = "articles"
+    local_path = "/tmp"
+    bucket_name = "medium-stats"
+    iceberg_bucket_name = "iceberg-tables-medium-stats"
+    iceberg_bucket_prefix = "iceberg-tables/"
+
+    download_from_s3(bucket_name, args.key, local_path)
+
+    # Process data
+    df, spark = process_data(local_path)
 
     if args.ingest_mode == "append":
         df.write.mode("append").saveAsTable("my_table")
@@ -151,6 +187,7 @@ if __name__ == "__main__":
                         readersThatRepliedCount int,
                         readersThatViewedCount init
                         ) 
-                        PARTITIONED BY (year(Date),month(Date),title);
+                        PARTITIONED BY (year(Date),month(Date),title)
+                        AS SELECT * FROM df;
                     """
         )
