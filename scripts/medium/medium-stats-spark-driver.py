@@ -161,7 +161,7 @@ if __name__ == "__main__":
         print("Data created table 'my_table'")
         spark.sql(
             f"""
-                    CREATE TABLE glue_catalog.{db_name}.{table_name} (
+                    CREATE TABLE IF NOT EXISTS glue_catalog.{db_name}.{table_name} (
                         Date date,
                         readersThatClappedCount int,
                         readersThatReadCount int,
