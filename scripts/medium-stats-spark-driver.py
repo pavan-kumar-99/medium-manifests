@@ -38,6 +38,7 @@ def process_data(local_path):
 
     Returns:
     - Joined DataFrame.
+    - Spark Session.
     """
     # Initialize Spark session
     spark = SparkSession.builder \
@@ -46,7 +47,6 @@ def process_data(local_path):
 
     statsSchema = StructType([
         StructField("dayStartsAt", LongType(), True),
-        StructField("id", IntegerType(), True),
         StructField("Date", LongType(), True),
         StructField("readersThatClappedCount", LongType(), True),
         StructField("readersThatReadCount", LongType(), True),
@@ -77,7 +77,7 @@ def process_data(local_path):
     # Join operation
     df_join = df.join(df_posts, df['article_id'] == df_posts['article_id'], 'inner').drop(df.article_id).withColumnRenamed("readersThatViewedCount", "Viewers")
 
-    return df_join
+    return df_join,spark
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process files from S3 and perform data transformations.')
@@ -91,11 +91,28 @@ if __name__ == "__main__":
     download_from_s3(args.bucket_name, args.key, args.local_path)
 
     # Process data
-    df = process_data(args.local_path)
+    df,spark = process_data(args.local_path)
+
+    db_name="medium-stats"
+    table_name="articles"
 
     if args.ingest_mode == 'append':
         df.write.mode('append').saveAsTable("my_table")
         print("Data appended to table 'my_table'")
     elif args.ingest_mode == 'create':
         print("Data created table 'my_table'")
-        df.writeTo("iceberg_catalog.medium-stats.article-stats").append()
+        spark.sql(
+                    f"""
+                    CREATE TABLE iceberg_catalog.{db_name}.{table_name} (
+                        article_id bigint,
+                        title string,
+                        url string,
+                        Date date,
+                        readersThatClappedCount int,
+                        readersThatReadCount int,
+                        readersThatRepliedCount int,
+                        readersThatViewedCount init
+                        ) 
+                        PARTITIONED BY (year(Date),month(Date),title);
+                    """
+                )
