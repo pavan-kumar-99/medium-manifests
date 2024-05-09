@@ -18,12 +18,17 @@ def download_from_s3(bucket_name, key, local_path):
     - key: The key (path) of the file in the S3 bucket.
     - local_path: The local path where the file will be downloaded.
     """
-    s3 = boto3.client("s3")
+    s3 = boto3.resource("s3")
     try:
-        s3.download_file(bucket_name, key, local_path)
-        print(
-            f"File downloaded successfully from S3: s3://{bucket_name}/{key} to {local_path}"
-        )
+        bucket = s3.Bucket(bucket_name)
+        for obj in bucket.objects.filter(Prefix=key):
+            target = obj.key if local_path is None \
+                else os.path.join(local_path, os.path.relpath(obj.key, key))
+            if not os.path.exists(os.path.dirname(target)):
+                os.makedirs(os.path.dirname(target))
+            if obj.key[-1] == '/':
+                continue
+            bucket.download_file(obj.key, target)
     except botocore.exceptions.ClientError as e:
         if e.response["Error"]["Code"] == "404":
             print(f"The object does not exist: s3://{bucket_name}/{key}")
@@ -47,41 +52,18 @@ def process_data(bucket_name, bucket_prefix, local_path):
     catalog_name = "glue_catalog"
     iceberg_bucket_name = bucket_name
     iceberg_bucket_prefix = bucket_prefix
-    database_name = "iceberg_dataframe"
-    table_name = "product"
     warehouse_path = f"s3://{iceberg_bucket_name}/{iceberg_bucket_prefix}"
     dynamodb_table = "myGlueLockTable"
 
-    conf = (
-        SparkConf()
-        .config(
-            f"spark.sql.catalog.{catalog_name}", "org.apache.iceberg.spark.SparkCatalog"
-        )
-        .config(f"spark.sql.catalog.{catalog_name}.warehouse", f"{warehouse_path}")
-        .config(
-            f"spark.sql.catalog.{catalog_name}.catalog-impl",
-            "org.apache.iceberg.aws.glue.GlueCatalog",
-        )
-        .config(
-            f"spark.sql.catalog.{catalog_name}.io-impl",
-            "org.apache.iceberg.aws.s3.S3FileIO",
-        )
-        .config(
-            f"spark.sql.catalog.{catalog_name}.lock-impl",
-            "org.apache.iceberg.aws.glue.DynamoLockManager",
-        )
-        .config(f"spark.sql.catalog.{catalog_name}.lock.table", f"{dynamodb_table}")
-        .config(
-            "spark.sql.extensions",
-            "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions",
-        )
-    )
     # Initialize Spark session
-    spark = (
-        SparkSession.builder.appName("Medium Stats Pavan")
-        .config(conf=conf)
+    spark = SparkSession.builder \
+        .appName("Medium Stats Pavan") \
+        .config(f"spark.sql.catalog.{catalog_name}", "org.apache.iceberg.spark.SparkCatalog") \
+        .config(f"spark.sql.catalog.{catalog_name}.warehouse", f"{warehouse_path}") \
+        .config(f"spark.sql.catalog.{catalog_name}.catalog-impl", "org.apache.iceberg.aws.glue.GlueCatalog") \
+        .config(f"spark.sql.catalog.{catalog_name}.io-impl", "org.apache.iceberg.aws.s3.S3FileIO") \
+        .config("spark.sql.extensions","org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions") \
         .getOrCreate()
-    )
 
     statsSchema = StructType(
         [
@@ -91,13 +73,13 @@ def process_data(bucket_name, bucket_prefix, local_path):
             StructField("readersThatReadCount", LongType(), True),
             StructField("readersThatRepliedCount", LongType(), True),
             StructField("readersThatViewedCount", LongType(), True),
-            StructField("article_id", LongType(), True),
+            StructField("article_id", StringType(), True),
         ]
     )
 
     articlesSchema = StructType(
         [
-            StructField("article_id", LongType(), True),
+            StructField("article_id", StringType(), True),
             StructField("title", StringType(), True),
             StructField("url", StringType(), True),
         ]
@@ -112,19 +94,21 @@ def process_data(bucket_name, bucket_prefix, local_path):
         .schema(statsSchema)
         .json(local_path)
     )
+    
     df_posts = (
         spark.read.option("multiLine", "true")
         .option("mode", "PERMISSIVE")
         .schema(articlesSchema)
         .json(file_path)
     )
+    
 
     # Data transformations
     df = df.dropDuplicates()  # Drop duplicate rows
     df_posts = df_posts.dropDuplicates()
     df = df.withColumn(
         "Date",
-        to_date(from_unixtime(floor(col("dayStartsAt") / 1000), "yyyy-MM-dd HH:mm:ss")),
+        to_date(from_unixtime(floor(col("dayStartsAt") / 1000), "yyyy-MM-dd")),
     )
     columns_to_drop = [
         "__typename",
@@ -158,9 +142,9 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    db_name = "medium-stats"
+    db_name = "mediumstats"
     table_name = "articles"
-    local_path = "/tmp"
+    local_path = "/tmp/" + args.key
     bucket_name = "medium-stats"
     iceberg_bucket_name = "iceberg-tables-medium-stats"
     iceberg_bucket_prefix = "iceberg-tables/"
@@ -168,8 +152,8 @@ if __name__ == "__main__":
     download_from_s3(bucket_name, args.key, local_path)
 
     # Process data
-    df, spark = process_data(local_path)
-
+    df, spark = process_data(iceberg_bucket_name,iceberg_bucket_prefix,local_path)
+    df.show(truncate=False)
     if args.ingest_mode == "append":
         df.write.mode("append").saveAsTable("my_table")
         print("Data appended to table 'my_table'")
@@ -177,17 +161,16 @@ if __name__ == "__main__":
         print("Data created table 'my_table'")
         spark.sql(
             f"""
-                    CREATE TABLE iceberg_catalog.{db_name}.{table_name} (
-                        article_id bigint,
-                        title string,
-                        url string,
+                    CREATE TABLE glue_catalog.{db_name}.{table_name} (
                         Date date,
                         readersThatClappedCount int,
                         readersThatReadCount int,
                         readersThatRepliedCount int,
-                        readersThatViewedCount init
-                        ) 
-                        PARTITIONED BY (year(Date),month(Date),title)
-                        AS SELECT * FROM df;
+                        Viewers int,
+                        article_id string,
+                        title string,
+                        url string
+                        ) using iceberg
+                        PARTITIONED BY (year(Date),title);
                     """
         )
