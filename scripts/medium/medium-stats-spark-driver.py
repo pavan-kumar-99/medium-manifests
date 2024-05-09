@@ -58,6 +58,7 @@ def process_data(bucket_name, bucket_prefix, local_path):
     # Initialize Spark session
     spark = SparkSession.builder \
         .appName("Medium Stats Pavan") \
+        .config('spark.driver.host', '127.0.0.1') \
         .config(f"spark.sql.catalog.{catalog_name}", "org.apache.iceberg.spark.SparkCatalog") \
         .config(f"spark.sql.catalog.{catalog_name}.warehouse", f"{warehouse_path}") \
         .config(f"spark.sql.catalog.{catalog_name}.catalog-impl", "org.apache.iceberg.aws.glue.GlueCatalog") \
@@ -162,7 +163,7 @@ if __name__ == "__main__":
             f"""
                     CREATE TABLE IF NOT EXISTS glue_catalog.{db_name}.{table_name} (
                         Date date,
-                        readersThatClappedCount int,
+                        readersThatClappedCount long,
                         readersThatReadCount int,
                         readersThatRepliedCount int,
                         Viewers int,
