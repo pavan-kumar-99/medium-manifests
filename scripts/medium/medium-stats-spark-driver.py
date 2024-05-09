@@ -158,7 +158,6 @@ if __name__ == "__main__":
         df.write.mode("append").saveAsTable("my_table")
         print("Data appended to table 'my_table'")
     elif args.ingest_mode == "create":
-        print("Data created table 'my_table'")
         spark.sql(
             f"""
                     CREATE TABLE IF NOT EXISTS glue_catalog.{db_name}.{table_name} (
@@ -171,6 +170,8 @@ if __name__ == "__main__":
                         title string,
                         url string
                         ) using iceberg
-                        PARTITIONED BY (year(Date),title);
+                        PARTITIONED BY (day(Date),title);
                     """
         )
+        df.writeTo(f"glue_catalog.{db_name}.{table_name}").overwritePartitions()
+        print("Data created table 'my_table'")
