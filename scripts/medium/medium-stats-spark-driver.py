@@ -80,6 +80,8 @@ def process_data(bucket_name, bucket_prefix, local_path):
         .getOrCreate()
     )
 
+    spark.sparkContext.setLogLevel('WARN')
+
     statsSchema = StructType(
         [
             StructField("dayStartsAt", LongType(), True),
