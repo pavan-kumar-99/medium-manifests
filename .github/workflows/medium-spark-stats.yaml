@@ -21,7 +21,7 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
-             
+
     - uses: actions/setup-python@v5
       with:
         python-version: '3.12'
@@ -34,7 +34,8 @@ jobs:
     - uses: vemonet/setup-spark@v1
       with:
         spark-version: '3.2.3'
-        scala-version: '2.12'
+        scala-version: '2.13'
+        hadoop-version: '3.2'
         xms: '12288M'
         xmx: '12288M'
 
