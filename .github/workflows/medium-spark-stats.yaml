@@ -1,0 +1,44 @@
+name: Run Spark Job for Stats
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 0 * * *' 
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up AWS CLI
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+             
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: temurin
+
+    - uses: vemonet/setup-spark@v1
+      with:
+        spark-version: '3.2.3'
+        scala-version: '2.12'
+        xms: '12288M'
+        xmx: '12288M'
+
+    - run: |
+        todaysDate=$(date +"%Y-%m-%d")
+        spark-submit --packages org.apache.iceberg:iceberg-spark-runtime-3.2_2.12:1.4.3,org.apache.iceberg:iceberg-aws-bundle:1.4.3 --num-executors 2 medium-stats-spark-driver.py $todaysDate/ create
+
