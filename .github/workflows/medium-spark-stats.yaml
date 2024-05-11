@@ -36,10 +36,8 @@ jobs:
         spark-version: '3.2.3'
         scala-version: '2.13'
         hadoop-version: '3.2'
-        xms: '12288M'
-        xmx: '12288M'
 
     - run: |
         todaysDate=$(date +"%Y-%m-%d")
-        spark-submit --packages org.apache.iceberg:iceberg-spark-runtime-3.2_2.12:1.4.3,org.apache.iceberg:iceberg-aws-bundle:1.4.3 --num-executors 2 medium-stats-spark-driver.py $todaysDate/ create
+        spark-submit --version
 
