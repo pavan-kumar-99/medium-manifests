@@ -208,5 +208,6 @@ if __name__ == "__main__":
                         PARTITIONED BY (day(Date),title);
                     """
         )
-        df.writeTo(f"glue_catalog.{db_name}.{table_name}").overwritePartitions()
+        #df.writeTo(f"glue_catalog.{db_name}.{table_name}").overwritePartitions()
+        df.writeTo(f"glue_catalog.{db_name}.{table_name}")
         print("Data created table 'my_table'")
