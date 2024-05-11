@@ -22,11 +22,14 @@ def download_from_s3(bucket_name, key, local_path):
     try:
         bucket = s3.Bucket(bucket_name)
         for obj in bucket.objects.filter(Prefix=key):
-            target = obj.key if local_path is None \
+            target = (
+                obj.key
+                if local_path is None
                 else os.path.join(local_path, os.path.relpath(obj.key, key))
+            )
             if not os.path.exists(os.path.dirname(target)):
                 os.makedirs(os.path.dirname(target))
-            if obj.key[-1] == '/':
+            if obj.key[-1] == "/":
                 continue
             bucket.download_file(obj.key, target)
     except botocore.exceptions.ClientError as e:
@@ -53,18 +56,29 @@ def process_data(bucket_name, bucket_prefix, local_path):
     iceberg_bucket_name = bucket_name
     iceberg_bucket_prefix = bucket_prefix
     warehouse_path = f"s3://{iceberg_bucket_name}/{iceberg_bucket_prefix}"
-    dynamodb_table = "myGlueLockTable"
 
     # Initialize Spark session
-    spark = SparkSession.builder \
-        .appName("Medium Stats Pavan") \
-        .config('spark.driver.host', '127.0.0.1') \
-        .config(f"spark.sql.catalog.{catalog_name}", "org.apache.iceberg.spark.SparkCatalog") \
-        .config(f"spark.sql.catalog.{catalog_name}.warehouse", f"{warehouse_path}") \
-        .config(f"spark.sql.catalog.{catalog_name}.catalog-impl", "org.apache.iceberg.aws.glue.GlueCatalog") \
-        .config(f"spark.sql.catalog.{catalog_name}.io-impl", "org.apache.iceberg.aws.s3.S3FileIO") \
-        .config("spark.sql.extensions","org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions") \
+    spark = (
+        SparkSession.builder.appName("Medium Stats Pavan")
+        .config("spark.driver.host", "127.0.0.1")
+        .config(
+            f"spark.sql.catalog.{catalog_name}", "org.apache.iceberg.spark.SparkCatalog"
+        )
+        .config(f"spark.sql.catalog.{catalog_name}.warehouse", f"{warehouse_path}")
+        .config(
+            f"spark.sql.catalog.{catalog_name}.catalog-impl",
+            "org.apache.iceberg.aws.glue.GlueCatalog",
+        )
+        .config(
+            f"spark.sql.catalog.{catalog_name}.io-impl",
+            "org.apache.iceberg.aws.s3.S3FileIO",
+        )
+        .config(
+            "spark.sql.extensions",
+            "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions",
+        )
         .getOrCreate()
+    )
 
     statsSchema = StructType(
         [
@@ -95,14 +109,13 @@ def process_data(bucket_name, bucket_prefix, local_path):
         .schema(statsSchema)
         .json(local_path)
     )
-    
+
     df_posts = (
         spark.read.option("multiLine", "true")
         .option("mode", "PERMISSIVE")
         .schema(articlesSchema)
         .json(file_path)
     )
-    
 
     # Data transformations
     df = df.dropDuplicates()  # Drop duplicate rows
@@ -130,6 +143,24 @@ def process_data(bucket_name, bucket_prefix, local_path):
     return df_join, spark
 
 
+def compute_yearly_statistics(spark):
+    """
+    Compute yearly statistics using Apache Spark.
+
+    Args:
+    - spark: The SparkSession object.
+    - df: The DataFrame containing the data for computation.
+    """
+
+    df = spark.sql(
+        f"""select title AS Title ,
+        Sum(Viewers) AS Total_Viewers,
+        FIRST(url) AS URL 
+        from glue_catalog.{db_name}.{table_name} GROUP BY title ORDER BY Total_Viewers DESC;"""
+    )
+    df.show(truncate=False)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Process files from S3 and perform data transformations."
@@ -152,12 +183,15 @@ if __name__ == "__main__":
 
     download_from_s3(bucket_name, args.key, local_path)
 
-    # Process data
-    df, spark = process_data(iceberg_bucket_name,iceberg_bucket_prefix,local_path)
+    df, spark = process_data(iceberg_bucket_name, iceberg_bucket_prefix, local_path)
+
     df.show(truncate=False)
+
+    df.cache()
+
     if args.ingest_mode == "append":
-        df.write.mode("append").saveAsTable("my_table")
-        print("Data appended to table 'my_table'")
+        compute_yearly_statistics(spark)
+
     elif args.ingest_mode == "create":
         spark.sql(
             f"""
