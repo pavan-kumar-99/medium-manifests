@@ -200,7 +200,7 @@ if __name__ == "__main__":
                 MERGE INTO glue_catalog.{db_name}.{table_name} a
                 USING {temp_table_name} b
                 on a.Date = b.Date
-                WHEN NOT MATCHED THEN INSERT
+                WHEN NOT MATCHED THEN INSERT;
                 """
         )
 
