@@ -80,7 +80,7 @@ def process_data(bucket_name, bucket_prefix, local_path):
         .getOrCreate()
     )
 
-    spark.sparkContext.setLogLevel('WARN')
+    spark.sparkContext.setLogLevel("OFF")
 
     statsSchema = StructType(
         [
@@ -192,7 +192,16 @@ if __name__ == "__main__":
     df.cache()
 
     if args.ingest_mode == "append":
-        compute_yearly_statistics(spark)
+        df.createOrReplaceTempView("temp")        
+        print("Merging Data to Iceberg")
+        spark.sql(
+            f"""
+                MERGE INTO glue_catalog.{db_name}.{table_name} a
+                USING temp b
+                on a.Date = b.Date
+                WHEN NOT MATCHED THEN INSERT
+                """
+        )
 
     elif args.ingest_mode == "create":
         spark.sql(
