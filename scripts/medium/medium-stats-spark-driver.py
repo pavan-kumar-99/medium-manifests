@@ -182,7 +182,7 @@ if __name__ == "__main__":
     bucket_name = "medium-stats"
     iceberg_bucket_name = "iceberg-tables-medium-stats"
     iceberg_bucket_prefix = "iceberg-tables/"
-    temp_table_name  = "medium-stats-temp"
+    temp_table_name  = "mediumstatstemp"
 
     download_from_s3(bucket_name, args.key, local_path)
 
