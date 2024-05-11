@@ -38,6 +38,7 @@ jobs:
     - uses: vemonet/setup-spark@v1
       with:
         spark-version: '3.3.2'
+        scala-version: '2.13'
 
     - run: |
         todaysDate=$(date +"%Y-%m-%d")
