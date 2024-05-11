@@ -145,7 +145,7 @@ def process_data(bucket_name, bucket_prefix, local_path):
     return df_join, spark
 
 
-def compute_yearly_statistics(spark):
+def compute_yearly_statistics(spark,table_name):
     """
     Compute yearly statistics using Apache Spark.
 
@@ -158,7 +158,7 @@ def compute_yearly_statistics(spark):
         f"""select title AS Title ,
         Sum(Viewers) AS Total_Viewers,
         FIRST(url) AS URL 
-        from glue_catalog.{db_name}.{table_name} GROUP BY title ORDER BY Total_Viewers DESC;"""
+        from {table_name} GROUP BY title ORDER BY Total_Viewers DESC;"""
     )
     df.show(truncate=False)
 
@@ -182,6 +182,7 @@ if __name__ == "__main__":
     bucket_name = "medium-stats"
     iceberg_bucket_name = "iceberg-tables-medium-stats"
     iceberg_bucket_prefix = "iceberg-tables/"
+    temp_table_name  = "medium-stats-temp"
 
     download_from_s3(bucket_name, args.key, local_path)
 
@@ -192,16 +193,18 @@ if __name__ == "__main__":
     df.cache()
 
     if args.ingest_mode == "append":
-        df.createOrReplaceTempView("temp")        
+        df.createOrReplaceTempView(f"""{temp_table_name}""")
         print("Merging Data to Iceberg")
         spark.sql(
             f"""
                 MERGE INTO glue_catalog.{db_name}.{table_name} a
-                USING temp b
+                USING {temp_table_name} b
                 on a.Date = b.Date
                 WHEN NOT MATCHED THEN INSERT
                 """
         )
+
+        compute_yearly_statistics(spark,temp_table_name)
 
     elif args.ingest_mode == "create":
         spark.sql(
@@ -219,6 +222,6 @@ if __name__ == "__main__":
                         PARTITIONED BY (day(Date),title);
                     """
         )
-        #df.writeTo(f"glue_catalog.{db_name}.{table_name}").overwritePartitions()
+        # df.writeTo(f"glue_catalog.{db_name}.{table_name}").overwritePartitions()
         df.writeTo(f"glue_catalog.{db_name}.{table_name}")
         print("Data created table 'my_table'")
