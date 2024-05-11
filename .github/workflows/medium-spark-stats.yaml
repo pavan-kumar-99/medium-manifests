@@ -28,7 +28,7 @@ jobs:
 
     - uses: actions/setup-java@v4
       with:
-        java-version: '21'
+        java-version: '17'
         distribution: temurin
 
     - uses: vemonet/setup-spark@v1
@@ -36,6 +36,8 @@ jobs:
         spark-version: '3.2.3'
         scala-version: '2.13'
         hadoop-version: '3.2'
+        xms: '12288M'
+        xmx: '12288M'
 
     - run: |
         todaysDate=$(date +"%Y-%m-%d")
