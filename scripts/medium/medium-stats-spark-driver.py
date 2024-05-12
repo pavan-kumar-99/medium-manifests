@@ -56,6 +56,7 @@ def process_data(bucket_name, bucket_prefix, local_path):
     iceberg_bucket_name = bucket_name
     iceberg_bucket_prefix = bucket_prefix
     warehouse_path = f"s3://{iceberg_bucket_name}/{iceberg_bucket_prefix}"
+    mongodb_uri = os.getenv("MONGO_URI")
 
     # Initialize Spark session
     spark = (
@@ -76,6 +77,10 @@ def process_data(bucket_name, bucket_prefix, local_path):
         .config(
             "spark.sql.extensions",
             "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions",
+        )
+        .config(
+            "spark.mongodb.write.connection.uri",
+            f"{mongodb_uri}",
         )
         .getOrCreate()
     )
@@ -145,7 +150,7 @@ def process_data(bucket_name, bucket_prefix, local_path):
     return df_join, spark
 
 
-def compute_yearly_statistics(spark,table_name):
+def compute_yearly_statistics(spark, table_name):
     """
     Compute yearly statistics using Apache Spark.
 
@@ -160,7 +165,23 @@ def compute_yearly_statistics(spark,table_name):
         FIRST(url) AS URL 
         from {table_name} GROUP BY title ORDER BY Total_Viewers DESC;"""
     )
-    df.show(truncate=False)
+    df.show(100, truncate=False)
+    return df
+
+
+def write_to_mongo (df, mongo_collection_name):
+    """
+    Write the Dataframe to MongoDB Atlas.
+
+    Args:
+    - spark: The SparkSession object.
+    - df: The DataFrame containing the data for computation.
+    - mongo_db_name: Mongo DB name where the data should be written.
+    """
+
+    df.write.format("mongodb").mode("overwrite").option(
+        "collection", f"{mongo_collection_name}"
+    ).save()
 
 
 if __name__ == "__main__":
@@ -182,13 +203,11 @@ if __name__ == "__main__":
     bucket_name = "medium-stats"
     iceberg_bucket_name = "iceberg-tables-medium-stats"
     iceberg_bucket_prefix = "iceberg-tables/"
-    temp_table_name  = "mediumstatstemp"
+    temp_table_name = "mediumstatstemp"
 
     download_from_s3(bucket_name, args.key, local_path)
 
     df, spark = process_data(iceberg_bucket_name, iceberg_bucket_prefix, local_path)
-
-    df.show(truncate=False)
 
     df.cache()
 
@@ -204,7 +223,8 @@ if __name__ == "__main__":
                 """
         )
 
-        compute_yearly_statistics(spark,temp_table_name)
+        df_yearly=compute_yearly_statistics(spark, temp_table_name)
+        write_to_mongo(df_yearly,"yearlyStats")
 
     elif args.ingest_mode == "create":
         spark.sql(
