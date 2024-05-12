@@ -160,7 +160,7 @@ def compute_yearly_statistics(spark,table_name):
         FIRST(url) AS URL 
         from {table_name} GROUP BY title ORDER BY Total_Viewers DESC;"""
     )
-    df.show(truncate=False)
+    df.show(100,truncate=False)
 
 
 if __name__ == "__main__":
@@ -187,8 +187,6 @@ if __name__ == "__main__":
     download_from_s3(bucket_name, args.key, local_path)
 
     df, spark = process_data(iceberg_bucket_name, iceberg_bucket_prefix, local_path)
-
-    df.show(truncate=False)
 
     df.cache()
 
