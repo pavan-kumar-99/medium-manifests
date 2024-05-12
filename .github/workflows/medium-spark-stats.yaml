@@ -40,10 +40,10 @@ jobs:
         spark-version: '3.3.2'
         scala-version: '2.13'
 
-    - run: |
+    - name: Spark Monthly and Yearly Stats
+      env:
+        MONGO_URI: ${{ secrets.MONGO_URI }}
+      run: |
         todaysDate=$(date +"%Y-%m-%d")
         spark-submit --packages org.mongodb.spark:mongo-spark-connector_2.13:10.3.0,org.apache.iceberg:iceberg-spark-runtime-3.3_2.13:1.5.2,org.apache.iceberg:iceberg-aws-bundle:1.4.3 --num-executors 2 scripts/medium/medium-stats-spark-driver.py $todaysDate/ append
-      name: Spark Monthly and Yearly Stats
-      with:
-        MONGO_URI: ${{ secrets.MONGO_URI }}
 
