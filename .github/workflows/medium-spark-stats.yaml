@@ -42,6 +42,8 @@ jobs:
 
     - run: |
         todaysDate=$(date +"%Y-%m-%d")
-        spark-submit --packages org.apache.iceberg:iceberg-spark-runtime-3.3_2.13:1.5.2,org.apache.iceberg:iceberg-aws-bundle:1.4.3 --num-executors 2 scripts/medium/medium-stats-spark-driver.py $todaysDate/ append
+        spark-submit --packages org.mongodb.spark:mongo-spark-connector_2.13:10.3.0,org.apache.iceberg:iceberg-spark-runtime-3.3_2.13:1.5.2,org.apache.iceberg:iceberg-aws-bundle:1.4.3 --num-executors 2 scripts/medium/medium-stats-spark-driver.py $todaysDate/ append
       name: Spark Monthly and Yearly Stats
+      with:
+        MONGO_URI: ${{ secrets.MONGO_URI }}
 
