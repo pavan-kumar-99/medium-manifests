@@ -32,6 +32,7 @@ def download_from_s3(bucket_name, key, local_path):
             if obj.key[-1] == "/":
                 continue
             bucket.download_file(obj.key, target)
+            print("Object Downloaded",obj.key)
     except botocore.exceptions.ClientError as e:
         if e.response["Error"]["Code"] == "404":
             print(f"The object does not exist: s3://{bucket_name}/{key}")
