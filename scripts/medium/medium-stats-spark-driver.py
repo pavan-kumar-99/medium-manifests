@@ -8,7 +8,7 @@ from pyspark.sql.functions import *
 from pyspark.sql.types import *
 
 
-# Define a function to download files from S3
+## Define a function to download files from S3
 def download_from_s3(bucket_name, key, local_path):
     """
     Download a file from Amazon S3 to the local file system.
