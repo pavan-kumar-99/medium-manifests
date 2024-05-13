@@ -57,6 +57,8 @@ RUN set -ex; \
 
 COPY entrypoint.sh /opt/
 
+COPY articles.json /opt/
+
 ENV SPARK_HOME /opt/spark
 
 RUN curl https://repo1.maven.org/maven2/org/mongodb/spark/mongo-spark-connector_2.12/10.3.0/mongo-spark-connector_2.12-10.3.0.jar --output /opt/spark/jars/mongo-spark-connector_2.12-10.3.0.jar
