@@ -61,7 +61,7 @@ def process_data(bucket_name, bucket_prefix, local_path):
     # Initialize Spark session
     spark = (
         SparkSession.builder.appName("Medium Stats Pavan")
-        .config("spark.jars", "/opt/bitnami/spark/jars/*.jar")
+        .config("spark.jars", "/opt/bitnami/spark/jars/mongo-spark-connector_2.12-10.3.0.jar,/opt/bitnami/spark/jars/iceberg-spark-runtime-3.3_2.12-1.5.2.jar,/opt/bitnami/spark/jars/iceberg-aws-bundle-1.4.3.jar")
         .config(
             f"spark.sql.catalog.{catalog_name}", "org.apache.iceberg.spark.SparkCatalog"
         )
