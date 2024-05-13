@@ -1,3 +1,4 @@
+#!/bin/bash
 # Check whether there is a passwd entry for the container UID
 myuid=$(id -u)
 mygid=$(id -g)
