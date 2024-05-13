@@ -122,7 +122,7 @@ def process_data(bucket_name, bucket_prefix, local_path):
         spark.read.option("multiLine", "true")
         .option("mode", "PERMISSIVE")
         .schema(articlesSchema)
-        .json(file_path)
+        .json("/opt/articles.json")
     )
 
     # Data transformations
@@ -200,7 +200,7 @@ if __name__ == "__main__":
 
     db_name = "mediumstats"
     table_name = "articles"
-    local_path = "/opt/spark/stats/" + args.key
+    local_path = "/tmp" + args.key
     bucket_name = "medium-stats"
     iceberg_bucket_name = "iceberg-tables-medium-stats"
     iceberg_bucket_prefix = "iceberg-tables/"
