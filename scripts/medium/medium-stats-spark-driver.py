@@ -200,7 +200,7 @@ if __name__ == "__main__":
 
     db_name = "mediumstats"
     table_name = "articles"
-    local_path = "/opt/spark-stats/" + args.key
+    local_path = "/opt/spark/spark-stats/" + args.key
     bucket_name = "medium-stats"
     iceberg_bucket_name = "iceberg-tables-medium-stats"
     iceberg_bucket_prefix = "iceberg-tables/"
