@@ -34,8 +34,12 @@ jobs:
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v2'
 
-    - name: 'Get KubeConfig'
-      run: 'gcloud container clusters get-credentials spark-stats-cluster --zone us-central1-c --project kinetic-abbey-420301'
+    - id: 'get-credentials'
+      uses: 'google-github-actions/get-gke-credentials@v2'
+      with:
+        cluster_name: 'spark-stats-cluster'
+        location: 'us-central1-c'
+        project_id: "kinetic-abbey-420301"
 
     - uses: actions/setup-java@v4
       with:
