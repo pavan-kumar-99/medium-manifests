@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spark-pod
+spec:
+  containers:
+    - name: spark-driver
+      image: greypavan/medium-manifests:medium-stats
+      envFrom:
+      - secretRef:
+          name:  medium-creds
+      volumeMounts:
+        - name: stats-pvc
+          mountPath: /usr/stats
+  volumes:
+    - name: stats-pvc
+      persistentVolumeClaim:
+        claimName: stats-pvc
