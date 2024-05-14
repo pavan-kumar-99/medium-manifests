@@ -22,10 +22,6 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-    - uses: actions/setup-python@v5
-      with:
-        python-version: '3.10'
-
     - id: 'gcloud-auth'
       uses: 'google-github-actions/auth@v2'
       with:
