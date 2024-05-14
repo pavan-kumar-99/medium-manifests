@@ -63,9 +63,9 @@ jobs:
           --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
           --conf spark.kubernetes.namespace=default \
           --conf spark.kubernetes.driver.request.cores=3 \
-          --conf spark.driver.memory=3g \
+          --conf spark.driver.memory=2g \
           --conf spark.kubernetes.executor.request.cores=3 \
-          --conf spark.executor.memory=3g \
+          --conf spark.executor.memory=2g \
           --conf spark.kubernetes.pyspark.pythonVersion=3 \
           --conf spark.kubernetes.container.image=greypavan/medium-manifests:medium-stats \
           --conf spark.kubernetes.driver.podTemplateFile=./driver.yaml \
