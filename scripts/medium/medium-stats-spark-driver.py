@@ -58,7 +58,10 @@ def process_data(bucket_name, bucket_prefix, local_path):
     iceberg_bucket_prefix = bucket_prefix
     warehouse_path = f"s3://{iceberg_bucket_name}/{iceberg_bucket_prefix}"
     mongodb_uri = os.getenv("MONGO_URI")
-
+    
+    if not mongodb_uri:
+        raise ValueError("MONGO_URI environment variable is not set")
+    
     # Initialize Spark session
     spark = (
         SparkSession.builder.appName("Medium Stats Pavan")
