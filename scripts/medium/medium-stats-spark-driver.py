@@ -170,7 +170,7 @@ def compute_yearly_statistics(spark, table_name):
     return df
 
 
-def write_to_mongo (df, mongo_collection_name):
+def write_to_mongo (df):
     """
     Write the Dataframe to MongoDB Atlas.
 
@@ -179,10 +179,8 @@ def write_to_mongo (df, mongo_collection_name):
     - df: The DataFrame containing the data for computation.
     - mongo_db_name: Mongo DB name where the data should be written.
     """
-
-    df.write.format("mongodb").mode("overwrite").option(
-        "collection", f"{mongo_collection_name}"
-    ).save()
+    
+    df.write.format("mongodb").mode("overwrite").option("database", "medium").option("collection", "yearlyStats").save()
 
 
 if __name__ == "__main__":
@@ -225,7 +223,7 @@ if __name__ == "__main__":
         )
 
         df_yearly=compute_yearly_statistics(spark, temp_table_name)
-        write_to_mongo(df_yearly,"yearlyStats")
+        write_to_mongo(df_yearly)
 
     elif args.ingest_mode == "create":
         spark.sql(
