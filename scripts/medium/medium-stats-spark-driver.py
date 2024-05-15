@@ -167,20 +167,7 @@ def compute_yearly_statistics(spark, table_name):
         from {table_name} GROUP BY title ORDER BY Total_Viewers DESC;"""
     )
     df.show(100, truncate=False)
-    return df
-
-
-def write_to_mongo (df):
-    """
-    Write the Dataframe to MongoDB Atlas.
-
-    Args:
-    - spark: The SparkSession object.
-    - df: The DataFrame containing the data for computation.
-    - mongo_db_name: Mongo DB name where the data should be written.
-    """
-    
-    df.write.format("mongodb").mode("overwrite").option("database", "medium").option("collection", "yearlyStats").save()
+    return df 
 
 
 if __name__ == "__main__":
@@ -223,7 +210,8 @@ if __name__ == "__main__":
         )
 
         df_yearly=compute_yearly_statistics(spark, temp_table_name)
-        write_to_mongo(df_yearly)
+        print("Writing yearly stats to mongo")
+        df_yearly.write.format("mongodb").mode("overwrite").option("database", "medium").option("collection", "yearlyStats").save()
 
     elif args.ingest_mode == "create":
         spark.sql(
@@ -238,9 +226,11 @@ if __name__ == "__main__":
                         title string,
                         url string
                         ) using iceberg
-                        PARTITIONED BY (day(Date),title);
+                        PARTITIONED BY (year(Date),title);
                     """
         )
         # df.writeTo(f"glue_catalog.{db_name}.{table_name}").overwritePartitions()
         df.writeTo(f"glue_catalog.{db_name}.{table_name}")
-        print("Data created table 'my_table'")
+        print("Data created table",table_name)
+        print("Data writing to mongo")
+        df.write.format("mongodb").mode("overwrite").option("database", "medium").option("collection", "allStats").save()
