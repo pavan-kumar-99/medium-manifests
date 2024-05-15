@@ -1,5 +1,9 @@
 FROM eclipse-temurin:11-jre-focal
 
+# SCALA = 2.12.15
+# PY - 3.9.17
+# openjdk 17.0.8 2023-07-18 LTS
+
 ARG spark_uid=185
 
 RUN groupadd --system --gid=${spark_uid} spark && \
@@ -63,7 +67,15 @@ ENV SPARK_HOME /opt/spark
 
 RUN curl https://repo1.maven.org/maven2/org/mongodb/spark/mongo-spark-connector_2.12/10.3.0/mongo-spark-connector_2.12-10.3.0.jar --output /opt/spark/jars/mongo-spark-connector_2.12-10.3.0.jar
 
+RUN curl https://repo1.maven.org/maven2/org/mongodb/mongodb-driver-sync/4.8.1/mongodb-driver-sync-4.8.1.jar --output /opt/spark/jars/mongodb-driver-sync-4.8.1.jar
+
+RUN curl https://repo1.maven.org/maven2/org/mongodb/bson/4.8.1/bson-4.8.1.jar --output /opt/spark/jars/bson-4.8.1.jar
+
+RUN curl https://repo1.maven.org/maven2/org/mongodb/mongodb-driver-core/4.8.1/mongodb-driver-core-4.8.1.jar --output /opt/spark/jars/mongodb-driver-core-4.8.1.jar
+
 RUN curl https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-spark-runtime-3.3_2.12/1.5.2/iceberg-spark-runtime-3.3_2.12-1.5.2.jar --output /opt/spark/jars/iceberg-spark-runtime-3.3_2.12-1.5.2.jar
+
+RUN curl https://repo1.maven.org/maven2/org/mongodb/bson-record-codec/4.8.1/bson-record-codec-4.8.1.jar --output /opt/spark/jars/bson-record-codec-4.8.1.jar
 
 RUN curl https://repo1.maven.org/maven2/org/apache/iceberg/iceberg-aws-bundle/1.4.3/iceberg-aws-bundle-1.4.3.jar --output /opt/spark/jars/iceberg-aws-bundle-1.4.3.jar
 
