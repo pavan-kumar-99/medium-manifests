@@ -32,7 +32,7 @@ def download_from_s3(bucket_name, key, local_path):
             if obj.key[-1] == "/":
                 continue
             bucket.download_file(obj.key, target)
-            print("Object Downloaded",obj.key)
+            print("Object Downloaded", obj.key)
     except botocore.exceptions.ClientError as e:
         if e.response["Error"]["Code"] == "404":
             print(f"The object does not exist: s3://{bucket_name}/{key}")
@@ -58,14 +58,17 @@ def process_data(bucket_name, bucket_prefix, local_path):
     iceberg_bucket_prefix = bucket_prefix
     warehouse_path = f"s3://{iceberg_bucket_name}/{iceberg_bucket_prefix}"
     mongodb_uri = os.getenv("MONGO_URI")
-    
+
     if not mongodb_uri:
         raise ValueError("MONGO_URI environment variable is not set")
-    
+
     # Initialize Spark session
     spark = (
         SparkSession.builder.appName("Medium Stats Pavan")
-        .config("spark.jars", "/opt/spark/jars/mongo-spark-connector_2.12-10.3.0.jar,/opt/spark/jars/iceberg-spark-runtime-3.3_2.12-1.5.2.jar,/opt/spark/jars/iceberg-aws-bundle-1.4.3.jar")
+        .config(
+            "spark.jars",
+            "/opt/spark/jars/mongo-spark-connector_2.12-10.3.0.jar,/opt/spark/jars/iceberg-spark-runtime-3.3_2.12-1.5.2.jar,/opt/spark/jars/iceberg-aws-bundle-1.4.3.jar,/opt/spark/jars/mongodb-driver-sync-4.8.1.jar,/opt/spark/jars/bson-4.8.1.jar,/opt/spark/jars/mongodb-driver-core-4.8.1.jar,/opt/spark/jars/bson-record-codec-4.8.1.jar",
+        )
         .config(
             f"spark.sql.catalog.{catalog_name}", "org.apache.iceberg.spark.SparkCatalog"
         )
@@ -170,7 +173,7 @@ def compute_yearly_statistics(spark, table_name):
         from {table_name} GROUP BY title ORDER BY Total_Viewers DESC;"""
     )
     df.show(100, truncate=False)
-    return df 
+    return df
 
 
 if __name__ == "__main__":
@@ -212,9 +215,11 @@ if __name__ == "__main__":
                 """
         )
 
-        df_yearly=compute_yearly_statistics(spark, temp_table_name)
+        df_yearly = compute_yearly_statistics(spark, temp_table_name)
         print("Writing yearly stats to mongo")
-        df_yearly.write.format("mongodb").mode("overwrite").option("database", "medium").option("collection", "yearlyStats").save()
+        df_yearly.write.format("mongodb").mode("overwrite").option(
+            "database", "medium"
+        ).option("collection", "yearlyStats").save()
 
     elif args.ingest_mode == "create":
         spark.sql(
@@ -234,6 +239,8 @@ if __name__ == "__main__":
         )
         # df.writeTo(f"glue_catalog.{db_name}.{table_name}").overwritePartitions()
         df.writeTo(f"glue_catalog.{db_name}.{table_name}")
-        print("Data created table",table_name)
+        print("Data created table", table_name)
         print("Data writing to mongo")
-        df.write.format("mongodb").mode("overwrite").option("database", "medium").option("collection", "allStats").save()
+        df.write.format("mongodb").mode("overwrite").option(
+            "database", "medium"
+        ).option("collection", "allStats").save()
