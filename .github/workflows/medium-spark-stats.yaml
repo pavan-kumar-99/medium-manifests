@@ -57,4 +57,4 @@ jobs:
           --conf spark.kubernetes.driver.podTemplateFile=./driver.yaml \
           --conf spark.kubernetes.executor.podTemplateFile=./executor.yaml \
           --conf spark.kubernetes.container.image.pullPolicy=Always \
-          https://raw.githubusercontent.com/pavan-kumar-99/medium-manifests/master/scripts/medium/medium-stats-spark-driver.py $todaysDate/ append
+          https://raw.githubusercontent.com/pavan-kumar-99/medium-manifests/master/scripts/medium/medium-stats-spark-driver.py $todaysDate/ create
