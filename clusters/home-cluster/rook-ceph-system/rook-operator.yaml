@@ -14,7 +14,8 @@ metadata:
   namespace: rook-system
 spec:
   interval: 10m
-  createNamespace: true
+  install: 
+    createNamespace: true
   chart:
     spec:
       chart: rook-ceph
