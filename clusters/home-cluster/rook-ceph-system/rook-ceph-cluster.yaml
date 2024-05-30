@@ -1,0 +1,74 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: rook-ceph-cluster
+  namespace: rook-system
+spec:
+  interval: 10m
+  install: 
+    createNamespace: true
+  chart:
+    spec:
+      chart: rook-ceph
+      version: '0.0.1'
+      sourceRef:
+        kind: HelmRepository
+        name: rook
+        namespace: flux-system
+      interval: 1m
+    values:
+      operatorNamespace: rook-system
+      cephClusterSpec:
+        mon:
+          count: 1
+        mgr:
+          count: 1
+        dashboard:
+          enabled: true
+          ssl: false
+      cephBlockPools:
+      - name: ceph-blockpool
+        spec:
+          replicated:
+            size: 1
+      cephFileSystems:
+      - name: ceph-filesystem
+        spec:
+          metadataPool:
+            replicated:
+              size: 1
+          dataPools:
+            - failureDomain: host
+              replicated:
+                size: 1
+              name: data0
+          metadataServer:
+            activeCount: 1
+            activeStandby: true
+            resources:
+              limits:
+                memory: "4Gi"
+              requests:
+                cpu: "100m"
+                memory: "2Gi"
+      cephObjectStores:
+        - name: ceph-objectstore
+          spec:
+            metadataPool:
+              failureDomain: host
+              replicated:
+                size: 1
+            dataPool:
+              failureDomain: host
+              erasureCoded:
+                dataChunks: 2
+                codingChunks: 1
+            preservePoolsOnDelete: true
+            gateway:
+              port: 80
+              resources:
+                limits:
+                  memory: "2Gi"
+                requests:
+                  cpu: "100m"
+                  memory: "1Gi"
