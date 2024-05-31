@@ -26,7 +26,7 @@ spec:
 
     # -- The metadata.name of the CephCluster CR
     # @default -- The same as the namespace
-    clusterName:
+    clusterName: rook-ceph
 
     # -- Optional override of the target kubernetes version
     kubeVersion:
