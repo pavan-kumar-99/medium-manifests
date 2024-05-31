@@ -26,18 +26,17 @@ spec:
 
     # -- The metadata.name of the CephCluster CR
     # @default -- The same as the namespace
-    clusterName: rook-ceph
+    clusterName:
 
     # -- Optional override of the target kubernetes version
     kubeVersion:
 
     # -- Cluster ceph.conf override
-    configOverride:
-    # configOverride: |
-    #   [global]
-    #   mon_allow_pool_delete = true
-    #   osd_pool_default_size = 3
-    #   osd_pool_default_min_size = 2
+    configOverride: |
+      [global]
+      mon_allow_pool_delete = true
+      osd_pool_default_size = 1
+      osd_pool_default_min_size = 1
 
     # Installs a debugging toolbox deployment
     toolbox:
