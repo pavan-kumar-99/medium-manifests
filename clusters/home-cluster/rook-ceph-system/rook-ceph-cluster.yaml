@@ -626,9 +626,6 @@ spec:
           reclaimPolicy: Delete
           volumeBindingMode: "Immediate"
           # see https://github.com/rook/rook/blob/master/Documentation/Storage-Configuration/Object-Storage-RGW/ceph-object-bucket-claim.md#storageclass for available configuration
-          parameters:
-            # note: objectStoreNamespace and objectStoreName are configured by the chart
-            region: us-east-1
         ingress:
           # Enable an ingress for the ceph-objectstore
           enabled: false
