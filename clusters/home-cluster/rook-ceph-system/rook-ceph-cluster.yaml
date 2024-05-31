@@ -601,11 +601,11 @@ spec:
           metadataPool:
             failureDomain: host
             replicated:
-              size: 1
+              size: 3
           dataPool:
             failureDomain: host
             erasureCoded:
-              dataChunks: 1
+              dataChunks: 2
               codingChunks: 1
           preservePoolsOnDelete: true
           gateway:
