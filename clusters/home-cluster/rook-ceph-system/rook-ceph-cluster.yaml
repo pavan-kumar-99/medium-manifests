@@ -26,7 +26,7 @@ spec:
 
     # -- The metadata.name of the CephCluster CR
     # @default -- The same as the namespace
-    clusterName:
+    clusterName: rook-ceph
 
     # -- Optional override of the target kubernetes version
     kubeVersion:
@@ -463,7 +463,7 @@ spec:
         spec:
           failureDomain: host
           replicated:
-            size: 3
+            size: 1
           # Enables collecting RBD per-image IO statistics by enabling dynamic OSD performance counters. Defaults to false.
           # For reference: https://docs.ceph.com/docs/latest/mgr/prometheus/#rbd-io-statistics
           # enableRBDStats: true
@@ -526,11 +526,11 @@ spec:
         spec:
           metadataPool:
             replicated:
-              size: 3
+              size: 1
           dataPools:
             - failureDomain: host
               replicated:
-                size: 3
+                size: 1
               # Optional and highly recommended, 'data0' by default, see https://github.com/rook/rook/blob/master/Documentation/CRDs/Shared-Filesystem/ceph-filesystem-crd.md#pools
               name: data0
           metadataServer:
@@ -600,13 +600,13 @@ spec:
           metadataPool:
             failureDomain: host
             replicated:
-              size: 3
+              size: 1
           dataPool:
             failureDomain: host
             erasureCoded:
               dataChunks: 2
               codingChunks: 1
-          preservePoolsOnDelete: true
+          preservePoolsOnDelete: false
           gateway:
             port: 80
             resources:
