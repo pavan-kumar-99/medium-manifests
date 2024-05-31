@@ -174,7 +174,7 @@ spec:
         # port: 8443
         # Serve the dashboard using SSL (if using ingress to expose the dashboard and `ssl: true` you need to set
         # the corresponding "backend protocol" annotation(s) for your ingress controller of choice)
-        ssl: true
+        ssl: false
 
       # Network configuration, see: https://github.com/rook/rook/blob/master/Documentation/CRDs/Cluster/ceph-cluster-crd.md#network-configuration-settings
       network:
@@ -240,7 +240,7 @@ spec:
           # method indicates if the entire disk should be sanitized or simply ceph's metadata
           # in both case, re-install is possible
           # possible choices are 'complete' or 'quick' (default)
-          method: quick
+          method: complete
           # dataSource indicate where to get random bytes from to write on the disk
           # possible choices are 'zero' (default) or 'random'
           # using random sources will consume entropy from the system and will take much more time then the zero source
