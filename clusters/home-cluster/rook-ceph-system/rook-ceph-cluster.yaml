@@ -598,16 +598,16 @@ spec:
       - name: ceph-objectstore
         # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Object-Storage/ceph-object-store-crd.md#object-store-settings for available configuration
         spec:
-          # metadataPool:
-          #   failureDomain: host
-          #   replicated:
-          #     size: 1
-          # dataPool:
-          #   failureDomain: host
-          #   erasureCoded:
-          #     dataChunks: 1
-          #     codingChunks: 1
-          # preservePoolsOnDelete: true
+          metadataPool:
+            failureDomain: host
+            replicated:
+              size: 1
+          dataPool:
+            failureDomain: host
+            erasureCoded:
+              dataChunks: 1
+              codingChunks: 1
+          preservePoolsOnDelete: true
           gateway:
             port: 80
             resources:
