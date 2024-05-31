@@ -148,7 +148,7 @@ spec:
       mon:
         # Set the number of mons to be started. Generally recommended to be 3.
         # For highest availability, an odd number of mons should be specified.
-        count: 1
+        count: 3
         # The mons should be on unique nodes. For production, at least 3 nodes are recommended for this reason.
         # Mons should only be allowed on the same node for test environments where data loss is acceptable.
         allowMultiplePerNode: false
@@ -157,7 +157,7 @@ spec:
         # When higher availability of the mgr is needed, increase the count to 2.
         # In that case, one mgr will be active and one in standby. When Ceph updates which
         # mgr is active, Rook will update the mgr services to match the active mgr.
-        count: 1
+        count: 2
         allowMultiplePerNode: false
         modules:
           # List of modules to optionally enable or disable.
@@ -174,7 +174,7 @@ spec:
         # port: 8443
         # Serve the dashboard using SSL (if using ingress to expose the dashboard and `ssl: true` you need to set
         # the corresponding "backend protocol" annotation(s) for your ingress controller of choice)
-        ssl: false
+        ssl: true
 
       # Network configuration, see: https://github.com/rook/rook/blob/master/Documentation/CRDs/Cluster/ceph-cluster-crd.md#network-configuration-settings
       network:
@@ -216,7 +216,7 @@ spec:
 
       # enable the crash collector for ceph daemon crash collection
       crashCollector:
-        disable: true
+        disable: false
         # Uncomment daysToRetain to prune ceph crash entries older than the
         # specified number of days.
         # daysToRetain: 30
@@ -240,7 +240,7 @@ spec:
           # method indicates if the entire disk should be sanitized or simply ceph's metadata
           # in both case, re-install is possible
           # possible choices are 'complete' or 'quick' (default)
-          method: complete
+          method: quick
           # dataSource indicate where to get random bytes from to write on the disk
           # possible choices are 'zero' (default) or 'random'
           # using random sources will consume entropy from the system and will take much more time then the zero source
@@ -321,7 +321,7 @@ spec:
             memory: "4Gi"
           requests:
             cpu: "500m"
-            memory: "512Mi"
+            memory: "1Gi"
         prepareosd:
           # limits: It is not recommended to set limits on the OSD prepare job
           #         since it's a one-time burst for memory that must be allowed to
@@ -464,7 +464,7 @@ spec:
         spec:
           failureDomain: host
           replicated:
-            size: 1
+            size: 3
           # Enables collecting RBD per-image IO statistics by enabling dynamic OSD performance counters. Defaults to false.
           # For reference: https://docs.ceph.com/docs/latest/mgr/prometheus/#rbd-io-statistics
           # enableRBDStats: true
@@ -527,11 +527,11 @@ spec:
         spec:
           metadataPool:
             replicated:
-              size: 1
+              size: 3
           dataPools:
             - failureDomain: host
               replicated:
-                size: 1
+                size: 3
               # Optional and highly recommended, 'data0' by default, see https://github.com/rook/rook/blob/master/Documentation/CRDs/Shared-Filesystem/ceph-filesystem-crd.md#pools
               name: data0
           metadataServer:
@@ -626,6 +626,9 @@ spec:
           reclaimPolicy: Delete
           volumeBindingMode: "Immediate"
           # see https://github.com/rook/rook/blob/master/Documentation/Storage-Configuration/Object-Storage-RGW/ceph-object-bucket-claim.md#storageclass for available configuration
+          parameters:
+            # note: objectStoreNamespace and objectStoreName are configured by the chart
+            region: us-east-1
         ingress:
           # Enable an ingress for the ceph-objectstore
           enabled: false
