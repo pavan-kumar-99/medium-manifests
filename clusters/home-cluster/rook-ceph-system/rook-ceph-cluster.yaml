@@ -600,7 +600,7 @@ spec:
           metadataPool:
             failureDomain: osd
             replicated:
-              size: 3
+              size: 1
           dataPool:
             failureDomain: osd
             erasureCoded:
