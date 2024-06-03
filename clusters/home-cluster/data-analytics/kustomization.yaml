@@ -3,3 +3,4 @@ kind: Kustomization
 namespace: data-analytics
 resources:
   - rook-nfs.yaml
+  - rook-s3.yaml
