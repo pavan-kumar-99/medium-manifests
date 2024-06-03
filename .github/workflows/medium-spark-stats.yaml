@@ -1,60 +1,60 @@
-name: Run Spark Job for Medium Stats
+# name: Run Spark Job for Medium Stats
 
-on:
-  push:
-    branches:
-      - master
-  schedule:
-    - cron: '0 1 * * *' 
+# on:
+#   push:
+#     branches:
+#       - master
+#   schedule:
+#     - cron: '0 1 * * *' 
 
-jobs:
-  sparkStats:
-    runs-on: self-hosted
+# jobs:
+#   sparkStats:
+#     runs-on: self-hosted
     
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v4
 
-    - name: Set up AWS CLI
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
+#     - name: Set up AWS CLI
+#       uses: aws-actions/configure-aws-credentials@v4
+#       with:
+#         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         aws-region: us-east-1
 
-    - id: 'gcloud-auth'
-      uses: 'google-github-actions/auth@v2'
-      with:
-        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+#     - id: 'gcloud-auth'
+#       uses: 'google-github-actions/auth@v2'
+#       with:
+#         credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
-    - name: 'Set up Cloud SDK'
-      uses: 'google-github-actions/setup-gcloud@v2'
+#     - name: 'Set up Cloud SDK'
+#       uses: 'google-github-actions/setup-gcloud@v2'
 
-    - id: 'get-credentials'
-      uses: 'google-github-actions/get-gke-credentials@v2'
-      with:
-        cluster_name: 'spark-stats-cluster'
-        location: 'us-central1-c'
-        project_id: "kinetic-abbey-420301"
+#     - id: 'get-credentials'
+#       uses: 'google-github-actions/get-gke-credentials@v2'
+#       with:
+#         cluster_name: 'spark-stats-cluster'
+#         location: 'us-central1-c'
+#         project_id: "kinetic-abbey-420301"
 
-    - name: Spark Monthly and Yearly Stats
-      run: |
-        cd scripts/medium
-        todaysDate=$(date +"%Y-%m-%d")
-        spark-submit \
-          --master k8s://https://34.171.207.118 \
-          --deploy-mode cluster \
-          --name medium-stats \
-          --conf spark.executor.instances=3 \
-          --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
-          --conf spark.kubernetes.namespace=default \
-          --conf spark.kubernetes.driver.request.cores=2 \
-          --conf spark.driver.memory=1g \
-          --conf spark.kubernetes.executor.request.cores=2 \
-          --conf spark.executor.memory=1g \
-          --conf spark.kubernetes.pyspark.pythonVersion=3 \
-          --conf spark.kubernetes.container.image=greypavan/medium-manifests:medium-stats \
-          --conf spark.kubernetes.driver.podTemplateFile=./driver.yaml \
-          --conf spark.kubernetes.executor.podTemplateFile=./executor.yaml \
-          --conf spark.kubernetes.container.image.pullPolicy=Always \
-          https://raw.githubusercontent.com/pavan-kumar-99/medium-manifests/master/scripts/medium/medium-stats-spark-driver.py $todaysDate/ append
+#     - name: Spark Monthly and Yearly Stats
+#       run: |
+#         cd scripts/medium
+#         todaysDate=$(date +"%Y-%m-%d")
+#         spark-submit \
+#           --master k8s://https://34.171.207.118 \
+#           --deploy-mode cluster \
+#           --name medium-stats \
+#           --conf spark.executor.instances=3 \
+#           --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+#           --conf spark.kubernetes.namespace=default \
+#           --conf spark.kubernetes.driver.request.cores=2 \
+#           --conf spark.driver.memory=1g \
+#           --conf spark.kubernetes.executor.request.cores=2 \
+#           --conf spark.executor.memory=1g \
+#           --conf spark.kubernetes.pyspark.pythonVersion=3 \
+#           --conf spark.kubernetes.container.image=greypavan/medium-manifests:medium-stats \
+#           --conf spark.kubernetes.driver.podTemplateFile=./driver.yaml \
+#           --conf spark.kubernetes.executor.podTemplateFile=./executor.yaml \
+#           --conf spark.kubernetes.container.image.pullPolicy=Always \
+#           https://raw.githubusercontent.com/pavan-kumar-99/medium-manifests/master/scripts/medium/medium-stats-spark-driver.py $todaysDate/ append
