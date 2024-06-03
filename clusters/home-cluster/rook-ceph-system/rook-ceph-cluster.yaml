@@ -26,7 +26,7 @@ spec:
 
     # -- The metadata.name of the CephCluster CR
     # @default -- The same as the namespace
-    clusterName: rook-ceph
+    clusterName:
 
     # -- Optional override of the target kubernetes version
     kubeVersion:
@@ -34,9 +34,8 @@ spec:
     # -- Cluster ceph.conf override
     configOverride: |
       [global]
-      mon_allow_pool_delete = true
-      osd_pool_default_size = 1
-      osd_pool_default_min_size = 1
+      osd_pool_default_size = 2
+      osd_pool_default_min_size = 2
 
     # Installs a debugging toolbox deployment
     toolbox:
@@ -147,17 +146,17 @@ spec:
       mon:
         # Set the number of mons to be started. Generally recommended to be 3.
         # For highest availability, an odd number of mons should be specified.
-        count: 3
+        count: 2
         # The mons should be on unique nodes. For production, at least 3 nodes are recommended for this reason.
         # Mons should only be allowed on the same node for test environments where data loss is acceptable.
-        allowMultiplePerNode: true
+        allowMultiplePerNode: false
 
       mgr:
         # When higher availability of the mgr is needed, increase the count to 2.
         # In that case, one mgr will be active and one in standby. When Ceph updates which
         # mgr is active, Rook will update the mgr services to match the active mgr.
         count: 2
-        allowMultiplePerNode: true
+        allowMultiplePerNode: false
         modules:
           # List of modules to optionally enable or disable.
           # Note the "dashboard" and "monitoring" modules are already configured by other settings in the cluster CR.
@@ -173,7 +172,7 @@ spec:
         # port: 8443
         # Serve the dashboard using SSL (if using ingress to expose the dashboard and `ssl: true` you need to set
         # the corresponding "backend protocol" annotation(s) for your ingress controller of choice)
-        ssl: true
+        ssl: false
 
       # Network configuration, see: https://github.com/rook/rook/blob/master/Documentation/CRDs/Cluster/ceph-cluster-crd.md#network-configuration-settings
       network:
@@ -313,14 +312,14 @@ spec:
           limits:
             memory: "2Gi"
           requests:
-            cpu: "500m"
-            memory: "512Mi"
+            cpu: "1000m"
+            memory: "1Gi"
         osd:
           limits:
             memory: "4Gi"
           requests:
-            cpu: "500m"
-            memory: "1Gi"
+            cpu: "1000m"
+            memory: "4Gi"
         prepareosd:
           # limits: It is not recommended to set limits on the OSD prepare job
           #         since it's a one-time burst for memory that must be allowed to
@@ -461,9 +460,9 @@ spec:
       - name: ceph-blockpool
         # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Block-Storage/ceph-block-pool-crd.md#spec for available configuration
         spec:
-          failureDomain: osd
+          failureDomain: host
           replicated:
-            size: 1
+            size: 2
           # Enables collecting RBD per-image IO statistics by enabling dynamic OSD performance counters. Defaults to false.
           # For reference: https://docs.ceph.com/docs/latest/mgr/prometheus/#rbd-io-statistics
           # enableRBDStats: true
@@ -526,11 +525,11 @@ spec:
         spec:
           metadataPool:
             replicated:
-              size: 1
+              size: 2
           dataPools:
-            - failureDomain: osd
+            - failureDomain: host
               replicated:
-                size: 1
+                size: 2
               # Optional and highly recommended, 'data0' by default, see https://github.com/rook/rook/blob/master/Documentation/CRDs/Shared-Filesystem/ceph-filesystem-crd.md#pools
               name: data0
           metadataServer:
@@ -540,8 +539,8 @@ spec:
               limits:
                 memory: "4Gi"
               requests:
-                cpu: "500m"
-                memory: "1Gi"
+                cpu: "1000m"
+                memory: "4Gi"
             priorityClassName: system-cluster-critical
         storageClass:
           enabled: true
@@ -598,22 +597,21 @@ spec:
         # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Object-Storage/ceph-object-store-crd.md#object-store-settings for available configuration
         spec:
           metadataPool:
-            failureDomain: osd
+            failureDomain: host
             replicated:
-              size: 1
+              size: 2
           dataPool:
-            failureDomain: osd
-            erasureCoded:
-              dataChunks: 2
-              codingChunks: 1
-          preservePoolsOnDelete: false
+            failureDomain: host
+            replicated:
+              size: 2
+          preservePoolsOnDelete: true
           gateway:
             port: 80
             resources:
               limits:
                 memory: "2Gi"
               requests:
-                cpu: "500m"
+                cpu: "1000m"
                 memory: "1Gi"
             # securePort: 443
             # sslCertificateRef:
