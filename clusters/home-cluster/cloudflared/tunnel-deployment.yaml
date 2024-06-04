@@ -24,11 +24,11 @@ spec:
         - run
         args:
         - --token
-        - $TOKEN
+        - $CLOUDFLARE_API_TOKEN
         image: cloudflare/cloudflared:latest
         name: cloudflared
         env:
-        - name: TOKEN
+        - name: CLOUDFLARE_API_TOKEN
           valueFrom:
             secretKeyRef:
               name: cloudflared-token
