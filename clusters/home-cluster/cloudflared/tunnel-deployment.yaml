@@ -16,19 +16,15 @@ spec:
         pod: cloudflared
     spec:
       containers:
-      - command:
-        - cloudflared
-        - tunnel
-        - --metrics
-        - 0.0.0.0:2000
-        - run
-        args:
-        - --token
-        - $CLOUDFLARE_API_TOKEN
+      - name: cloudflared
         image: cloudflare/cloudflared:latest
-        name: cloudflared
+        command: ["/bin/sh"]
+        args:
+          - "-c"
+          - >
+            cloudflared tunnel --metrics 0.0.0.0:2000 run --token ${TOKEN}
         env:
-        - name: CLOUDFLARE_API_TOKEN
+        - name: TOKEN
           valueFrom:
             secretKeyRef:
               name: cloudflared-token
@@ -47,3 +43,10 @@ spec:
           failureThreshold: 3
           initialDelaySeconds: 10
           periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
