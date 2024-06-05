@@ -47,7 +47,6 @@ spec:
       ollama:
         models:
         - gemma
-        - mistral
       autoscaling:
         enabled: true
         minReplicas: 2
