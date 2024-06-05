@@ -28,10 +28,10 @@ spec:
       # -- Automatically install Ollama Helm chart from https://otwld.github.io/ollama-helm/. Use [Helm Values](https://github.com/otwld/ollama-helm/#helm-values) to configure
       enabled: true
       replicaCount: 2
-      models:
-      - gemma
-      - llama3
-      - mistral
+      ollama:
+        models:
+        - gemma
+        - mistral
       autoscaling:
         enabled: true
         minReplicas: 2
