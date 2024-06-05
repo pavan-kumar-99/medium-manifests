@@ -51,11 +51,11 @@ spec:
       autoscaling:
         enabled: true
         minReplicas: 2
-        maxReplicas: 10
+        maxReplicas: 3
         targetCPUUtilizationPercentage: 50
       persistentVolume:
         enabled: true
         accessModes:
-        - ReadWriteMany
+        - ReadWriteOnce
         size: 100Gi
-        storageClass: "ceph-filesystem"
+        storageClass: "ceph-block"
