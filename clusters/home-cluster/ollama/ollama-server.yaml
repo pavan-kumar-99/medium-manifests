@@ -1,0 +1,45 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: ollama-helm
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://helm.openwebui.com/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ollama-server
+  namespace: ollama
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: open-webui
+      version: '2.1.0'
+      sourceRef:
+        kind: HelmRepository
+        name: ollama-helm
+        namespace: flux-system
+      interval: 1m
+  values:
+    ollama:
+      # -- Automatically install Ollama Helm chart from https://otwld.github.io/ollama-helm/. Use [Helm Values](https://github.com/otwld/ollama-helm/#helm-values) to configure
+      enabled: true
+      replicaCount: 2
+      models:
+      - gemma
+      - llama3
+      - mistral
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 10
+        targetCPUUtilizationPercentage: 50
+      persistentVolume:
+        enabled: true
+        accessModes:
+        - ReadWriteMany
+        size: 100Gi
+        storageClass: "ceph-filesystem"
