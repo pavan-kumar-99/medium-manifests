@@ -38,13 +38,17 @@ spec:
       enabled: true
       resources:
         requests:
-          cpu: "6000m"
+          cpu: "7000m"
           memory: "6Gi"
         limits:
           cpu: "7000m"
           memory: "6Gi"
       replicaCount: 1
       ollama:
+        gpu:
+          enabled: true
+          type: 'nvidia'
+          number: 1
         models:
         - gemma
       autoscaling:
