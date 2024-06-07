@@ -51,7 +51,6 @@ spec:
           number: 1
         models:
         - gemma
-        - llama3
       autoscaling:
         enabled: false
         minReplicas: 3
