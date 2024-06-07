@@ -470,7 +470,7 @@ spec:
           enabled: true
           name: ceph-block
           isDefault: true
-          reclaimPolicy: Retain
+          reclaimPolicy: Delete
           allowVolumeExpansion: true
           volumeBindingMode: "Immediate"
           mountOptions: []
@@ -548,7 +548,7 @@ spec:
           name: ceph-filesystem
           # (Optional) specify a data pool to use, must be the name of one of the data pools above, 'data0' by default
           pool: data0
-          reclaimPolicy: Retain
+          reclaimPolicy: Delete
           allowVolumeExpansion: true
           volumeBindingMode: "Immediate"
           mountOptions: []
@@ -620,7 +620,7 @@ spec:
         storageClass:
           enabled: true
           name: ceph-bucket
-          reclaimPolicy: Retain
+          reclaimPolicy: Delete
           volumeBindingMode: "Immediate"
           # see https://github.com/rook/rook/blob/master/Documentation/Storage-Configuration/Object-Storage-RGW/ceph-object-bucket-claim.md#storageclass for available configuration
           parameters:
