@@ -42,7 +42,7 @@ spec:
           memory: "4Gi"
         limits:
           cpu: "4000m"
-          memory: "4Gi"
+          memory: "6Gi"
       replicaCount: 1
       ollama:
         gpu:
@@ -51,6 +51,7 @@ spec:
           number: 1
         models:
         - gemma
+        - llama3
       autoscaling:
         enabled: false
         minReplicas: 3
