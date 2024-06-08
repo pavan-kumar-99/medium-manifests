@@ -60,5 +60,5 @@ spec:
         enabled: true
         accessModes:
         - ReadWriteOnce
-        size: 50Gi
+        size: 100Gi
         storageClass: "ceph-block"
