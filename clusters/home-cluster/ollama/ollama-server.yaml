@@ -36,6 +36,8 @@ spec:
     ollama:
       # -- Automatically install Ollama Helm chart from https://otwld.github.io/ollama-helm/. Use [Helm Values](https://github.com/otwld/ollama-helm/#helm-values) to configure
       enabled: true
+      image:
+        tag: "0.1.42"
       resources:
         requests:
           cpu: "4000m"
@@ -49,8 +51,8 @@ spec:
           enabled: true
           type: 'nvidia'
           number: 1
-        models:
-        - gemma
+        # models:
+        # - gemma
       autoscaling:
         enabled: false
         minReplicas: 3
