@@ -1,66 +1,66 @@
-# apiVersion: source.toolkit.fluxcd.io/v1
-# kind: HelmRepository
-# metadata:
-#   name: ollama-helm
-#   namespace: flux-system
-# spec:
-#   interval: 1m
-#   url: https://helm.openwebui.com/
-# ---
-# apiVersion: helm.toolkit.fluxcd.io/v2
-# kind: HelmRelease
-# metadata:
-#   name: ollama-server
-#   namespace: ollama
-# spec:
-#   interval: 10m
-#   chart:
-#     spec:
-#       chart: open-webui
-#       version: '2.1.0'
-#       sourceRef:
-#         kind: HelmRepository
-#         name: ollama-helm
-#         namespace: flux-system
-#       interval: 1m
-#   values:
-#     ollamaUrls:
-#     - 'http://ollama-server:11434'
-#     resources:
-#       requests:
-#         cpu: "500m"
-#         memory: "1Gi"
-#       limits:
-#         cpu: "1000m"
-#         memory: "4Gi"
-#     ollama:
-#       # -- Automatically install Ollama Helm chart from https://otwld.github.io/ollama-helm/. Use [Helm Values](https://github.com/otwld/ollama-helm/#helm-values) to configure
-#       enabled: true
-#       image:
-#         tag: "0.1.42"
-#       resources:
-#         requests:
-#           cpu: "4000m"
-#           memory: "4Gi"
-#         limits:
-#           cpu: "6000m"
-#           memory: "6Gi"
-#       replicaCount: 1
-#       ollama:
-#         gpu:
-#           enabled: true
-#           type: 'nvidia'
-#           number: 1
-#         # models:
-#         # - gemma
-#       autoscaling:
-#         enabled: false
-#         minReplicas: 3
-#         maxReplicas: 4
-#         targetCPUUtilizationPercentage: 50
-#       persistentVolume:
-#         enabled: true
-#         accessModes:
-#         - ReadWriteOnce
-#         size: 100Gi
-#         storageClass: "ceph-block-ssd"
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: ollama-helm
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://helm.openwebui.com/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ollama-server
+  namespace: ollama
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: open-webui
+      version: '2.1.0'
+      sourceRef:
+        kind: HelmRepository
+        name: ollama-helm
+        namespace: flux-system
+      interval: 1m
+  values:
+    ollamaUrls:
+    - 'http://ollama-server:11434'
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "1Gi"
+      limits:
+        cpu: "1000m"
+        memory: "4Gi"
+    ollama:
+      # -- Automatically install Ollama Helm chart from https://otwld.github.io/ollama-helm/. Use [Helm Values](https://github.com/otwld/ollama-helm/#helm-values) to configure
+      enabled: true
+      image:
+        tag: "0.1.42"
+      resources:
+        requests:
+          cpu: "4000m"
+          memory: "4Gi"
+        limits:
+          cpu: "6000m"
+          memory: "6Gi"
+      replicaCount: 1
+      ollama:
+        gpu:
+          enabled: true
+          type: 'nvidia'
+          number: 1
+        # models:
+        # - gemma
+      autoscaling:
+        enabled: false
+        minReplicas: 3
+        maxReplicas: 4
+        targetCPUUtilizationPercentage: 50
+      persistentVolume:
+        enabled: true
+        accessModes:
+        - ReadWriteOnce
+        size: 100Gi
+        storageClass: "ceph-block-ssd"
