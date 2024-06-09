@@ -1,0 +1,33 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: minio-helm
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: oci://registry-1.docker.io/bitnamicharts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: minio-server
+  namespace: minio
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: minio
+      version: '14.6.7'
+      sourceRef:
+        kind: HelmRepository
+        name: minio-helm
+        namespace: flux-system
+      interval: 1m
+  values:
+    mode: standalone
+    replicaCount: 2
+    provisioning:
+      enabled: true
+      buckets:
+        - name: medium-stats
+        - name: iceberg-table
