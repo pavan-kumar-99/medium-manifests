@@ -26,6 +26,9 @@ spec:
   values:
     mode: standalone
     replicaCount: 2
+    persistence:
+      enabled: true 
+      size: 100Gi
     provisioning:
       enabled: true
       buckets:
