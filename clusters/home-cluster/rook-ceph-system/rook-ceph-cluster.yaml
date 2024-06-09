@@ -654,43 +654,43 @@ spec:
 
     # -- A list of CephObjectStore configurations to deploy
     # @default -- See [below](#ceph-object-stores)
-    cephObjectStores:
-      - name: ceph-objectstore
-        # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Object-Storage/ceph-object-store-crd.md#object-store-settings for available configuration
-        spec:
-          metadataPool:
-            failureDomain: host
-            replicated:
-              size: 2
-          dataPool:
-            failureDomain: host
-            replicated:
-              size: 2
-          preservePoolsOnDelete: true
-          gateway:
-            port: 80
-            resources:
-              limits:
-                memory: "2Gi"
-              requests:
-                cpu: "100m"
-                memory: "512Mi"
-            # securePort: 443
-            # sslCertificateRef:
-            instances: 1
-            priorityClassName: system-cluster-critical
-        storageClass:
-          enabled: true
-          name: ceph-bucket
-          reclaimPolicy: Delete
-          volumeBindingMode: "Immediate"
-          # see https://github.com/rook/rook/blob/master/Documentation/Storage-Configuration/Object-Storage-RGW/ceph-object-bucket-claim.md#storageclass for available configuration
-          parameters:
-            # note: objectStoreNamespace and objectStoreName are configured by the chart
-            region: us-east-1
-        ingress:
-          # Enable an ingress for the ceph-objectstore
-          enabled: false
+    cephObjectStores: []
+      # - name: ceph-objectstore
+      #   # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Object-Storage/ceph-object-store-crd.md#object-store-settings for available configuration
+      #   spec:
+      #     metadataPool:
+      #       failureDomain: host
+      #       replicated:
+      #         size: 2
+      #     dataPool:
+      #       failureDomain: host
+      #       replicated:
+      #         size: 2
+      #     preservePoolsOnDelete: true
+      #     gateway:
+      #       port: 80
+      #       resources:
+      #         limits:
+      #           memory: "2Gi"
+      #         requests:
+      #           cpu: "100m"
+      #           memory: "512Mi"
+      #       # securePort: 443
+      #       # sslCertificateRef:
+      #       instances: 1
+      #       priorityClassName: system-cluster-critical
+      #   storageClass:
+      #     enabled: true
+      #     name: ceph-bucket
+      #     reclaimPolicy: Delete
+      #     volumeBindingMode: "Immediate"
+      #     # see https://github.com/rook/rook/blob/master/Documentation/Storage-Configuration/Object-Storage-RGW/ceph-object-bucket-claim.md#storageclass for available configuration
+      #     parameters:
+      #       # note: objectStoreNamespace and objectStoreName are configured by the chart
+      #       region: us-east-1
+      #   ingress:
+      #     # Enable an ingress for the ceph-objectstore
+      #     enabled: false
           # annotations: {}
           # host:
           #   name: objectstore.example.com
