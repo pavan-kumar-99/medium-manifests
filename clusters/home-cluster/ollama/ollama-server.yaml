@@ -41,10 +41,10 @@ spec:
       resources:
         requests:
           cpu: "4000m"
-          memory: "14Gi"
+          memory: "36Gi"
         limits:
           cpu: "6000m"
-          memory: "16Gi"
+          memory: "36Gi"
       replicaCount: 1
       ollama:
         gpu:
