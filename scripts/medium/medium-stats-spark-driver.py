@@ -18,7 +18,7 @@ def download_from_s3(bucket_name, key, local_path):
     - key: The key (path) of the file in the S3 bucket.
     - local_path: The local path where the file will be downloaded.
     """
-    s3 = boto3.resource("s3")
+    s3 = boto3.resource("s3",endpoint_url="http://minio-server.minio:9000")
     try:
         bucket = s3.Bucket(bucket_name)
         for obj in bucket.objects.filter(Prefix=key):
