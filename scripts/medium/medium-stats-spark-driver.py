@@ -53,7 +53,7 @@ def process_data(bucket_name, bucket_prefix, local_path):
     - Joined DataFrame.
     - Spark Session.
     """
-    catalog_name = "glue_catalog"
+    catalog_name = "medium_stats"
     iceberg_bucket_name = bucket_name
     iceberg_bucket_prefix = bucket_prefix
     warehouse_path = f"s3a://{iceberg_bucket_name}/{iceberg_bucket_prefix}"
@@ -213,7 +213,7 @@ if __name__ == "__main__":
         print("Merging Data to Iceberg")
         spark.sql(
             f"""
-                MERGE INTO glue_catalog.{db_name}.{table_name} a
+                MERGE INTO {catalog_name}.{db_name}.{table_name} a
                 USING {temp_table_name} b
                 on a.Date = b.Date
                 WHEN NOT MATCHED THEN INSERT *;
@@ -229,7 +229,7 @@ if __name__ == "__main__":
     elif args.ingest_mode == "create":
         spark.sql(
             f"""
-                    CREATE TABLE IF NOT EXISTS glue_catalog.{db_name}.{table_name} (
+                    CREATE TABLE IF NOT EXISTS {catalog_name}.{db_name}.{table_name} (
                         Date date,
                         readersThatClappedCount long,
                         readersThatReadCount int,
@@ -242,8 +242,8 @@ if __name__ == "__main__":
                         PARTITIONED BY (year(Date),title);
                     """
         )
-        # df.writeTo(f"glue_catalog.{db_name}.{table_name}").overwritePartitions()
-        df.writeTo(f"glue_catalog.{db_name}.{table_name}")
+        # df.writeTo(f"{catalog_name}.{db_name}.{table_name}").overwritePartitions()
+        df.writeTo(f"{catalog_name}.{db_name}.{table_name}")
         print("Data created table", table_name)
         print("Data writing to mongo")
         df.write.format("mongodb").mode("overwrite").option(
