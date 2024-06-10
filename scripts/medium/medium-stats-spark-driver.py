@@ -74,8 +74,13 @@ def process_data(bucket_name, bucket_prefix, local_path):
         )
         .config(f"spark.sql.catalog.{catalog_name}.warehouse", f"{warehouse_path}")
         .config(
-            f"spark.sql.catalog.{catalog_name}.catalog-impl",
-            "org.apache.iceberg.aws.glue.GlueCatalog",
+            f"spark.sql.catalog.{catalog_name}.type",
+            "hadoop",
+        )
+        .config(f"spark.sql.defaultCatalog", f"{catalog_name}")
+        .config(
+            f"spark.sql.catalog.{catalog_name}.s3.endpoint",
+            "http://minio-server.minio:9000",
         )
         .config(
             f"spark.sql.catalog.{catalog_name}.io-impl",
@@ -193,7 +198,7 @@ if __name__ == "__main__":
     table_name = "articles"
     local_path = "/usr/stats/" + args.key
     bucket_name = "medium-stats"
-    iceberg_bucket_name = "iceberg-tables-medium-stats"
+    iceberg_bucket_name = "iceberg-table"
     iceberg_bucket_prefix = "iceberg-tables/"
     temp_table_name = "mediumstatstemp"
 
