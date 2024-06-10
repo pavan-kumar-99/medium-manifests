@@ -56,7 +56,7 @@ def process_data(bucket_name, bucket_prefix, local_path):
     catalog_name = "glue_catalog"
     iceberg_bucket_name = bucket_name
     iceberg_bucket_prefix = bucket_prefix
-    warehouse_path = f"s3://{iceberg_bucket_name}/{iceberg_bucket_prefix}"
+    warehouse_path = f"s3a://{iceberg_bucket_name}/{iceberg_bucket_prefix}"
     mongodb_uri = os.getenv("MONGO_URI")
 
     if not mongodb_uri:
@@ -80,6 +80,10 @@ def process_data(bucket_name, bucket_prefix, local_path):
         .config(f"spark.sql.defaultCatalog", f"{catalog_name}")
         .config(
             f"spark.sql.catalog.{catalog_name}.s3.endpoint",
+            "http://minio-server.minio:9000",
+        )
+        .config(
+            f"spark.sql.catalog.{catalog_name}.s3a.endpoint",
             "http://minio-server.minio:9000",
         )
         .config(
