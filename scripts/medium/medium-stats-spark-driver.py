@@ -193,7 +193,8 @@ if __name__ == "__main__":
         help="Ingestion mode: append or create",
     )
     args = parser.parse_args()
-
+    
+    catalog_name = "medium_stats"
     db_name = "mediumstats"
     table_name = "articles"
     local_path = "/usr/stats/" + args.key
