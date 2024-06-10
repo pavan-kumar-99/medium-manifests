@@ -87,10 +87,6 @@ def process_data(bucket_name, bucket_prefix, local_path):
             "http://minio-server.minio:9000",
         )
         .config(
-            f"spark.sql.catalog.{catalog_name}.io-impl",
-            "org.apache.iceberg.aws.s3.S3FileIO",
-        )
-        .config(
             "spark.sql.extensions",
             "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions",
         )
