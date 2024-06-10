@@ -26,7 +26,7 @@ jobs:
           --name medium-stats \
           --conf spark.executor.instances=3 \
           --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
-          --conf spark.kubernetes.namespace=default \
+          --conf spark.kubernetes.namespace=data-analytics \
           --conf spark.kubernetes.driver.request.cores=2 \
           --conf spark.driver.memory=1g \
           --conf spark.kubernetes.executor.request.cores=2 \
