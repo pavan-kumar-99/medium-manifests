@@ -83,12 +83,20 @@ def process_data(bucket_name, bucket_prefix, local_path):
             "http://minio-server.minio:9000/",
         )
         .config(
+            f"spark.sql.catalog.{catalog_name}.s3.endpoint",
+            "http://minio-server.minio:9000/",
+        )
+        .config(
             "spark.sql.extensions",
             "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions",
         )
         .config(
             "spark.mongodb.write.connection.uri",
             f"{mongodb_uri}",
+        )
+        .config(
+            "spark.hadoop.fs.s3a.endpoint",
+            "http://minio-server.minio:9000/",
         )
         .config(
             "spark.hadoop.fs.s3a.access.key",
