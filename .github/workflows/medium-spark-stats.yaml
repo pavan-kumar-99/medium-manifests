@@ -31,6 +31,7 @@ jobs:
           --conf spark.driver.memory=1g \
           --conf spark.kubernetes.executor.request.cores=2 \
           --conf spark.executor.memory=1g \
+          --packages org.apache.hadoop:hadoop-aws:3.3.4 \
           --conf spark.kubernetes.pyspark.pythonVersion=3 \
           --conf spark.kubernetes.container.image=greypavan/medium-manifests:medium-stats \
           --conf spark.kubernetes.driver.podTemplateFile=./driver.yaml \
