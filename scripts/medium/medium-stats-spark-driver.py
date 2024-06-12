@@ -59,7 +59,9 @@ def process_data(bucket_name, bucket_prefix, local_path):
     warehouse_path = f"s3a://{iceberg_bucket_name}/{iceberg_bucket_prefix}"
     print("Warehouse path is",warehouse_path)
     mongodb_uri = os.getenv("MONGO_URI")
-
+    access_key = os.getenv("AWS_ACCESS_KEY_ID")
+    secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+    
     if not mongodb_uri:
         raise ValueError("MONGO_URI environment variable is not set")
 
@@ -97,11 +99,11 @@ def process_data(bucket_name, bucket_prefix, local_path):
         )
         .config(
             "spark.hadoop.fs.s3a.access.key",
-            "H7FzkQTJ6o4mVJa1grZE",
+            f"{access_key}",
         )
         .config(
             "spark.hadoop.fs.s3a.secret.key",
-            "CGeGAuznUL8cEMIBJ8q2z5jwxk5GHthfoFoVbThj",
+            f"{secret_key}",
         )
         .getOrCreate()
     )
