@@ -57,6 +57,7 @@ def process_data(bucket_name, bucket_prefix, local_path):
     iceberg_bucket_name = bucket_name
     iceberg_bucket_prefix = bucket_prefix
     warehouse_path = f"s3a://{iceberg_bucket_name}/{iceberg_bucket_prefix}"
+    print("Warehouse path is",warehouse_path)
     mongodb_uri = os.getenv("MONGO_URI")
 
     if not mongodb_uri:
@@ -78,10 +79,6 @@ def process_data(bucket_name, bucket_prefix, local_path):
             "hadoop",
         )
         .config(f"spark.sql.defaultCatalog", f"{catalog_name}")
-        .config(
-            f"spark.sql.catalog.{catalog_name}.s3.endpoint",
-            "http://minio-server.minio:9000/",
-        )
         .config(
             "spark.sql.extensions",
             "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions",
