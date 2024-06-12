@@ -79,10 +79,6 @@ def process_data(bucket_name, bucket_prefix, local_path):
         )
         .config(f"spark.sql.defaultCatalog", f"{catalog_name}")
         .config(
-            f"spark.sql.catalog.{catalog_name}.s3a.endpoint",
-            "http://minio-server.minio:9000/",
-        )
-        .config(
             f"spark.sql.catalog.{catalog_name}.s3.endpoint",
             "http://minio-server.minio:9000/",
         )
