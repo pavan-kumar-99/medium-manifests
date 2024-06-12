@@ -95,6 +95,10 @@ def process_data(bucket_name, bucket_prefix, local_path):
             "http://minio-server.minio:9000/",
         )
         .config(
+            "spark.sql.catalogImplementation",
+            "in-memory",
+        )
+        .config(
             "spark.hadoop.fs.s3a.access.key",
             "H7FzkQTJ6o4mVJa1grZE",
         )
