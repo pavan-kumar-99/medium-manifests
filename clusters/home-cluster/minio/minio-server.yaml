@@ -28,7 +28,7 @@ spec:
       repository: bitnami/minio
       tag: 2024.6.11
     mode: standalone
-    replicaCount: 2
+    replicaCount: 1
     persistence:
       enabled: true 
       size: 100Gi
