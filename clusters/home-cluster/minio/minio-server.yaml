@@ -24,6 +24,8 @@ spec:
         namespace: flux-system
       interval: 1m
   values:
+    image:
+      tag: RELEASE.2024-04-06T05-26-02Z
     mode: standalone
     replicaCount: 2
     persistence:
