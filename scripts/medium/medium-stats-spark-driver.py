@@ -94,6 +94,14 @@ def process_data(bucket_name, bucket_prefix, local_path):
             "spark.mongodb.write.connection.uri",
             f"{mongodb_uri}",
         )
+        .config(
+            "spark.hadoop.fs.s3a.access.key",
+            "H7FzkQTJ6o4mVJa1grZE",
+        )
+        .config(
+            "spark.hadoop.fs.s3a.secret.key",
+            "CGeGAuznUL8cEMIBJ8q2z5jwxk5GHthfoFoVbThj",
+        )
         .getOrCreate()
     )
 
