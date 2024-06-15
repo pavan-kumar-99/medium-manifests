@@ -37,3 +37,4 @@ spec:
       buckets:
         - name: medium-stats
         - name: iceberg-table
+        - name: medium-tags
