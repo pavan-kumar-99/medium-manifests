@@ -25,6 +25,8 @@ spec:
       interval: 1m
   values:
     shards: 1
+    keeper:
+      enabled: true
     replicaCount: 2
     resources:
       requests:
@@ -39,5 +41,3 @@ spec:
       size: 100Gi
     zookeeper:
       enabled: false
-    keeper:
-      enabled: true
