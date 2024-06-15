@@ -36,5 +36,9 @@ spec:
       enabled: true
       buckets:
         - name: medium-stats
+          lifecycle:
+          - id: DeleteAfter1Day
+            expiry:
+              days: 1
         - name: iceberg-table
         - name: medium-tags
