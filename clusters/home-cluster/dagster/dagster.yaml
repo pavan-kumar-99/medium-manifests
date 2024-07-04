@@ -1,0 +1,30 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: dagster-helm
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://dagster-io.github.io/helm
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: dagster
+  namespace: dagster
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: dagster
+      version: '1.7.12'
+      sourceRef:
+        kind: HelmRepository
+        name: dagster-helm
+        namespace: flux-system
+      interval: 1m
+  values:
+    dagsterWebserver:
+      enableReadOnly: true
+    runLauncher:
+      type: K8sRunLauncher
