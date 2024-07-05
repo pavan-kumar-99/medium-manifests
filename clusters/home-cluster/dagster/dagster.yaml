@@ -25,6 +25,7 @@ spec:
       interval: 1m
   values:
     postgresql:
+      enabled: false
       primary:
         livenessProbe:
           enabled: false
