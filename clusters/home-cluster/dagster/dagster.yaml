@@ -24,6 +24,9 @@ spec:
         namespace: flux-system
       interval: 1m
   values:
+    postgresql:
+      image:
+        tag: "latest"
     dagsterWebserver:
       enableReadOnly: true
     runLauncher:
