@@ -25,6 +25,11 @@ spec:
       interval: 1m
   values:
     postgresql:
+      primary:
+        livenessProbe:
+          enabled: false
+        readinessProbe:
+          enabled: false
       image:
         tag: "latest"
     dagsterWebserver:
