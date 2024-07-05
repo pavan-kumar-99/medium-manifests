@@ -26,9 +26,9 @@ spec:
   values:
     postgresql:
       enabled: false
-      postgresqlHost: "postgresql"
-      postgresqlUsername: postgres
-      postgresqlPassword: "3JqjyCBD4p"
+      postgresqlHost: "ep-sweet-firefly-a5if2gk1.us-east-2.aws.neon.tech"
+      postgresqlUsername: "dagster_owner"
+      postgresqlPassword: "vU1cOqHYTes6"
       postgresqlDatabase: "dagster"
     dagsterWebserver:
       enableReadOnly: true
