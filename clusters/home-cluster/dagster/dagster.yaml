@@ -26,13 +26,10 @@ spec:
   values:
     postgresql:
       enabled: false
-      primary:
-        livenessProbe:
-          enabled: false
-        readinessProbe:
-          enabled: false
-      image:
-        tag: "latest"
+      postgresqlHost: "postgresql"
+      postgresqlUsername: postgres
+      postgresqlPassword: "3JqjyCBD4p"
+      postgresqlDatabase: "dagster"
     dagsterWebserver:
       enableReadOnly: true
     runLauncher:
