@@ -67,7 +67,7 @@ spec:
     monitoring:
       # -- Enable Prometheus integration, will also create necessary RBAC rules to allow Operator to create ServiceMonitors.
       # Monitoring requires Prometheus to be pre-installed
-      enabled: true
+      enabled: false
       # -- Whether to create the Prometheus rules for Ceph alerts
       createPrometheusRules: true
       # -- The namespace in which to create the prometheus rules, if different from the rook cluster namespace.
