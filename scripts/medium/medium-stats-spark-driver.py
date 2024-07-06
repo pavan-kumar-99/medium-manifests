@@ -91,7 +91,7 @@ def process_data(bucket_name, bucket_prefix, local_path):
         )
         .config(
             "spark.hadoop.fs.s3a.endpoint",
-            "http://10.97.32.50:9000/",
+            "http://10.100.44.242:9000/",
         )
         .config(
             "spark.sql.catalogImplementation",
