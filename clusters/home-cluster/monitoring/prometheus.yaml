@@ -25,3 +25,6 @@ spec:
         name: vm
         namespace: flux-system
       interval: 1m
+  values:
+    crds:
+      enabled: false
