@@ -2,6 +2,7 @@ apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMCluster
 metadata:
   name: cluster-1
+  namespace: monitoring
 spec:
   retentionPeriod: "1"
   replicationFactor: 1
