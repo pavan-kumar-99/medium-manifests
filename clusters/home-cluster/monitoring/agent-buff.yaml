@@ -1,0 +1,15 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAgent
+metadata:
+  name: vmagent-buffer
+spec:
+  selectAllByDefault: false
+  vmAgentExternalLabelName: vmagent_ha
+  replicaCount: 2
+  statefulMode: true
+  statefulStorage:
+    volumeClaimTemplate:
+      spec:
+        resources:
+            requests:
+              storage: 2Gi
