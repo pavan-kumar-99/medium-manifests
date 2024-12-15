@@ -1,0 +1,7 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAuth
+metadata:
+  name: k8svmauth
+  namespace: monitoring
+spec:
+  selectAllByDefault: true
