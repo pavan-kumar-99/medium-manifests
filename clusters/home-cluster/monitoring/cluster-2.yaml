@@ -4,6 +4,7 @@ metadata:
   name: cluster-2
   namespace: monitoring
 spec:
+  paused: true
   retentionPeriod: "1"
   replicationFactor: 1
   vmstorage:
