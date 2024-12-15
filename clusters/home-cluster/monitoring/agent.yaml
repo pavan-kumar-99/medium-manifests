@@ -1,0 +1,10 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMAgent
+metadata:
+  name: k8s-vm-agent
+  namespace: monitoring
+spec:
+  selectAllByDefault: true
+  remoteWrite:
+    - url: "http://vminsert-cluster-1.monitoring.svc:8480/insert/0/prometheus/api/v1/write"
+    - url: "http://vminsert-cluster-2.monitoring.svc:8480/insert/0/prometheus/api/v1/write"
