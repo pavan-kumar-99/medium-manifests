@@ -5,7 +5,11 @@ metadata:
   namespace: monitoring
 spec:
   selectAllByDefault: false
+  remoteWrite:
+    - url: "http://vminsert-cluster-1.monitoring.svc:8480/insert/0/prometheus/api/v1/write"
+    - url: "http://vminsert-cluster-2.monitoring.svc:8480/insert/0/prometheus/api/v1/write"
   vmAgentExternalLabelName: vmagent_ha
+  scrapeInterval: 30s
   replicaCount: 2
   statefulMode: true
   statefulStorage:
