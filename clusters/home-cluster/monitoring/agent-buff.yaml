@@ -10,7 +10,6 @@ spec:
     - url: "http://vminsert-cluster-2.monitoring.svc:8480/insert/0/prometheus/api/v1/write"
   vmAgentExternalLabelName: vmagent_ha
   ingestOnlyMode: true
-  maxDiskUsage: 1Gi
   replicaCount: 2
   statefulMode: true
   statefulStorage:
