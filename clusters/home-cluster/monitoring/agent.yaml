@@ -8,3 +8,4 @@ spec:
   remoteWrite:
     - url: "http://vminsert-cluster-1.monitoring.svc:8480/insert/0/prometheus/api/v1/write"
     - url: "http://vminsert-cluster-2.monitoring.svc:8480/insert/0/prometheus/api/v1/write"
+    - url: "http://vmagent-vmagent-buffer.monitoring.svc:8429/api/v1/write"
