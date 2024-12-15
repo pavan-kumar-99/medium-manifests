@@ -1,0 +1,25 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMUser
+metadata:
+  name: demo
+  namespace: monitoring
+spec:
+    name: demo
+    username: demo
+    generatePassword: true
+    targetRefs:
+      # vmui + vmselect
+      - crd:
+          kind: VMCluster/vmselect
+          name: cluster-1
+          namespace: monitoring
+        target_path_suffix: "/select/0"
+        paths:
+          - "/vmui"
+          - "/vmui/.*"
+          - "/prometheus/api/v1/query"
+          - "/prometheus/api/v1/query_range"
+          - "/prometheus/api/v1/series"
+          - "/prometheus/api/v1/status/.*"
+          - "/prometheus/api/v1/label/"
+          - "/prometheus/api/v1/label/[^/]+/values"
