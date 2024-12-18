@@ -11,7 +11,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: headlamp
-  namespace: headlamp
+  namespace: kube-system
 spec:
   interval: 10m
   install:
