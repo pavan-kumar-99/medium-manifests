@@ -25,29 +25,29 @@ spec:
         name: headlamp
         namespace: flux-system
       interval: 1m
-  values:
-    config:
-      pluginsDir: /build/plugins
-    initContainers:
-      - name: headlamp-plugins
-        image: ghcr.io/headlamp-k8s/headlamp-plugin-flux:latest
-        imagePullPolicy: Always
-        command:
-          - /bin/sh
-          - -c
-          - mkdir -p /build/plugins && cp -r /plugins/* /build/plugins/
-        volumeMounts:
-          - mountPath: /build/plugins
-            name: headlamp-plugins
-    persistentVolumeClaim:
-      accessModes:
-        - ReadWriteOnce
-      enabled: true
-      size: 1Gi
-    volumeMounts:
-      - mountPath: /build/plugins
-        name: headlamp-plugins
-    volumes:
-      - name: headlamp-plugins
-        persistentVolumeClaim:
-          claimName: headlamp
+#   values:
+#     config:
+#       pluginsDir: /build/plugins
+#     initContainers:
+#       - name: headlamp-plugins
+#         image: ghcr.io/headlamp-k8s/headlamp-plugin-flux:latest
+#         imagePullPolicy: Always
+#         command:
+#           - /bin/sh
+#           - -c
+#           - mkdir -p /build/plugins && cp -r /plugins/* /build/plugins/
+#         volumeMounts:
+#           - mountPath: /build/plugins
+#             name: headlamp-plugins
+#     persistentVolumeClaim:
+#       accessModes:
+#         - ReadWriteOnce
+#       enabled: true
+#       size: 1Gi
+#     volumeMounts:
+#       - mountPath: /build/plugins
+#         name: headlamp-plugins
+#     volumes:
+#       - name: headlamp-plugins
+#         persistentVolumeClaim:
+#           claimName: headlamp
