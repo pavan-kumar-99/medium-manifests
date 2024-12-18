@@ -18,10 +18,13 @@ spec:
     createNamespace: true
   chart:
     spec:
-      chart:  devtron
+      chart:  devtron-operator
       version: "*"
       sourceRef:
         kind: HelmRepository
         name:  devtron
         namespace: flux-system
       interval: 1m
+    values:
+      installer:
+        modules: [cicd]
