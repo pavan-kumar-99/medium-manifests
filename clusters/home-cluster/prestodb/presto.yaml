@@ -1,27 +1,27 @@
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name:  presto
-  namespace: flux-system
-spec:
-  interval: 1m
-  url: https://prestodb.github.io/presto-helm-charts
----
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
-metadata:
-  name:  presto
-  namespace: presto
-spec:
-  interval: 10m
-  install:
-    createNamespace: true
-  chart:
-    spec:
-      chart:  presto
-      version: "*"
-      sourceRef:
-        kind: HelmRepository
-        name:  presto
-        namespace: flux-system
-      interval: 1m
+# apiVersion: source.toolkit.fluxcd.io/v1
+# kind: HelmRepository
+# metadata:
+#   name:  presto
+#   namespace: flux-system
+# spec:
+#   interval: 1m
+#   url: https://prestodb.github.io/presto-helm-charts
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2
+# kind: HelmRelease
+# metadata:
+#   name:  presto
+#   namespace: presto
+# spec:
+#   interval: 10m
+#   install:
+#     createNamespace: true
+#   chart:
+#     spec:
+#       chart:  presto
+#       version: "*"
+#       sourceRef:
+#         kind: HelmRepository
+#         name:  presto
+#         namespace: flux-system
+#       interval: 1m
