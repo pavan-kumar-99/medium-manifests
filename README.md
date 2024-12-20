@@ -1,4 +1,5 @@
-# MlOps: Machine learning Pipelines using kubeflow
-The Kubeflow project is dedicated to making deployments of machine learning (ML) workflows on Kubernetes simple, portable and scalable. Kubeflow is the ML toolkit for Kubernetes.A kubeflow pipeline is a description of an ML workflow, including all of the components in the workflow and how they combine in the form of a graph. The pipeline includes the definition of the inputs (parameters) required to run the pipeline and the inputs and outputs of each component.
+# Real-Time Messaging with NATS on Kubernetes
+With the rise of cloud-native applications and real-time communication requirements, reliable messaging systems are crucial for distributed architectures. NATS, an open-source, lightweight messaging system, is designed to deliver simple, high-performance messaging across cloud-native environments. In this article, we'll explore how NATS works, why it's useful, and how to deploy it using both Flux (GitOps) and Helm commands.
 Full Article Published here: https://pavan1999-kumar.medium.com/mlops-machine-learning-pipelines-using-kubeflow-fc06508a3f0d
-![image](https://user-images.githubusercontent.com/34813177/187722535-1f467a19-2145-48ad-8af7-2bff8523ad86.png)
+![image](https://github.com/user-attachments/assets/13942c1a-98f7-4a35-99af-26b62cb78207)
+
