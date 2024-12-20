@@ -25,3 +25,9 @@ spec:
         name:  nats
         namespace: flux-system
       interval: 1m
+  values: 
+    config:
+      cluster:
+        enabled: true
+      jetstream:
+        enabled: true
