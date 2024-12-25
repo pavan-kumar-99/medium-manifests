@@ -25,5 +25,5 @@ spec:
       interval: 1m
   values:
     driver:
-      enabled: false
+      enabled: true
       version: "550.90.07"
