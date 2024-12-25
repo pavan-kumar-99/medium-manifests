@@ -1,0 +1,33 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name:  k8sgpt
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://charts.k8sgpt.ai/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name:  k8sgpt
+  namespace: k8sgpt-operator-system
+spec:
+  interval: 10m
+  install:
+    createNamespace: true
+  chart:
+    spec:
+      chart: k8sgpt-operator
+      version: "*"
+      sourceRef:
+        kind: HelmRepository
+        name:  k8sgpt
+        namespace: flux-system
+      interval: 1m
+  values: 
+    config:
+      cluster:
+        enabled: true
+      jetstream:
+        enabled: true
