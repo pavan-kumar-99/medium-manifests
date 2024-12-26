@@ -1,24 +1,21 @@
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
 metadata:
-  name: mysql-helm
+  name: mysql
   namespace: flux-system
 spec:
-  interval: 1m
-  url: https://charts.bitnami.com/bitnami
+  interval: 10m
+  url: oci://registry-1.docker.io/bitnamicharts/mysql
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: mysql-server
+  name: mysql
   namespace: mysql
 spec:
   interval: 10m
-  chart:
-    spec:
-      chart: mysql
-      sourceRef:
-        kind: HelmRepository
-        name: mysql-helm
-        namespace: flux-system
-      interval: 1m
+  releaseName: mysql
+  chartRef:
+    kind: OCIRepository
+    name: mysql
+    namespace: flux-system
