@@ -1,0 +1,34 @@
+# Development Environment Configuration
+variables:
+  catalog: "dev_test"
+  environment: "dev"
+
+workspace:
+  host: "https://adb-dev-88474350318135.15.azuredatabricks.net"  # Dev workspace
+  root_path: "/Users/${workspace.current_user}/.bundle/${bundle.name}/${bundle.target}"
+
+mode: development
+default: true
+
+presets:
+  name_prefix: "dev-"
+  trigger_pause_status: "PAUSED"
+  jobs_max_concurrent_runs: 1
+  tags:
+    environment: "dev"
+    cost_center: "analytics"
+    project: "iot-ingestion"
+
+# Override job settings for development
+resources:
+  jobs:
+    iot_ingestion_job:
+      schedule:
+        pause_status: "PAUSED"
+      job_clusters:
+        - job_cluster_key: "iot_processing_cluster"
+          new_cluster:
+            num_workers: 1
+            autoscale:
+              min_workers: 1
+              max_workers: 2 

@@ -1,0 +1,68 @@
+resources:
+  jobs:
+    config_tables_job:
+      name: "${var.environment}-config-tables-job"
+      description: "Setup configuration tables for ${var.environment} environment"
+      
+      # Email notifications
+      email_notifications:
+        on_failure:
+          - "data-engineering@seaspancorp.com"
+        no_alert_for_skipped_runs: false
+      
+      # Job cluster configuration
+      job_clusters:
+        - job_cluster_key: "config_cluster"
+          new_cluster:
+            cluster_name: "${var.environment}-config-processing"
+            spark_version: "13.3.x-scala2.12"
+            node_type_id: "Standard_DS3_v2"
+            driver_node_type_id: "Standard_DS3_v2"
+            num_workers: 1
+            spark_conf:
+              "spark.databricks.cluster.profile": "singleNode"
+              "spark.master": "local[*, 4]"
+            custom_tags:
+              project: "iot-ingestion"
+              environment: "${var.environment}"
+              team: "data-engineering"
+              workload_type: "config"
+      
+      # Task definition
+      tasks:
+        - task_key: "create_config_tables"
+          description: "Create configuration tables for the environment"
+          job_cluster_key: "config_cluster"
+          notebook_task:
+            notebook_path: "notebooks/config/create_config_tables"
+            source: "WORKSPACE"
+            base_parameters:
+              catalog: "${var.catalog}"
+              environment: "${var.environment}"
+              schema: "config"
+          timeout_seconds: 1800
+          retry_on_timeout: true
+          max_retries: 1
+          min_retry_interval_millis: 30000
+      
+      # Queue settings for better resource management
+      queue:
+        enabled: true
+      
+      # Performance optimization
+      performance_target: "STANDARD"
+      
+      # Access control
+      access_control_list:
+        - user_name: "odiakonova@seaspancorp.com"
+          permission_level: "IS_OWNER"
+        - group_name: "iot-data-engineers"
+          permission_level: "CAN_MANAGE_RUN"
+      
+      # Tags for cost tracking and organization
+      tags:
+        cost_center: "analytics"
+        project: "iot-ingestion"
+        environment: "${var.environment}"
+        owner: "data-engineering"
+        workload_type: "configuration" 

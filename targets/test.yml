@@ -1,0 +1,41 @@
+# Test Environment Configuration
+variables:
+  catalog: "iot_test"
+  environment: "test"
+
+workspace:
+  host: "https://adb-test-88474350318135.15.azuredatabricks.net"  # Test workspace
+  root_path: "/Shared/bundles/${bundle.name}/${bundle.target}"
+
+mode: development
+
+presets:
+  name_prefix: "test-"
+  trigger_pause_status: "PAUSED"
+  jobs_max_concurrent_runs: 2
+  tags:
+    environment: "test"
+    cost_center: "analytics"
+    project: "iot-ingestion"
+
+# Use shared service principal for job execution
+run_as:
+  service_principal_name: "12345678-1234-1234-1234-123456789012"  # Shared service principal client ID
+
+# Override job settings for test environment
+resources:
+  jobs:
+    iot_ingestion_job:
+      schedule:
+        pause_status: "PAUSED"
+      job_clusters:
+        - job_cluster_key: "iot_processing_cluster"
+          new_cluster:
+            num_workers: 2
+            autoscale:
+              min_workers: 1
+              max_workers: 3
+            
+    config_tables_job:
+      schedule:
+        pause_status: "PAUSED" 

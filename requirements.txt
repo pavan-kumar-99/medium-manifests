@@ -1,0 +1,18 @@
+# Core dependencies for Databricks Asset Bundle
+databricks-cli>=0.218.0
+pytest>=7.0.0
+black>=22.0.0
+flake8>=5.0.0
+bandit>=1.7.0
+
+# Data processing dependencies
+pandas>=1.5.3
+numpy>=1.24.2
+pyspark>=3.4.0
+
+# Testing frameworks
+pytest-mock>=3.10.0
+chispa>=0.9.2
+
+# Development tools
+pre-commit>=3.0.0 

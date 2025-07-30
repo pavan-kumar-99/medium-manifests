@@ -1,0 +1,33 @@
+# Databricks Asset Bundle configuration
+bundle:
+  name: "iot_ingestion_framework"
+  
+include:
+  - "resources/**/*.yml"
+  - "targets/dev.yml"
+  - "targets/test.yml"  
+  - "targets/prod.yml"
+
+variables:
+  catalog:
+    description: "Target Unity Catalog name"
+    default: "dev_test"
+  
+  environment:
+    description: "Deployment environment"
+    default: "dev"
+
+# Global permissions
+permissions:
+  - level: "CAN_MANAGE"
+    group_name: "iot-data-engineers"
+  - level: "CAN_VIEW"
+    group_name: "iot-analysts"
+
+# Global presets
+presets:
+  name_prefix: "${var.environment}-"
+  tags:
+    project: "iot-ingestion"
+    team: "data-engineering"
+    cost_center: "analytics" 

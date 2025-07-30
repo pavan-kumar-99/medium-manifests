@@ -1,0 +1,62 @@
+resources:
+  clusters:
+    shared_iot_cluster:
+      cluster_name: "${var.environment}-shared-iot-cluster"
+      spark_version: "13.3.x-scala2.12"
+      node_type_id: "Standard_DS3_v2"
+      driver_node_type_id: "Standard_DS3_v2"
+      
+      # Environment-specific scaling
+      autoscale:
+        min_workers: 1
+        max_workers: 4
+      
+      # Spark configuration optimized for IoT workloads
+      spark_conf:
+        "spark.databricks.cluster.profile": "singleNode"
+        "spark.master": "local[*, 4]"
+        "spark.databricks.delta.optimizeWrite.enabled": "true"
+        "spark.databricks.delta.autoCompact.enabled": "true"
+        "spark.databricks.adaptive.enabled": "true"
+        "spark.databricks.adaptive.coalescePartitions.enabled": "true"
+        "spark.serializer": "org.apache.spark.serializer.KryoSerializer"
+        "spark.sql.adaptive.advisoryPartitionSizeInBytes": "128MB"
+        "spark.sql.adaptive.skewJoin.enabled": "true"
+      
+      # Environment variables
+      spark_env_vars:
+        ENVIRONMENT: "${var.environment}"
+        CATALOG: "${var.catalog}"
+      
+      # Auto-termination (environment specific)
+      autotermination_minutes: 30
+      
+      # Enable cluster log delivery
+      cluster_log_conf:
+        dbfs:
+          destination: "dbfs:/cluster-logs/${var.environment}"
+      
+      # Install required libraries
+      libraries:
+        - pypi:
+            package: "requests>=2.28.0"
+        - pypi:
+            package: "pandas>=1.5.0"
+        - pypi:
+            package: "numpy>=1.24.0"
+        - pypi:
+            package: "delta-spark>=2.4.0"
+      
+      # Custom tags for cost tracking
+      custom_tags:
+        project: "iot-ingestion"
+        team: "data-engineering"
+        environment: "${var.environment}"
+        cost_center: "analytics"
+        workload_type: "shared"
+        
+      # Security and access
+      enable_elastic_disk: false
+      
+      # Driver and worker instance pool (if available)
+      # instance_pool_id: "${var.instance_pool_id}" 

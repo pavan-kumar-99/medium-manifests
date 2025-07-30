@@ -1,148 +1,231 @@
-# Medium Manifests
-What is Medium Manifests?
-Medium Manifests is a GitHub repo that contains all the code for the articles writtern here https://pavan1999-kumar.medium.com/. Every article here, will have the GitHub Branch added in the article description itself. One Might clone the repo with the branch specified in the medium articles. 
+# IoT Ingestion Framework - Databricks Asset Bundle
 
-## Cloning the Repo
+This repository contains a production-ready Databricks Asset Bundle (DAB) for IoT data ingestion and processing, following enterprise-grade CI/CD best practices.
 
-The branch names for the corresponding articles could be found [here](https://pavan1999-kumar.medium.com/) 
+## 🏗️ Architecture Overview
 
-```bash
-git clone https://github.com/pavan-kumar-99/medium-manifests.git -b <branch_name>
+```
+├── databricks.yml              # Main bundle configuration
+├── resources/                  # Resource definitions
+│   └── jobs/                   # Job configurations
+│       ├── iot_ingestion_job.yml
+│       └── config_job.yml
+├── notebooks/                  # Notebook source code
+│   ├── iot_ingestion/
+│   │   ├── api_ingestion_framework.py
+│   │   ├── load_data_into_bronze.py
+│   │   └── create_final_bronze_table.py
+│   └── config/
+│       └── create_config_tables.py
+├── tests/                      # Unit and integration tests
+├── .github/workflows/          # CI/CD automation
+│   └── ci-cd.yml
+└── requirements.txt            # Python dependencies
 ```
 
-## Published
+## 🚀 Getting Started
 
-[Kyverno](https://medium.com/gitconnected/kubernetes-policies-as-code-using-kyverno-10720df9c842)
+### Prerequisites
 
-[Helm Dashboard](https://medium.com/gitconnected/introduction-to-helm-dashboard-dddf43e38cc2)
+1. **Databricks CLI** (v0.218.0+)
+   ```bash
+   pip install databricks-cli
+   ```
 
-[Goldilocks](https://pavan1999-kumar.medium.com/how-to-guess-the-right-size-for-your-kubernetes-pods-9c88686fec)
+2. **Configure Authentication**
+   ```bash
+   databricks configure --token
+   ```
 
-[Multi Stage Docker Build](https://pavan1999-kumar.medium.com/how-i-reduced-the-size-of-my-docker-image-by-95-520a05439300)
+3. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-[jsPolicy](https://pavan1999-kumar.medium.com/policies-as-code-in-kubernetes-using-jspolicy-8d358d064bfd)
+### Local Development
 
-[Kubeflow: MLOPS](https://medium.com/nerd-for-tech/mlops-machine-learning-pipelines-using-kubeflow-fc06508a3f0d)
+1. **Validate Bundle**
+   ```bash
+   databricks bundle validate
+   ```
 
-[Hashicorp Vault Secrets in Kubernetes with CSI Driver](https://pavan1999-kumar.medium.com/hashicvault-secrets-in-kubernetes-with-csi-driver-ec917d4a2672)
+2. **Deploy to Development**
+   ```bash
+   databricks bundle deploy --target dev
+   ```
 
-[Loft ( Virtual Clusters )](https://pavan1999-kumar.medium.com/multi-tenancy-in-kubernetes-using-lofts-vcluster-dee6513a7206)
+3. **Run Jobs**
+   ```bash
+   databricks bundle run config_tables_job --target dev
+   databricks bundle run iot_ingestion_job --target dev
+   ```
 
-[HashiCorp Vault PKI With Vault Injector](https://medium.com/nerd-for-tech/pki-certs-injection-to-k8s-pods-with-vault-agent-injector-d97482b48f3d)
+## 🔄 CI/CD Pipeline
 
-[Analyze Terraform costs with Infracost ( The GitOps Way )](https://pavan1999-kumar.medium.com/terraforming-the-cost-with-infracost-c28dc6c981c9)
+The repository implements a GitOps workflow with the following environments:
 
-[Atlantis Pull Request Automation](https://pavan1999-kumar.medium.com/terraforming-the-gitops-way-9417cf4abf58)
+### Environment Promotion Flow
+```
+Feature Branch → develop → main → release tag
+     ↓            ↓        ↓         ↓
+   Manual      Dev Env   Test Env  Prod Env
+```
 
-[Kubernetes HashiCorp Vault with Cert-Manager](https://pavan1999-kumar.medium.com/using-hashicorp-vault-as-a-certificate-issuer-in-cert-manager-9e19d7239d3d)
+### Pipeline Stages
 
-[Cortex Metrics](https://medium.com/nerd-for-tech/deep-dive-into-cortex-part-i-c228e01f8c58)
+1. **Validation** (All branches)
+   - Bundle syntax validation
+   - Configuration checks across all targets
+   - Code linting and security scans
 
-[Kubernetes Cluster Autoscaler](https://medium.com/nerd-for-tech/kubernetes-cluster-autoscaler-in-action-6172a023f542)
+2. **Testing** (Pull requests)
+   - Unit tests execution
+   - Integration test validation
+   - Code quality checks
 
-[Grafana Loki](https://medium.com/nerd-for-tech/logging-at-scale-in-kubernetes-using-grafana-loki-3bb2eb0c0872)
+3. **Development Deployment** (`develop` branch)
+   - Automatic deployment to dev environment
+   - User-isolated workspace paths
+   - Paused job schedules for testing
 
-[Spark on EKS](https://medium.com/nerd-for-tech/running-apache-spark-on-eks-with-aws-spot-instances-f8ce91d319b9)
+4. **Test Deployment** (`main` branch)
+   - Deployment to shared test environment
+   - Smoke tests execution
+   - Staging validation
 
-[Kubernetes Kubeless](https://medium.com/nerd-for-tech/going-serverless-in-kubernetes-using-kubeless-8ef83b3f2f89)
+5. **Production Deployment** (Release tags)
+   - Manual approval required
+   - Production deployment with monitoring
+   - Notification and health checks
 
-[Kubernetes Cert Manager](https://medium.com/nerd-for-tech/free-and-automatic-ssl-certificates-in-kubernetes-using-cert-manager-6fb65ac63d5)
+## 🎯 Environment Configuration
 
-[Kubernetes Chaos Mesh](https://medium.com/nerd-for-tech/chaos-engineering-in-kubernetes-using-chaos-mesh-431c1587ef0a)
+### Development (`dev`)
+- **Mode**: `development`
+- **Path**: `/Users/{current_user}/.bundle/{bundle_name}/dev`
+- **Scheduling**: Paused by default
+- **Concurrent runs**: Limited to 1
+- **Purpose**: Individual developer testing and iteration
 
-[Thanos](https://medium.com/nerd-for-tech/deep-dive-into-thanos-part-i-f72ecba39f76)
+### Test (`test`)
+- **Mode**: `development`
+- **Path**: `/Shared/bundles/{bundle_name}/test`
+- **Scheduling**: Paused by default
+- **Concurrent runs**: Limited to 2
+- **Purpose**: Integration testing and QA validation
 
-[Kube-Bench and Kube-Hunter](https://www.techmanyu.com/kubernetes-security-with-kube-bench-and-kube-hunter-6765bf44ebc6)
+### Production (`prod`)
+- **Mode**: `production`
+- **Path**: `/Shared/bundles/{bundle_name}/prod`
+- **Scheduling**: Active based on cron schedule
+- **Concurrent runs**: Up to 5
+- **Purpose**: Live data processing
 
-[Kubernetes Network Policies](https://medium.com/nerd-for-tech/network-policies-demystified-in-kubernetes-d57fc2548043)
+## 🔐 Security & Permissions
 
-[Kubernetes Auto Scaling](https://medium.com/nerd-for-tech/autoscaling-in-kubernetes-hpa-vpa-ab61a2177950)
+### Access Control
+- **Data Engineers**: Full management permissions
+- **Analysts**: View-only access
+- **Production Admins**: Production environment control
 
-[GitHub Self Hosted Runner](https://www.techmanyu.com/creating-self-hosted-github-runners-in-a-kubernetes-cluster-fd05560de34a)
+### Secret Management
+- Use Databricks Secret Scopes for sensitive data
+- Environment variables in CI/CD for tokens
+- No hardcoded credentials in configuration files
 
-[Kubernetes Rabbit MQ Operator](https://medium.com/nerd-for-tech/deploying-rabbitmq-on-kubernetes-using-rabbitmq-cluster-operator-ef99f7a4e417)
+### Resource Tagging
+All resources are tagged with:
+- `project`: iot-ingestion
+- `team`: data-engineering
+- `cost_center`: analytics
+- `environment`: dev/test/prod
 
-[Kubernetes Cross Plane](https://medium.com/nerd-for-tech/introduction-to-crossplane-2f873ae0f9f3)
+## 📊 Monitoring & Observability
 
-[Kubernetes Sealed Secrets](https://faun.pub/introduction-to-bitnami-sealed-secrets-bb5ae74d9a25)
+### Job Monitoring
+- Email notifications on job failures
+- Webhook integration for Slack alerts
+- Retry policies with exponential backoff
+- Timeout protection for long-running tasks
 
-[Kubernetes External DNS](https://faun.pub/introduction-to-external-dns-in-kubernetes-654aa4cf38e6)
+### Resource Optimization
+- Auto-scaling clusters (1-4 workers)
+- Delta optimization enabled
+- Queue management for resource efficiency
+- Environment-specific cluster sizing
 
-[Kubernetes Jenkins Operator](https://medium.com/swlh/introduction-to-jenkins-operator-f4cb7ebc2e0b)
+## 🧪 Testing Strategy
 
-[GitHub Actions](https://medium.com/nerd-for-tech/creating-a-gke-cluster-with-github-actions-dd34e2de50a6)
+### Unit Tests
+```bash
+pytest tests/ -v
+```
 
-[Kubernetes KIND](https://medium.com/nerd-for-tech/create-a-kubernetes-cluster-using-kind-b364a67437b7)
+### Integration Tests
+- Bundle validation across environments
+- End-to-end pipeline testing
+- Data quality validation
 
-[Kubernetes Flux CD V1](https://medium.com/swlh/deploying-applications-in-kubernetes-using-flux-a9d171b11917)
+### Deployment Validation
+- Post-deployment health checks
+- Job execution verification
+- Data lineage confirmation
 
+## 📝 Development Workflow
 
-[Kubernetes Kustomize](https://faun.pub/introduction-to-kustomize-97f990dc2f44)
+1. **Create Feature Branch**
+   ```bash
+   git checkout -b feature/new-iot-source
+   ```
 
-[Kubernetes ArgoCD](https://medium.com/nerd-for-tech/deploying-applications-in-kubernetes-using-argo-cd-ab004a8cdb5e)
+2. **Make Changes**
+   - Update notebooks in `notebooks/`
+   - Modify job configurations in `resources/jobs/`
+   - Add tests in `tests/`
 
-[Kubernetes HashiCorp Vault Injector](https://faun.pub/securing-your-secrets-using-vault-k8s-in-kubernetes-part-1-de3d7378e226)
+3. **Test Locally**
+   ```bash
+   databricks bundle validate
+   databricks bundle deploy --target dev
+   ```
 
+4. **Submit Pull Request**
+   - CI pipeline validates changes
+   - Code review and approval required
+   - Automated testing execution
 
-## Upcoming
+5. **Deploy to Test**
+   - Merge to `main` triggers test deployment
+   - Staging validation and smoke tests
 
-- [x] Kubernetes Cert Manager and Vault
-- [x] Atlantis ( Terraform Pull Request Automation )
-- [x] Infracost
-- [x] HashiCorp Vault PKI With Vault Injector
-- [x] Loft ( Virtual Clusters )
-- [x] HashiCorp Vault CSI Provider
-- [x] Kubeflow
-- [x] JSPolicy
-- [x] MultiStage Docker Build
-- [x] Goldilocks
-- [x] Kyverno
-- [ ] Grafana Mimir
-- [x] Helm Dashboard
-- [ ] Stack Storm
-- [ ] Google Architecture Diagram
-- [ ] KubeArmour
-- [ ] Volcano
-- [ ] KubeCost
-- [ ] KeyCloak
-- [ ] KubeVirt
-- [ ] AWS Karpenter
-- [ ] Hierarchical Namespaces
-- [ ] Prometheus Adapter
-- [ ] Custom Scheduler in K8s
-- [ ] External Secrets and HashiCorp Vault
-- [ ] Elastic Search Hot-Warm-Cold Architecture using Elastic Operator
-- [ ] TelePort ( Go TelePort )
-- [ ] LongHorn.io
-- [ ] Backstage.io
-- [ ] Env0
-- [ ] kURL
-- [ ] Netflix Console Me
-- [ ] Cosign Sigstore
-- [ ] Cloud Custodian
-- [ ] Keptn
-- [ ] FluxCD V2
-- [ ] Kube Resource Report
-- [ ] Forecastle
-- [ ] Capsule
-- [ ] Grafana OnCall
-- [ ] ElasticSearch Curator
-- [ ] CAST AI
-- [ ] Devtron
-- [ ] Forsetti
-- [ ] Jit.io
-- [ ] Numaflow
-- [ ] Weavework TF Controller
-- [ ] Kaniaster
-- [ ] TestKube
-- [ ] Pritunl
-- [ ] AirByte
+6. **Release to Production**
+   - Create release tag for production deployment
+   - Manual approval and monitoring
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+## 🏷️ Versioning
 
-Please make sure to update tests as appropriate.
+The project follows [Semantic Versioning](https://semver.org/):
+- **MAJOR**: Breaking changes to data schemas or APIs
+- **MINOR**: New features and backwards-compatible changes
+- **PATCH**: Bug fixes and minor improvements
 
-## Sponsorship
+## 🤝 Contributing
 
-Want your product to be articulated and presented to a wider audience or want to sponsor any of my upcoming articles? Feel free to reach out on ( pavan1999.kumar@gmail.com ).
+1. Follow the established directory structure
+2. Add tests for new functionality
+3. Update documentation for changes
+4. Use descriptive commit messages
+5. Request code review before merging
+
+## 📞 Support
+
+For questions and support:
+- **Data Engineering Team**: data-engineering@seaspancorp.com
+- **Documentation**: [Internal Wiki Link]
+- **Issues**: Use GitHub Issues for bug reports and feature requests
+
+## 🔗 Related Resources
+
+- [Databricks Asset Bundles Documentation](https://docs.databricks.com/dev-tools/bundles/)
+- [Company Data Engineering Standards](link-to-internal-docs)
+- [Unity Catalog Best Practices](link-to-internal-docs) 

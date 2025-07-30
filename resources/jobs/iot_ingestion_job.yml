@@ -1,0 +1,118 @@
+resources:
+  jobs:
+    iot_ingestion_job:
+      name: "${var.environment}-iot-ingestion-job"
+      description: "IoT data ingestion pipeline for ${var.environment} environment"
+      
+      # Email notifications
+      email_notifications:
+        on_failure:
+          - "data-engineering@seaspancorp.com"
+        on_success:
+          - "data-engineering@seaspancorp.com"
+        no_alert_for_skipped_runs: false
+      
+      # Webhook notifications  
+      webhook_notifications:
+        on_failure:
+          - id: "slack-webhook"
+        on_success:
+          - id: "slack-webhook"
+            
+      # Schedule configuration
+      schedule:
+        quartz_cron_expression: "0 0/2 * * * ?"
+        timezone_id: "UTC"
+        pause_status: "${var.trigger_pause_status}"
+      
+      # Job cluster configuration
+      job_clusters:
+        - job_cluster_key: "iot_processing_cluster"
+          new_cluster:
+            cluster_name: "${var.environment}-iot-processing"
+            spark_version: "13.3.x-scala2.12"
+            node_type_id: "Standard_DS3_v2"
+            driver_node_type_id: "Standard_DS3_v2"
+            num_workers: 2
+            autoscale:
+              min_workers: 1
+              max_workers: 4
+            spark_conf:
+              "spark.databricks.cluster.profile": "singleNode"
+              "spark.master": "local[*, 4]"
+              "spark.databricks.delta.optimizeWrite.enabled": "true"
+              "spark.databricks.delta.autoCompact.enabled": "true"
+            custom_tags:
+              project: "iot-ingestion"
+              environment: "${var.environment}"
+              team: "data-engineering"
+      
+      # Task definitions
+      tasks:
+        - task_key: "load_api_data"
+          description: "Load data from IoT API endpoints"
+          job_cluster_key: "iot_processing_cluster"
+          notebook_task:
+            notebook_path: "notebooks/iot_ingestion/api_ingestion_framework"
+            source: "WORKSPACE"
+            base_parameters:
+              catalog: "${var.catalog}"
+              environment: "${var.environment}"
+              checkpoint_location: "/tmp/checkpoints/api_ingestion"
+          timeout_seconds: 3600
+          retry_on_timeout: true
+          max_retries: 2
+          min_retry_interval_millis: 30000
+          
+        - task_key: "load_to_bronze"
+          description: "Load processed data into bronze layer"
+          depends_on:
+            - task_key: "load_api_data"
+          job_cluster_key: "iot_processing_cluster"
+          notebook_task:
+            notebook_path: "notebooks/iot_ingestion/load_data_into_bronze"
+            source: "WORKSPACE"
+            base_parameters:
+              catalog: "${var.catalog}"
+              environment: "${var.environment}"
+              source_table: "${var.catalog}.raw.api_data"
+              target_table: "${var.catalog}.bronze.iot_data"
+          timeout_seconds: 3600
+          retry_on_timeout: true
+          max_retries: 2
+          min_retry_interval_millis: 30000
+          
+        - task_key: "create_final_bronze_table"
+          description: "Create final bronze table with data quality checks"
+          depends_on:
+            - task_key: "load_to_bronze"
+          job_cluster_key: "iot_processing_cluster" 
+          notebook_task:
+            notebook_path: "notebooks/iot_ingestion/create_final_bronze_table"
+            source: "WORKSPACE"
+            base_parameters:
+              catalog: "${var.catalog}"
+              environment: "${var.environment}"
+              source_table: "${var.catalog}.bronze.iot_data"
+              target_table: "${var.catalog}.bronze.iot_data_final"
+              data_quality_checks: "true"
+          timeout_seconds: 1800
+          retry_on_timeout: true
+          max_retries: 1
+          min_retry_interval_millis: 60000
+      
+      # Access control
+      access_control_list:
+        - user_name: "odiakonova@seaspancorp.com"
+          permission_level: "IS_OWNER"
+        - group_name: "iot-data-engineers"
+          permission_level: "CAN_MANAGE_RUN"
+        - group_name: "iot-analysts"
+          permission_level: "CAN_VIEW"
+      
+      # Tags for cost tracking and organization
+      tags:
+        cost_center: "analytics"
+        project: "iot-ingestion"
+        environment: "${var.environment}"
+        owner: "data-engineering" 
