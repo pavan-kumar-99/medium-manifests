@@ -22,22 +22,24 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Setup Databricks CLI
+        uses: databricks/setup-cli@main
+
       - name: Install dependencies
         run: |
-          pip install databricks-cli
-          pip install -r requirements.txt || echo "No requirements.txt found"
-
-      - name: Configure Databricks CLI (PAT)
-        run: |
-          echo "[DEFAULT]" > ~/.databrickscfg
-          echo "host = ${{ secrets.DATABRICKS_HOST }}" >> ~/.databrickscfg
-          echo "token = ${{ secrets.DATABRICKS_TOKEN }}" >> ~/.databrickscfg
+          pip install -r ci-cd/requirements.txt || echo "No requirements.txt found"
 
       - name: Validate Bundle Configuration
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
           databricks bundle validate
 
       - name: Run Bundle Syntax Check (DEV only)
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
           databricks bundle validate --target dev
 
@@ -59,11 +61,11 @@ jobs:
       - name: Install test dependencies
         run: |
           pip install pytest databricks-connect
-          pip install -r requirements.txt || echo "No requirements.txt found"
+          pip install -r ci-cd/requirements.txt || echo "No requirements.txt found"
 
       - name: Run unit tests
         run: |
-          pytest tests/ -v || echo "No tests found"
+          pytest ci-cd/tests/ -v || echo "No tests found"
 
   # Deploy to Development
   deploy-dev:
@@ -75,16 +77,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Databricks CLI
-        run: pip install databricks-cli
-
-      - name: Configure Databricks CLI (DEV - PAT)
-        run: |
-          echo "[DEFAULT]" > ~/.databrickscfg
-          echo "host = ${{ secrets.DATABRICKS_HOST }}" >> ~/.databrickscfg
-          echo "token = ${{ secrets.DATABRICKS_TOKEN }}" >> ~/.databrickscfg
+      - name: Setup Databricks CLI
+        uses: databricks/setup-cli@main
 
       - name: Deploy to Development
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
           databricks bundle deploy --target dev
 
