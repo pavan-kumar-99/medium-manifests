@@ -14,7 +14,6 @@ resources:
       job_clusters:
         - job_cluster_key: "config_cluster"
           new_cluster:
-            cluster_name: "${var.environment}-config-processing"
             spark_version: "13.3.x-scala2.12"
             node_type_id: "Standard_DS3_v2"
             driver_node_type_id: "Standard_DS3_v2"
@@ -34,7 +33,7 @@ resources:
           description: "Create configuration tables for the environment"
           job_cluster_key: "config_cluster"
           notebook_task:
-            notebook_path: "notebooks/config/create_config_tables.py"
+            notebook_path: "${workspace.file_path}/notebooks/config/create_config_tables"
             source: "WORKSPACE"
             base_parameters:
               catalog: "${var.catalog}"

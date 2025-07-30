@@ -12,12 +12,12 @@ resources:
           - "data-engineering@seaspancorp.com"
         no_alert_for_skipped_runs: false
       
-      # Webhook notifications  
-      webhook_notifications:
-        on_failure:
-          - id: "slack-webhook"
-        on_success:
-          - id: "slack-webhook"
+      # Webhook notifications (commented out until webhook is configured)
+      # webhook_notifications:
+      #   on_failure:
+      #     - id: "slack-webhook"
+      #   on_success:
+      #     - id: "slack-webhook"
             
       # Schedule configuration (environment-specific)
       schedule:
@@ -29,7 +29,6 @@ resources:
       job_clusters:
         - job_cluster_key: "iot_processing_cluster"
           new_cluster:
-            cluster_name: "${var.environment}-iot-processing"
             spark_version: "13.3.x-scala2.12"
             node_type_id: "Standard_DS3_v2"
             driver_node_type_id: "Standard_DS3_v2"
@@ -53,7 +52,7 @@ resources:
           description: "Load data from IoT API endpoints"
           job_cluster_key: "iot_processing_cluster"
           notebook_task:
-            notebook_path: "notebooks/iot_ingestion/api_ingestion_framework.py"
+            notebook_path: "${workspace.file_path}/notebooks/iot_ingestion/api_ingestion_framework"
             source: "WORKSPACE"
             base_parameters:
               catalog: "${var.catalog}"
@@ -70,7 +69,7 @@ resources:
             - task_key: "load_api_data"
           job_cluster_key: "iot_processing_cluster"
           notebook_task:
-            notebook_path: "notebooks/iot_ingestion/load_data_into_bronze.py"
+            notebook_path: "${workspace.file_path}/notebooks/iot_ingestion/load_data_into_bronze"
             source: "WORKSPACE"
             base_parameters:
               catalog: "${var.catalog}"
@@ -88,7 +87,7 @@ resources:
         #     - task_key: "load_to_bronze"
         #   job_cluster_key: "iot_processing_cluster" 
         #   notebook_task:
-        #     notebook_path: "notebooks/iot_ingestion/create_final_bronze_table.py"
+        #     notebook_path: "${workspace.file_path}/notebooks/iot_ingestion/create_final_bronze_table"
         #     source: "WORKSPACE"
         #     base_parameters:
         #       catalog: "${var.catalog}"

@@ -8,6 +8,10 @@ include:
   # - "targets/test.yml"  
   # - "targets/prod.yml"
 
+sync:
+  include:
+    - notebooks/**
+
 variables:
   catalog:
     description: "Target Unity Catalog name"
@@ -25,10 +29,11 @@ variables:
 permissions:
   - user_name: "pambati@centrilogic.com"
     level: "CAN_MANAGE"
-  - level: "CAN_MANAGE"
-    group_name: "iot-data-engineers"
-  - level: "CAN_VIEW"
-    group_name: "iot-analysts"
+  # Groups commented out until they are created in the workspace
+  # - level: "CAN_MANAGE"
+  #   group_name: "iot-data-engineers"
+  # - level: "CAN_VIEW"
+  #   group_name: "iot-analysts"
 
 # Global presets
 presets:
