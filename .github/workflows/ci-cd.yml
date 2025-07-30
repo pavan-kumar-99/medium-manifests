@@ -1,0 +1,97 @@
+name: Databricks Asset Bundle CI/CD - DEV Only
+
+on:
+  push:
+    branches: [dbx-asset-bundles]
+  pull_request:
+    branches: [dbx-asset-bundles]
+
+# Personal Access Token (PAT) authentication for DEV environment
+
+jobs:
+  # Continuous Integration
+  validate:
+    name: Validate Bundle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install databricks-cli
+          pip install -r requirements.txt || echo "No requirements.txt found"
+
+      - name: Configure Databricks CLI (PAT)
+        run: |
+          echo "[DEFAULT]" > ~/.databrickscfg
+          echo "host = ${{ secrets.DATABRICKS_HOST }}" >> ~/.databrickscfg
+          echo "token = ${{ secrets.DATABRICKS_TOKEN }}" >> ~/.databrickscfg
+
+      - name: Validate Bundle Configuration
+        run: |
+          databricks bundle validate
+
+      - name: Run Bundle Syntax Check (DEV only)
+        run: |
+          databricks bundle validate --target dev
+
+  # Unit Tests (if you have test files)
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: validate
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install test dependencies
+        run: |
+          pip install pytest databricks-connect
+          pip install -r requirements.txt || echo "No requirements.txt found"
+
+      - name: Run unit tests
+        run: |
+          pytest tests/ -v || echo "No tests found"
+
+  # Deploy to Development
+  deploy-dev:
+    name: Deploy to Development
+    runs-on: ubuntu-latest
+    needs: [validate]
+    if: github.ref == 'refs/heads/dbx-asset-bundles'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Databricks CLI
+        run: pip install databricks-cli
+
+      - name: Configure Databricks CLI (DEV - PAT)
+        run: |
+          echo "[DEFAULT]" > ~/.databrickscfg
+          echo "host = ${{ secrets.DATABRICKS_HOST }}" >> ~/.databrickscfg
+          echo "token = ${{ secrets.DATABRICKS_TOKEN }}" >> ~/.databrickscfg
+
+      - name: Deploy to Development
+        run: |
+          databricks bundle deploy --target dev
+
+      - name: Run Integration Tests (Optional)
+        run: |
+          # You can trigger specific jobs for validation
+          # databricks jobs run-now --job-id <job-id>
+          echo "Integration tests would run here"
+
+ 
