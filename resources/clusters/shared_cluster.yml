@@ -36,16 +36,8 @@ resources:
         dbfs:
           destination: "dbfs:/cluster-logs/${var.environment}"
       
-      # Install required libraries
-      libraries:
-        - pypi:
-            package: "requests>=2.28.0"
-        - pypi:
-            package: "pandas>=1.5.0"
-        - pypi:
-            package: "numpy>=1.24.0"
-        - pypi:
-            package: "delta-spark>=2.4.0"
+      # Libraries should be installed via job configuration or init scripts
+      # libraries field is not supported in clusters resource
       
       # Custom tags for cost tracking
       custom_tags:

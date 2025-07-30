@@ -19,11 +19,11 @@ resources:
         on_success:
           - id: "slack-webhook"
             
-      # Schedule configuration
+      # Schedule configuration (environment-specific)
       schedule:
         quartz_cron_expression: "0 0/2 * * * ?"
         timezone_id: "UTC"
-        pause_status: "${var.trigger_pause_status}"
+        pause_status: "PAUSED"  # Default to paused, override in target configs
       
       # Job cluster configuration
       job_clusters:
@@ -53,7 +53,7 @@ resources:
           description: "Load data from IoT API endpoints"
           job_cluster_key: "iot_processing_cluster"
           notebook_task:
-            notebook_path: "notebooks/iot_ingestion/api_ingestion_framework"
+            notebook_path: "notebooks/iot_ingestion/api_ingestion_framework.py"
             source: "WORKSPACE"
             base_parameters:
               catalog: "${var.catalog}"
@@ -70,7 +70,7 @@ resources:
             - task_key: "load_api_data"
           job_cluster_key: "iot_processing_cluster"
           notebook_task:
-            notebook_path: "notebooks/iot_ingestion/load_data_into_bronze"
+            notebook_path: "notebooks/iot_ingestion/load_data_into_bronze.py"
             source: "WORKSPACE"
             base_parameters:
               catalog: "${var.catalog}"
@@ -88,7 +88,7 @@ resources:
             - task_key: "load_to_bronze"
           job_cluster_key: "iot_processing_cluster" 
           notebook_task:
-            notebook_path: "notebooks/iot_ingestion/create_final_bronze_table"
+            notebook_path: "notebooks/iot_ingestion/create_final_bronze_table.py"
             source: "WORKSPACE"
             base_parameters:
               catalog: "${var.catalog}"
@@ -101,14 +101,8 @@ resources:
           max_retries: 1
           min_retry_interval_millis: 60000
       
-      # Access control
-      access_control_list:
-        - user_name: "odiakonova@seaspancorp.com"
-          permission_level: "IS_OWNER"
-        - group_name: "iot-data-engineers"
-          permission_level: "CAN_MANAGE_RUN"
-        - group_name: "iot-analysts"
-          permission_level: "CAN_VIEW"
+      # Access control should be managed via permissions in bundle configuration
+      # access_control_list field is not supported in job resources
       
       # Tags for cost tracking and organization
       tags:

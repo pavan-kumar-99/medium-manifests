@@ -5,8 +5,8 @@ bundle:
 include:
   - "resources/**/*.yml"
   - "targets/dev.yml"
-  - "targets/test.yml"  
-  - "targets/prod.yml"
+  # - "targets/test.yml"  
+  # - "targets/prod.yml"
 
 variables:
   catalog:
@@ -16,9 +16,15 @@ variables:
   environment:
     description: "Deployment environment"
     default: "dev"
+    
+  trigger_pause_status:
+    description: "Default pause status for scheduled jobs"
+    default: "PAUSED"
 
 # Global permissions
 permissions:
+  - user_name: "pambati@centrilogic.com"
+    level: "CAN_MANAGE"
   - level: "CAN_MANAGE"
     group_name: "iot-data-engineers"
   - level: "CAN_VIEW"

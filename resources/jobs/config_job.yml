@@ -34,7 +34,7 @@ resources:
           description: "Create configuration tables for the environment"
           job_cluster_key: "config_cluster"
           notebook_task:
-            notebook_path: "notebooks/config/create_config_tables"
+            notebook_path: "notebooks/config/create_config_tables.py"
             source: "WORKSPACE"
             base_parameters:
               catalog: "${var.catalog}"
@@ -52,12 +52,8 @@ resources:
       # Performance optimization
       performance_target: "STANDARD"
       
-      # Access control
-      access_control_list:
-        - user_name: "odiakonova@seaspancorp.com"
-          permission_level: "IS_OWNER"
-        - group_name: "iot-data-engineers"
-          permission_level: "CAN_MANAGE_RUN"
+      # Access control should be managed via permissions in bundle configuration
+      # access_control_list field is not supported in job resources
       
       # Tags for cost tracking and organization
       tags:

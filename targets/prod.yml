@@ -1,13 +1,15 @@
 # Production Environment Configuration
 variables:
-  catalog: "prod"
-  environment: "prod"
+  catalog:
+    default: "prod"
+  environment:
+    default: "prod"
 
 workspace:
   host: "https://adb-prod-88474350318135.15.azuredatabricks.net"  # Production workspace
-  root_path: "/Shared/bundles/${bundle.name}/${bundle.target}"
+  root_path: "/Workspace/Shared/.bundle/${bundle.name}/${bundle.target}"
 
-mode: production
+# Databricks Asset Bundle target configuration
 
 presets:
   name_prefix: "prod-"
@@ -29,24 +31,5 @@ permissions:
   - level: "CAN_VIEW"
     group_name: "business-analysts"
 
-# Override job settings for production
-resources:
-  jobs:
-    iot_ingestion_job:
-      schedule:
-        quartz_cron_expression: "0 0/2 * * * ?"
-        timezone_id: "UTC"
-        pause_status: "UNPAUSED"
-      job_clusters:
-        - job_cluster_key: "iot_processing_cluster"
-          new_cluster:
-            num_workers: 4
-            autoscale:
-              min_workers: 2
-              max_workers: 8
-            enable_elastic_disk: true
-            
-    config_tables_job:
-      # Config job typically runs on-demand in production
-      schedule:
-        pause_status: "PAUSED" 
+# Job overrides should be handled via variables or presets
+# Remove duplicate job definitions to avoid conflicts 
