@@ -11,9 +11,7 @@ targets:
       host: "https://adb-787779827200774.14.azuredatabricks.net/"  # Dev workspace
       root_path: "/Workspace/Shared/.bundle/${bundle.name}/${bundle.target}"
     
-    sync:
-      include:
-        - "notebooks/**"
+
 
     presets:
       name_prefix: "dev-"
