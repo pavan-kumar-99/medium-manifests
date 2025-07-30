@@ -81,24 +81,24 @@ resources:
           max_retries: 2
           min_retry_interval_millis: 30000
           
-        # - task_key: "create_final_bronze_table"
-        #   description: "Create final bronze table with data quality checks"
-        #   depends_on:
-        #     - task_key: "load_to_bronze"
-        #   job_cluster_key: "iot_processing_cluster" 
-        #   notebook_task:
-        #     notebook_path: "${workspace.file_path}/notebooks/iot_ingestion/create_final_bronze_table"
-        #     source: "WORKSPACE"
-        #     base_parameters:
-        #       catalog: "${var.catalog}"
-        #       environment: "${var.environment}"
-        #       source_table: "${var.catalog}.bronze.iot_data"
-        #       target_table: "${var.catalog}.bronze.iot_data_final"
-        #       data_quality_checks: "true"
-        #   timeout_seconds: 1800
-        #   retry_on_timeout: true
-        #   max_retries: 1
-        #   min_retry_interval_millis: 60000
+        - task_key: "create_final_bronze_table"
+          description: "Create final bronze table with data quality checks"
+          depends_on:
+            - task_key: "load_to_bronze"
+          job_cluster_key: "iot_processing_cluster" 
+          notebook_task:
+            notebook_path: "${workspace.file_path}/notebooks/iot_ingestion/create_final_bronze_table"
+            source: "WORKSPACE"
+            base_parameters:
+              catalog: "${var.catalog}"
+              environment: "${var.environment}"
+              source_table: "${var.catalog}.bronze.iot_data"
+              target_table: "${var.catalog}.bronze.iot_data_final"
+              data_quality_checks: "true"
+          timeout_seconds: 1800
+          retry_on_timeout: true
+          max_retries: 1
+          min_retry_interval_millis: 60000
       
       # Access control should be managed via permissions in bundle configuration
       # access_control_list field is not supported in job resources
